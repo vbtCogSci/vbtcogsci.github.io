@@ -49,6 +49,42 @@ var presets = {
             0, 1, 0, 
             0, 0, 1, 
             'X', 'Y', 'Z'],
+    'pos_chain_1': [1, 0, 0, 
+                    1, 1, 0, 
+                    0, 1, 1, 
+                    'X', 'Y', 'Z'],
+    'pos_chain_2': [1, 1, 0, 
+                    0, 1, 0, 
+                    1, 0, 1, 
+                    'X', 'Y', 'Z'],
+    'pos_chain_3': [1, 1, 0, 
+                    0, 1, 1, 
+                    0, 0, 1, 
+                    'X', 'Y', 'Z'],
+    'collider_1': [1, 0, 0,
+                   0, 1, 0,
+                   1, 1, 1,
+                   'X', 'Y', 'Z'],
+    'collider_2': [1, 1, 1,
+                   0, 1, 0,
+                   0, 0, 1,
+                  'X', 'Y', 'Z'],
+    'collider_3': [1, 0, 0,
+                   1, 1, 1,
+                   0, 0, 1,
+                   'X', 'Y', 'Z'],
+    'ccause_1': [1, 0, 0,
+                 1, 1, 0,
+                 1, 0, 1,
+                 'X', 'Y', 'Z'],
+    'ccause_2': [1, 1, 0,
+                 0, 1, 0,
+                 0, 1, 1,
+                 'X', 'Y', 'Z'],
+    'ccause_3': [1, 0, 1,
+                 0, 1, 1,
+                 0, 0, 1,
+                 'X', 'Y', 'Z'],
     'avg_z' : [1, 0, 0,
                 1, 1, 0,
                 1, -1, 1,
@@ -69,10 +105,26 @@ var presets = {
               1, 1, 0, 
               -0.5, -0.5, 1, 
               'Crime rate', 'Police action', 'Population satisfaction'],
+    'crime_control': [1, -1, 0,
+                      1, 1, 0, 
+                      -0.5, -0.5, 1, 
+                      'X', 'Y', 'Z'],
     'finance': [1, -0.5, -1,
                 0, 1, -1,
                 -0.5, 1, 1, 
                 'Stock Prices', 'Covid-19 cases', 'Confinement measures'],
+    'finance_control': [1, -0.5, -1,
+                        0, 1, -1,
+                        -0.5, 1, 1, 
+                        'X', 'Y', 'Z'],
+    'estate': [1, 1, 1,
+               -0.5, 1, 0.5,
+               -1, -1, 1, 
+               'House Prices', 'Neighbourhood population', 'Desireability'],
+    'estate_control': [1, 1, 1,
+                       -0.5, 1, 1,
+                       -1, -1, 1, 
+                       'X', 'Y', 'Z'],
     'virus-2': [1, -0.5, -1,
                 0, 1, -1,
                 0.5, 1, 1, 
@@ -85,7 +137,7 @@ $('document').ready(function () {
     // Setup initial slider positions
     setupSliders();
      // Setup chart logic and look
-    setupChart();
+    setupChart(['X', 'Y', 'Z']);
     // Setup user interface
     setupInterface();
 })
@@ -149,7 +201,7 @@ function setupInterface() {
         setupChart();
     })
 
-    $('button').button();
+    $('.process').button();
 
     // Sets up the theta parameter spinner
     $('#theta-spinner').prop('disabled', true);
@@ -224,6 +276,8 @@ function updateModel(preset) {
     $('#Z_0').spinner('value', causes['Z'][0]);
     $('#Z_1').spinner('value', causes['Z'][1]);
     $('#Z_2').spinner('value', causes['Z'][2]);
+
+    return presetLabels;
 }
 
 
@@ -336,7 +390,9 @@ function removeData(chart) {
     chart.update();
 }
 
-function setupChart() {
+function setupChart(labels) {
+    var canvas_html = "<canvas id='progressPlot'></canvas>";
+    $('.chart_container').html(canvas_html);
     var ctx = document.getElementById('progressPlot').getContext('2d');
     chart = new Chart(ctx, {
         // The type of chart we want to create
@@ -346,17 +402,17 @@ function setupChart() {
         data: {
             labels: [0],
             datasets: [{
-                label: 'X',
+                label: labels[0],
                 borderColor: xColour,
                 data: [0],
                 fill: false
             }, {
-                label: 'Y',
+                label: labels[1],
                 borderColor: yColour,
                 data: [0],
                 fill: false, 
             }, {
-                label: 'Z',
+                label: labels[2],
                 borderColor: zColour,
                 data: [0],
                 fill: false,
@@ -462,6 +518,17 @@ function setupSliders() {
         }
     });
 
+    $('#custom-handle-1, #custom-handle-2, #custom-handle-3').css({
+        'width': '3em',
+        'height': '1.6em',
+        'left': '-150%',
+        'top':'auto',
+        'margin-top': '-.8em',
+        'margin-left': '0',
+        'text-align': 'center',
+        'line-height': '1.6em'
+      });
+    
     if (display == true) {
         $('#x_label').css('color', xColour);
         $('#y_label').css('color', yColour);
@@ -469,7 +536,7 @@ function setupSliders() {
     }
 
     var $sliders = $('.slider');
-    
+    console.log($sliders);
     $sliders.slider({
         orientation: 'vertical',
         animate: 'fast',
