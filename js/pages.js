@@ -61,7 +61,7 @@ var loopy_intro_1 = `
     </div>
     <div class='graph-container'>
         <p><u>3) Simple common effect diagram where node A and Node B both cause the effect C</u></p>
-        <img class='page-3-graph' src='./img/pageFour-graphThree.png'>
+        <img class='page-3-graph' src='./img/pageFour-graphThree.PNG'>
     </div>
 </div>`;
 
@@ -74,7 +74,7 @@ var loopy_intro_2 = `
         <img class='page-3-graph' src='./img/pageFour-graphTwo.png'>
     </div>
     <div class='graph-container'>
-        <img class='page-3-graph' src='./img/pageFour-graphThree.png'>
+        <img class='page-3-graph' src='./img/pageFour-graphThree.PNG'>
     </div>
 </div>
 <p>
