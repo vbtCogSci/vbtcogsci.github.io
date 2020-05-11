@@ -137,14 +137,31 @@
 
   .graph-pred-rec {
     display: flex;
-    flex-wrap: wrap;
-    height: 80%;
     width: 100%;
+    height: 80%;
+    flex-wrap: nowrap;
+  }
+
+  .graph-pred-rec-right {
+    display: flex;
+    flex-wrap: wrap;
+    height: 100%;
+    width: 40%;
     flex-flow: column;
+    margin-left: 2%;
+  }
+
+  .graph-pred-rec-left {
+    display: flex;
+    flex-wrap: wrap;
+    height: 100%;
+    width: 60%;
+    flex-flow: column;
+    margin-right: 2%;
   }
 
   .feedback-slider-container {
-    width: 60%;
+    width: 100%;
     height: 15%;
     display: flex;
     align-items: center;
@@ -152,6 +169,21 @@
 
   .feedback-slider {
     width: 300px;
+  }
+
+  .label-fb {
+    height: 50%;
+    width: 90%;
+  }
+
+  .ui-checkboxradio-label{
+    margin-top: 1%;
+  }
+
+  #reason-qual {
+    height: 80%;
+    width: 98%;
+    align-self: center;
   }
 
   /* Slider and chart container for experiment page */

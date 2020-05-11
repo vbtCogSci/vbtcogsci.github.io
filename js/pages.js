@@ -358,58 +358,84 @@ var feedback_template = `
     </p>
 </div>
 <div class='graph-pred-rec'>
-    <div class='feedback-slider-container'>
-        <p style='text-align:center'>
-            <strong><span class='X'>X</span> -> <span class='Y'>Y</span></strong>
-        </p>
-        <div class='feedback-slider' id='XonY'>
-            <div id="handle-XonY" class="ui-slider-handle"></div>
+    <div class='graph-pred-rec-left'>
+        <div class='feedback-slider-container'>
+            <p style='text-align:center'>
+                <strong><span class='X'>X</span> -> <span class='Y'>Y</span></strong>
+            </p>
+            <div class='feedback-slider' id='XonY'>
+                <div id="handle-XonY" class="ui-slider-handle"></div>
+            </div>
+        </div>
+        <div class='feedback-slider-container'>
+            <p style='text-align:center'>
+                <strong><span class='X'>X</span> -> <span class='Z'>Z</span></strong>
+            </p>
+            <div class='feedback-slider' id='XonZ'>
+                <div id="handle-XonZ" class="ui-slider-handle"></div>
+            </div>
+        </div>
+        <div class='feedback-slider-container'>
+            <p style='text-align:center'>
+                <strong><span class='Y'>Y</span> -> <span class='X'>X</span></strong>
+            </p>
+            <div class='feedback-slider' id='YonX'>
+                <div id="handle-YonX" class="ui-slider-handle"></div>
+            </div>
+        </div>
+        <div class='feedback-slider-container'>
+            <p style='text-align:center'>
+                <strong><span class='Y'>Y</span> -> <span class='Z'>Z</span></strong>
+            </p>
+            <div class='feedback-slider' id='YonZ'>
+                <div id="handle-YonZ" class="ui-slider-handle"></div>
+            </div>
+        </div>
+        <div class='feedback-slider-container'>
+            <p style='text-align:center'>
+                <strong><span class='Z'>Z</span> -> <span class='X'>X</span></strong>
+            </p>
+            <div class='feedback-slider' id='ZonX'>
+                <div id="handle-ZonX" class="ui-slider-handle"></div>
+            </div>
+        </div>
+        <div class='feedback-slider-container'>
+            <p style='text-align:center'>
+                <strong><span class='Z'>Z</span> -> <span class='Y'>Y</span></strong>
+            </p>
+            <div class='feedback-slider' id='ZonY'>
+                <div id="handle-ZonY" class="ui-slider-handle"></div>
+            </div>
         </div>
     </div>
-    <div class='feedback-slider-container'>
-        <p style='text-align:center'>
-            <strong><span class='X'>X</span> -> <span class='Z'>Z</span></strong>
-        </p>
-        <div class='feedback-slider' id='XonZ'>
-            <div id="handle-XonZ" class="ui-slider-handle"></div>
-        </div>
-    </div>
-    <div class='feedback-slider-container'>
-        <p style='text-align:center'>
-            <strong><span class='Y'>Y</span> -> <span class='X'>X</span></strong>
-        </p>
-        <div class='feedback-slider' id='YonX'>
-            <div id="handle-YonX" class="ui-slider-handle"></div>
-        </div>
-    </div>
-    <div class='feedback-slider-container'>
-        <p style='text-align:center'>
-            <strong><span class='Y'>Y</span> -> <span class='Z'>Z</span></strong>
-        </p>
-        <div class='feedback-slider' id='YonZ'>
-            <div id="handle-YonZ" class="ui-slider-handle"></div>
-        </div>
-    </div>
-    <div class='feedback-slider-container'>
-        <p style='text-align:center'>
-            <strong><span class='Z'>Z</span> -> <span class='X'>X</span></strong>
-        </p>
-        <div class='feedback-slider' id='ZonX'>
-            <div id="handle-ZonX" class="ui-slider-handle"></div>
-        </div>
-    </div>
-    <div class='feedback-slider-container'>
-        <p style='text-align:center'>
-            <strong><span class='Z'>Z</span> -> <span class='Y'>Y</span></strong>
-        </p>
-        <div class='feedback-slider' id='ZonY'>
-            <div id="handle-ZonY" class="ui-slider-handle"></div>
-        </div>
+    <div class='graph-pred-rec-right'>
+        <!-- Need RADIO with sense making -->
+        <fieldset class='label-fb'>
+            <legend>To what extent did the behaviour of the variables feel logical?</legend>
+            <label for="radio-1">Completely illogical</label>
+            <input type="radio" name="radio-1" id="radio-1"><br>
+            <label for="radio-2">Somewhat illogical</label>
+            <input type="radio" name="radio-1" id="radio-2"><br>
+            <label for="radio-3">Somewhat logical</label>
+            <input type="radio" name="radio-1" id="radio-3"><br>
+            <label for="radio-4">Completely logical</label>
+            <input type="radio" name="radio-1" id="radio-4"><br>
+        </fieldset>
+        <fieldset class='label-fb'>
+            <legend>Please write in a few words the logic behind you answer:</legend>
+            <textarea type='text' id='reason-qual' name='reason'></textarea>
+        </fieldset>
     </div>
 </div>`;
 
+
 var outro_1 = `
 <p>
+    DEMOGRAPHICS
+</p>`;
+
+var outro_2 = `
+<p> 
     This experiment is a pilot, we are still correcting bugs and gathering feedback on its flow. 
     <br>
     Please fill out the following form to do so before moving on.
@@ -417,7 +443,7 @@ var outro_1 = `
     INSERT FEEDBACK FORM
 </p>`;
 
-var outro_2 = `
+var outro_3 = `
 <p>
     All done, you have reached the end of this experiment, thank you very much for participating!
     <br><br>

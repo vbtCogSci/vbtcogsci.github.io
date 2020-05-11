@@ -114,7 +114,7 @@ function setupLoopySubmit() {
         var $loopyInput = $(element);
         $loopyInput.on('input', function () {
             $loopyInput.css({
-                'color':'black'
+                'color':'black' 
             });
             var $validate = $('#'.concat($loopyInput.attr('id').concat('-validate')));
             $validate.button('enable');
@@ -220,6 +220,7 @@ function buildSurvey() {
     var outro_content = [];
     outro_content.push(outro_1);
     outro_content.push(outro_2);
+    outro_content.push(outro_3);
 
     // Experimental content
     var loopy_content = [];

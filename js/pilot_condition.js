@@ -103,21 +103,23 @@ function setupGame(condIdx) {
         var easyB = easyBlocks.shift()
         var randgen = easyB[Math.floor(Math.random() * 2) + 1];
         console.log(randgen)
-        updateModel(randgen);
-        setupChart(['X', 'Y', 'Z']);
+        
+        // Sets up the game page given the preset
+        var presetLabels = updateModel(randgen);
+        setupChart(presetLabels);
+        // Sets up the response page given the preset
+        resetFeedback(presetLabels);
         
     } else if (labGraphIdx.includes(condIdx)) {
         // Define preset as the first index of the labBlocks
         preset = labBlocks.shift();
-
         console.log(preset);
 
+        // Sets up the game page given the preset
         var presetLabels = updateModel(preset);
-        $('.X').html(presetLabels[0]);
-        $('.Y').html(presetLabels[1]);
-        $('.Z').html(presetLabels[2]);
         setupChart(presetLabels);
-  
+        // Sets up the response page given the preset
+        resetFeedback(presetLabels);
     }
 
     
@@ -125,6 +127,27 @@ function setupGame(condIdx) {
 
 
 // UTILITY FUNCTIONS
+// Resets feedback page for new input
+function resetFeedback(presetLabels) {
+    $('.feedback-slider').slider('value', 0);
+    $('.ui-slider-handle').html('0');
+    $('.X').html(presetLabels[0]);
+    $('.Y').html(presetLabels[1]);
+    $('.Z').html(presetLabels[2]);
+    
+    console.log(presetLabels)
+    if (presetLabels[1] == 'Y') {
+        console.log('Hello')
+        $('.graph-pred-rec-right').css('visibility', 'hidden');
+    } else {
+        $('.graph-pred-rec-right').css('visibility', 'visible');
+    }
+
+    $('input[type="radio"]').prop('checked', false);
+    $('input[type="radio"]').button( "refresh" );
+}
+
+
 function shuffleArray(array) {
     for (var i = array.length - 1; i > 0; i--) {
         var j = Math.floor(Math.random() * (i + 1));
