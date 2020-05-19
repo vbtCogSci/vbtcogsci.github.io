@@ -1,51 +1,19 @@
-var uid = sessionStorage.getItem('uid');
+// Get uid from session storage (user pc)
+var uid = localStorage.getItem('uid');
 console.log(uid);
+// Generate firebase reference
 var db = firebase.database();
 
-// Generate a list of all user ids.
-var uidList = [];
-db.ref('uids').on('child_added', function(localId, prevChildkey) {
-    //console.log(localId.val)
-    uidList.push(localId.val().toString());
-});
-
-// Generate a new uid if it not a new user
-if (uid == null) {
-    console.log('No uid in sessionStorage')
-    // if does not exists, generate a new one
-    uid = 'pilot_'.concat(Math.random().toString().slice(2, 7));
-    while ($.inArray(uid, uidList) > -1) {
-        console.log('I am in')
-        uid = 'pilot_'.concat(Math.random().toString().slice(2, 7));
-    }
-    // Generate a new uid and push it to the db
-    db.ref('uids').push(uid);
-} 
-
-// Handle condition here, if new participants, assign condition and push to db. //
-
-var condition = sessionStorage.getItem('condition');
-var condIdx = sessionStorage.getItem('condIndex');
-
-if (condition == null) {
-    // New participant, assign condition, logic to be defined.
-    //condition = [1, 1, 1]; //Placeholder
-    var condition = 'label';
-    condIdx = 0;
-}
-
-// Condition is a string
-// Info
-// Survey sequence, string of page indices
-// Labels with reference to indices
-var sets = {
-    'a':['Crime Rate', 'Police Action', 'Population Satisfaction'],
-    'b':['Stock Prices', 'Confinement Measures', 'Number of Covid cases'],
-    'c':['House prices', 'Population density', 'Desireability'],
-    'd':['X', 'Y', 'Z']
-}
+// OTHER GLOBAL VARIABLES
+// String containing the current model preset
+var currentModel = 'none';
+var condition;
+var condIdx;
+var dbCond;
+var labBlocks = [0, 0, 0];
 
 // Strings correspond to preset names in the sliders.js presets variable
+var easyLink = ['easy_1', 'easy_2', 'easy_2'];
 var chains = ['pos_chain_1', 'pos_chain_2', 'pos_chain_3'];
 var colliders = ['collider_1', 'collider_2', 'collider_3'];
 var commonCause = ['ccause_1', 'ccause_2', 'ccause_3'];
@@ -54,33 +22,95 @@ var condLabel = shuffleArray(['crime', 'finance', 'estate']);
 var condControl = shuffleArray(['crime_control', 'finance_control', 'estate_control']);
 
 var easyBlocks = [
+    easyLink,
     chains,
     colliders,
     commonCause
 ];
+
 // If the condition is label, assign labelled presets, otherwise add control presets
-if (condition == 'label') {
-    var labBlocks = [
-        condLabel[0],
-        condLabel[1],
-        condLabel[2]
-    ]
-} else {
-    var labBlocks = [
-        condControl[0],
-        condControl[1],
-        condControl[2]
-    ]
-}
 
 // Variables that define the number of experimental block of each type.
 var numLoopyBlocks = 1;
-var numLabelBlocks = easyBlocks.length;
-var numGenBlocks = labBlocks.length;
+var numGenBlocks = 3;
+var numLabelBlocks = 4;
 
 // Define variables that keep track of block indices
 var genGraphIdx = [];
 var labGraphIdx = [];
+
+// Generate a new uid if it not a new user
+if (uid == null) {
+    console.log('No uid in localStorage')
+    // if does not exists, generate a new one
+    uid = 'pilot_'.concat(Math.random().toString().slice(2, 11));
+    // Generate a list of all user ids.
+    // Generate a new uid and push it to the db
+    db.ref('uids').push(uid);
+    // Push it also to localstorage
+    localStorage.setItem('uid', uid);
+
+    // Define condition
+    // Get condition list from db, shift element and replace
+    db.ref('cond').once('value').then(function(snapshot) {
+        dbCond= snapshot.val().toString()
+
+        if (dbCond == "label") {
+            console.log('changing to control')
+            db.ref('cond').set('control');
+        } else {
+            console.log('changing to label')
+            db.ref('cond').set('label');
+        }
+
+        condition = dbCond;
+
+        if (condition == 'label') {
+            labBlocks = [
+                condLabel[0],
+                condLabel[1],
+                condLabel[2]
+            ]
+        } else {
+            labBlocks = [
+                condControl[0],
+                condControl[1],
+                condControl[2]
+            ]
+        }
+
+        db.ref('data').child(uid).child('condition').set(condition);
+        localStorage.setItem('condition', condition)
+        localStorage.setItem('condIdx', condIdx)
+        localStorage.setItem('currentModel', currentModel)
+    });
+    
+    // Set condition to be bd cond and replace condition in database
+    //condition = dbCond;
+    condIdx = 0;
+
+} else {
+    // Recover state from database
+    condition = localStorage.getItem('condition');
+    condIdx = parseInt(localStorage.getItem('condIdx'));
+    currentModel = localStorage.getItem('currentModel');
+
+    if (condition == 'label') {
+        labBlocks = [
+            condLabel[0],
+            condLabel[1],
+            condLabel[2]
+        ]
+    } else {
+        labBlocks = [
+            condControl[0],
+            condControl[1],
+            condControl[2]
+        ]
+    }
+}
+
+
 
 // Flow is always loopy labels x3 > Easy graphs x3 > Labelled or unlabelled hard graphs x3
 // Condition A is labels
@@ -93,11 +123,7 @@ function setupGame(condIdx) {
     // Reset sliders
     $('.slider').slider("value", 0);
 
-    if (condIdx == 7) {
-        console.log('Practice, run no links')
-        updateModel('no_link');
-        setupChart(['X', 'Y', 'Z']);
-    } else if (genGraphIdx.includes(condIdx)) {
+    if (genGraphIdx.includes(condIdx)) {
         // Remove the first index from genGraph so as to not activate this if statement
         genGraphIdx.shift()
         var easyB = easyBlocks.shift()
@@ -109,6 +135,11 @@ function setupGame(condIdx) {
         setupChart(presetLabels);
         // Sets up the response page given the preset
         resetFeedback(presetLabels);
+        // Resets game interface
+        resetInterface()
+
+        // Update currentModel for database storage
+        currentModel = randgen;
         
     } else if (labGraphIdx.includes(condIdx)) {
         // Define preset as the first index of the labBlocks
@@ -120,31 +151,151 @@ function setupGame(condIdx) {
         setupChart(presetLabels);
         // Sets up the response page given the preset
         resetFeedback(presetLabels);
-    }
+        // Resets game interface
+        resetInterface()
 
-    
+        // Update currentModel for database storage
+        currentModel = preset;
+    }
 }
 
 
 // UTILITY FUNCTIONS
+
+function saveState() {
+    db.ref('data').child(uid).child('state').set(currentModel);
+    db.ref('data').child(uid).child('condIdx').set(condIdx);
+    
+    localStorage.setItem('condIdx', condIdx);
+    localStorage.setItem('currentModel', currentModel);
+}
+
+function saveGraphData() {
+    // SEND TO DATABASE
+
+    // Graph data
+    // Times 
+    db.ref('data').child(uid).child(currentModel).child('times').set(steps);
+    // Values
+    db.ref('data').child(uid).child(currentModel).child('xVals').set(xHist);
+    db.ref('data').child(uid).child(currentModel).child('yVals').set(yHist);
+    db.ref('data').child(uid).child(currentModel).child('zVals').set(zHist);
+    // Interventions
+    db.ref('data').child(uid).child(currentModel).child('xInt').set(xInter);
+    db.ref('data').child(uid).child(currentModel).child('yInt').set(yInter);
+    db.ref('data').child(uid).child(currentModel).child('zInt').set(zInter);
+
+    // Reset Data storage variables
+    xHist = [0];
+    yHist = [0];
+    zHist = [0];
+    xInter = [0];
+    yInter = [0];
+    zInter = [0];
+    steps = [0];
+
+    // Feedback sliders values
+    var report = [
+        $('#XonY').slider("value"),
+        $('#XonZ').slider("value"),
+        $('#YonX').slider("value"),
+        $('#YonZ').slider("value"),
+        $('#ZonX').slider("value"),
+        $('#ZonY').slider("value")
+    ];
+    db.ref('data').child(uid).child(currentModel).child('report').set(report);
+    if (['crime', 'finance', 'estate'].includes(currentModel)) {
+        // Save qual feedback as well
+        var $radioSense = $("input:radio[name=radio-1]:checked").attr('id');
+        db.ref('data').child(uid).child(currentModel).child('sense').set($radioSense);
+        db.ref('data').child(uid).child(currentModel).child('reason').set($('#reason-qual').val())
+    }
+    
+}
+
+function saveDemographics () {
+    var radioGender = $("input:radio[name=gender]:checked").attr('id');
+    var radioCausal = $("input:radio[name=causal-familiarity]:checked").attr('id');
+    var radioLoopy = $("input:radio[name=loopy-fb]:checked").attr('id');
+    var radioGraph = $("input:radio[name=graph-fb]:checked").attr('id');
+
+    db.ref('demo').child(uid).child('age').set($('#age').val());
+    db.ref('demo').child(uid).child('gender').set(radioGender);
+    db.ref('demo').child(uid).child('activity').set($('#activity_selector').val());
+    db.ref('demo').child(uid).child('causal_fam').set(radioCausal);
+    db.ref('demo').child(uid).child('loopy_fb').set(radioLoopy);
+    db.ref('demo').child(uid).child('graph_fb').set(radioGraph);
+
+    // Save date and time of submission
+    db.ref('date').child(uid).set(Date.now());
+}
+
+function saveTechnicalFb () {
+    var radioScreen = $("input:radio[name=screen]:checked").attr('id');
+    var radioPc = $("input:radio[name=pc]:checked").attr('id');
+    var radioBrowser = $("input:radio[name=browser]:checked").attr('id');
+    var checkGraphTech = $("input:radio[name=graph-tech]:checked").attr('id');
+    var techText = $('#tech-fb').val();
+
+    if (radioScreen != null) {
+        db.ref('tech').child(uid).child('screen').set(radioScreen);
+    }
+    if (radioPc != null) {
+        db.ref('tech').child(uid).child('pc').set(radioPc);
+    }
+    if (radioBrowser != null) {
+        db.ref('tech').child(uid).child('browser').set(radioBrowser);
+    }
+    if (checkGraphTech != null) {
+        db.ref('tech').child(uid).child('tech').set(checkGraphTech);
+    }
+    if (techText != "") {
+        db.ref('tech').child(uid).child('techText').set(techText);
+    }
+}
+
+
+function resetInterface() {
+    $('.slider').slider({disabled: true});
+    //$('#stop_button').button({disabled: true});
+    $('#start_button').css({'display': 'flex'});
+    $('#stop_button').css({'display': 'none'});
+    $('.slider_box').css({'display': 'flex'})
+    $('.button_container').css({'display': 'flex'})
+    $('.feedback-slider-container').css({'display': 'none'});
+    $('.val-link-button').css({'display': 'none'});
+    $('.graph-pred-rec-right').css({'display': 'none'});
+}
+
 // Resets feedback page for new input
 function resetFeedback(presetLabels) {
     $('.feedback-slider').slider('value', 0);
-    $('.ui-slider-handle').html('0');
+    $('.fb-handle').html('0');
     $('.X').html(presetLabels[0]);
     $('.Y').html(presetLabels[1]);
     $('.Z').html(presetLabels[2]);
     
-    console.log(presetLabels)
-    if (presetLabels[1] == 'Y') {
-        console.log('Hello')
+    //console.log(presetLabels)
+    if (presetLabels[1] == 'Red') {
+        //console.log('Hello')
         $('.graph-pred-rec-right').css('visibility', 'hidden');
+        $('#custom-handle-1, #custom-handle-2, #custom-handle-3').css({
+            'line-height': '3em',
+            'font-size': 'smaller'
+        });
+        
     } else {
         $('.graph-pred-rec-right').css('visibility', 'visible');
+        $('#custom-handle-1, #custom-handle-2, #custom-handle-3').css({
+            'line-height': '1.5em',
+            'font-size': 'smaller'
+        });
     }
 
     $('input[type="radio"]').prop('checked', false);
     $('input[type="radio"]').button( "refresh" );
+
+    $('#reason-qual').val('')
 }
 
 

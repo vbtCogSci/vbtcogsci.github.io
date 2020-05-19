@@ -23,8 +23,8 @@
   
   .survey-window {
     margin: 2%;
-    width: 90%;
-    height: 90%;
+    width: 95%;
+    height: 95%;
     display: flex;
     flex-wrap: wrap;
     align-content: center;
@@ -32,8 +32,8 @@
   }
 
   .survey-display {
-    width: 95%;
-    height: 90%;
+    width: 100%;
+    height: 92%;
     display: flex;
     flex-wrap: nowrap;
     align-content: center;
@@ -41,18 +41,18 @@
   }
 
   .survey-page {
-    width: 95%;
-    height: 90%;
+    width: 100%;
+    height: 100%;
     display: none;
     flex-wrap: wrap;
     align-content: center;
     justify-content: center;
-    overflow: auto;
+    overflow: visible;
   }
 
   .nav-bar {
-    width: 95%;
-    height: 10%;
+    width: 100%;
+    height: 8%;
     display: flex;
     align-content: center;
     justify-content: flex-end;
@@ -62,6 +62,11 @@
     height: 50%;
     width: 50%;
     object-fit: contain;
+  }
+
+  .fb_img {
+    height: 100%;
+    width: auto;
   }
 
   p {
@@ -127,10 +132,28 @@
     justify-self: flex-start;
   }
 
+  /* CSS for graph tutorial */
+
+  .accordion-tab {
+    display: flex;
+    width: 90%;
+    height: 80%;
+    flex-flow: column;
+    justify-content: center;
+  }
+
+  .video-container {
+    width: 90%;
+  }
+
+  video {
+    width: 70%;
+  }
+
   /* Feedback page CSS for dynamical inference */ 
   .graph-pred-label {
     display: flex;
-    height: 20%;
+    height: 10%;
     width: 100%;
     align-content: center;
   }
@@ -138,15 +161,15 @@
   .graph-pred-rec {
     display: flex;
     width: 100%;
-    height: 80%;
+    height: 90%;
     flex-wrap: nowrap;
   }
 
   .graph-pred-rec-right {
     display: flex;
     flex-wrap: wrap;
-    height: 100%;
-    width: 40%;
+    height: 60%;
+    width: 80%;
     flex-flow: column;
     margin-left: 2%;
   }
@@ -165,15 +188,27 @@
     height: 15%;
     display: flex;
     align-items: center;
+    border-top: 1px dotted black;
+    margin-bottom: 0.2%;
+    margin-top: 0.2%;
+    margin-right: 5%;
   }
 
   .feedback-slider {
     width: 300px;
+    margin-left: 5%;
   }
 
   .label-fb {
     height: 50%;
     width: 90%;
+  }
+
+  .val-link-button {
+    height: 7%;
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
   }
 
   .ui-checkboxradio-label{
@@ -186,31 +221,68 @@
     align-self: center;
   }
 
+  #tech-fb {
+    width: 100%;
+    align-self: center;
+  }
+
+    /* Chart.js specific CSS */
+    #progressPlot {
+      width: 100px;
+}
+
   /* Slider and chart container for experiment page */
   .game-display {
     display: flex;
-    height: 80%;
+    height: 100%;
     width: 100%;
+    flex-wrap: nowrap;
   }
 
-  .slider_container, .chart_container {
-    padding: 2%;
-    width: 50%;
-    height: 100%;
+  .slider_container {
+    padding: 0%;
     display: flex;
     flex-wrap: wrap;
+    height: 100%;
+    width: 40%;
+    justify-content: left;
     align-content: center;
-    justify-content: center;
   }
+
+  .chart_container {
+    padding: 0%;
+    display: flex;
+    flex-wrap: wrap;
+    height: 90%;
+    width: 60%;
+    justify-content: center;
+    align-content: center;
+  }
+
+  /* Button container */
+   .button_container {
+    width: 40%;
+    height: 100%;
+    display: flex;
+    flex-flow: column;
+    flex-wrap: nowrap;
+    justify-content: flex-end;
+    align-content: flex-end;
+}
+
+ button {
+    margin: 3px;
+    justify-content: center;
+ }
 
   /* Slider specific CSS */
   .slider_box {
-    width: 50%;
-    height: 50%;
+    width: 15%;
+    height: 100%;
     display: flex;
+    flex-wrap: nowrap;
     align-content: center;
     justify-content: center;
-    vertical-align: baseline;
   }
 
   .slider-label {
@@ -218,7 +290,8 @@
   }
 
   .slider {
-      height: 80%;
+      height: 60%;
+      margin-bottom: 65%;
       align-self: center;
   }
 
@@ -229,12 +302,6 @@
     margin-top: -.8em;
     text-align: center;
     line-height: 1.6em;
-  }
-
-  /* Chart.js specific CSS */
-  #chart {
-      width: 100%;
-      height: 100%;
   }
 
    /* Option containers */
@@ -255,17 +322,7 @@
     flex-wrap: wrap;
   }
 
-   /* Button container */
-  .button_container {
-      width: 100%;
-      height: 10%;
-      margin: 1% 2% 1% 2%;
-      display: flex;
-      flex-wrap: nowrap;
-  }
-   button {
-      margin: 3px;
-   }
+
  
   /* Parameter container CSS */
   .parameter_container {

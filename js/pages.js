@@ -3,7 +3,8 @@ var consent_page = `
     <strong>Welcome to the dynamic inference experiment</strong>
     <br>
     This experiment has been approved by the UCL ethics commitee. Please read the following carefully before moving on.
-    <br> 
+    <br>
+    If you feel the interface or too small, do not hesitate to zoom in or out by holding the Ctrl key and scrolling up (zoom in) or down (zoom out).
     Please make sure you consent to the following
     <br>                
     - Your data being used for research purposes but will be anonymised
@@ -44,8 +45,6 @@ var loopy_intro_1 = `
     <p>
         In today's task, you will first be presented with a set of concepts and asked to draw your own representation of their causal links using a tool called Loopy. 
         Loopy is an online tool that allows you to draw causal models by simply drawing nodes as circles and arrows to show the relation between these. 
-        <br>
-        Please open Loopy now <strong><u>in a new tab</strong></u> following this link: <a target="_blank" href='https://ncase.me/loopy/v1.1/'>https://ncase.me/loopy/v1.1/</a> so that you can switch back and forth between Loopy and this survey.
         <br><br>
         <strong>Here are how some example structures would look like in Loopy:<br></strong>
     </p>
@@ -144,24 +143,24 @@ var loopy_crime = `
         <u>You are a small town mayor who is trying to understand the interplay between Criminality, Police action and the Satisfaction of your population.</u>
         <br>
         This is a complicated issue but sadly you only have access to three key indices:
-        <br>
+        <br><br>
         - <strong>Crime Rate</strong>, representing the amount of Criminality in your town.
         <br>
         - <strong>Police action</strong>, representing the intensity of police action in your town
         <br>
-        - <strong>Population satisfaction</strong>, representing how happy the population of you town is.
+        - <strong>Population happiness</strong>, representing how happy the population of you town is.
         <br><br>
         Without renaming, adding or removing nodes in the following loopy page, draw the arrows that you believe best represent how these concepts may affect each other.
-        Remember, you can use negative AND positive links and can represent stronger effect by adding additional arrows between the nodes. 
+        <i style='font-size:small;'>Remember, you can use negative AND positive links and can represent stronger effect by adding additional arrows between the nodes. 
         <br>
         Additionally, we want your model to be easy to understand for you collaborators who are less versed in causal modelling. 
         <br>
-        To do so we apply the following rule: 
+        As before, to do so we apply the following rule: 
         <ul>
             <li>No arrow from node A to node B means no effect of node A on node B</li>
             <li>One arrow from node A to node B means a moderate effect of node A on node B</li>
             <li>Two arrows from node A to node B means a strong effect of node A on node B</li>
-        </ul>
+        </ul></i>
         Follow this link to a preset loopy page: <a target="_blank" href='https://ncase.me/loopy/v1.1/?data=[[[3,480,237,0.5,%22Crime%2520rate%22,4],[4,800,238,0.5,%22Police%2520action%22,0],[5,646,464,0.5,%22Population%2520Satisfaction%22,3]],[],[],5%5D'>Loopy Criminality</a>
         <br><br>
         Once you are done, click "save as link" on the right-hand side menu and paste the link in the text box below.  
@@ -180,11 +179,13 @@ var loopy_finance = `
     <p>
         Please draw the arrows that correspond to your understanding of the causal dynamics in the following scenario. 
         <br><br>
-        <u>You are a state policy maker who is trying to manage a virus outbreak. You have to decide on a confinement policy to protect to the population and limit the number of virus cases but want to balance it with the long term aim not to overly damage the economy.</u><br>
+        <u>You are a state policy maker who is trying to manage a virus outbreak</u>.
+        You have to decide on a confinement policy to protect to the population and limit the number of virus cases but want to balance it with the long term aim not to overly damage the economy.
+        <br><br>
         Before making any decision you want to model the interplay between Stock Prices, the intensity of confinement measures (for instance, total confinement under all circumstances, partial, to allow people to still work or no confinement at all) and the number of people affected by the virus.
         <br>
         This is a complicated issue but sadly you only have access to three key indices:
-        <br>
+        <br><br>
         - <strong>Stock Prices</strong>, representing a global index of the stock market's health.
         <br>
         - <strong>Confinement Measures</strong>, representing the intensity of confinement measures on the territory.
@@ -192,7 +193,7 @@ var loopy_finance = `
         - <strong>Virus Cases</strong>, the number of people affected by the virus.
         <br><br>
         Without renaming, adding or removing nodes in the following loopy page, draw the arrows that you believe best represent how these concepts may affect each other.
-        Remember, you can use negative AND positive links and can represent stronger effect by adding additional arrows between the nodes.
+        <i style='font-size:small;'>Remember, you can use negative AND positive links and can represent stronger effect by adding additional arrows between the nodes.
         <br>
         Additionally, we want your model to be easy to understand for you collaborators who are less versed in causal modelling. 
         <br>
@@ -201,7 +202,7 @@ var loopy_finance = `
             <li>No arrow from node A to node B means no effect of node A on node B</li>
             <li>One arrow from node A to node B means a moderate effect of node A on node B</li>
             <li>Two arrows from node A to node B means a strong effect of node A on node B</li>
-        </ul>
+        </ul></i>
         Follow this link to a preset loopy page: <a target="_blank" href='https://ncase.me/loopy/v1.1/?data=[[[3,483,208,0.5,%22Stock%2520Prices%22,4],[4,803,209,0.5,%22Confinement%2520Measures%22,0],[5,649,435,0.5,%22Virus%2520Cases%22,3]],[],[],6%5D'>Loopy Outbreak</a>
         <br><br>
         Once you are done, click "save as link" on the right-hand side menu and paste the link in the text box below.  
@@ -221,18 +222,18 @@ var loopy_estate = `
     Please draw the arrows that correspond to your understanding of the causal dynamics in the following scenario. 
     <br><br>
     <u>You are an urban planner in a developping city. You notice that the some neighbourhoods are more desireable than other.</u><br>
-    You want to model the interplay, in a given neighbourhood, between House Prices, its Population density and its overall Desireability.
+    You want to model the interplay, in a given neighbourhood, between House Prices, its Population density and its overall Desirability.
     <br>
     This is a complex issue but sadly you only have access to three key indices:
-    <br>
+    <br><br>
     - <strong>House Prices</strong>, representing a global index of the real-estate market in the neighbourhood.
     <br>
     - <strong>Population Density</strong>, representing the number of inhabitants per km squared.
     <br>
-    - <strong>Desireability</strong>, an index of the desireability of the neighbourhood gathered via polls in the population.
+    - <strong>Desirability</strong>, an index of the desireability of the neighbourhood gathered via polls in the population.
     <br><br>
     Without renaming, adding or removing nodes in the following loopy page, draw the arrows that you believe best represent how these concepts may affect each other.
-    Remember, you can use negative AND positive links and can represent stronger effect by adding additional arrows between the nodes.
+    <i style='font-size:small;'>Remember, you can use negative AND positive links and can represent stronger effect by adding additional arrows between the nodes.
     <br>
     Additionally, we want your model to be easy to understand for you collaborators who are less versed in causal modelling. 
     <br>
@@ -241,7 +242,7 @@ var loopy_estate = `
         <li>No arrow from node A to node B means no effect of node A on node B</li>
         <li>One arrow from node A to node B means a moderate effect of node A on node B</li>
         <li>Two arrows from node A to node B means a strong effect of node A on node B</li>
-    </ul>
+    </ul></i>
     Follow this link to a preset loopy page: <a target="_blank" href='https://ncase.me/loopy/v1.1/?data=[[[3,483,208,0.5,%22Houses%2520Prices%22,4],[4,803,209,0.5,%22Population%2520Density%22,0],[5,649,435,0.5,%22Desireability%22,3]],[],[],5%5D'>Loopy Houses</a>
     <br><br>
     Once you are done, click "save as link" on the right-hand side menu and paste the link in the text box below.  
@@ -262,28 +263,81 @@ var graph_intro_1 = `
     With Loopy, you were able to represent causes and effects in a static way. However, in reality, interactions between causes and effects happen over time. 
     <br>
     In the next section, you will be introduced to another way to represent causal dynamics. One that takes time into account. 
-    Here we will not ask you to draw the arrows between the variables but instead attempt to understand the which causal model underlies the patterns you observe in a limited amount of time.
+    Here we will ask you to first attempt to understand the causal model underling the patterns you observe in a limited amount of time by interacting with the interface in a timely manner.
     <br>
-    The window will be layed out as shown in the picture below. You will have two tools at your disposal to do so:
+    Then you will be asked to report the sign, i.e. is it a negative (more is less) or a positive (more is more) effect, and the strength, i.e. 0, 1 or 2 arrows, of the relationships you observed. 
+    <br>
+    The window will be layed out as shown in the picture below. To start the game, press the <strong>start button on the bottom right</strong>. You will have two tools at your disposal:
     <ul>
-        <li><strong>Interventions</strong>: the three handles on the left will allow you to voluntarily change the value of one of the variables as long as you keep hold of it with your mouse.</li>
-        <li><strong>Observations</strong>: the graph on the right will plot the values (i.e. vertical axis is the value) that the three variables took in the last 10 seconds (i.e. horizontal axis is time in seconds), 
+        <li><strong>Interventions</strong>: the three handles on the right allow you to voluntarily change the value of one of the variables as long as you keep hold of it with your mouse.</li>
+        <li><strong>Observations</strong>: the graph on the left plots the values (i.e. vertical axis is the value) that the three variables took in the last 10 seconds (i.e. horizontal axis is time in seconds), 
             allowing you to observe their variations through time and the result of you interventions. These will be represented by a shading in the graph of variable's colour.</li> 
     </ul>
     The colours of the variables' names always corresponds to their respective colours on the graph.
-    The links between variables follow the same logic as what you have done with Loopy. Namely:
+    Watch next page's video. It shows a brief extract of what the game looks like in real time.
+</p>`;
+
+var graph_intro_2 = `
+<p>
+    <strong>Watch carefully to familiarise yourself with the interface.</strong> 
+    <br>
+    Next page will provide a few more indications before you start.
+</p>
+<div class='video-container'>
+    <video controls>
+        <source src="./img/graphTuto1.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+</div>`;
+
+var graph_intro_3 = `
+<p> 
+    <div id='spanLabels'>There are two kinds of trial:
     <ul>
-        <li>Variables can have multiple causes: changes in A can be caused by changes in B OR C OR B and C</li>
-        <li>Variables can have multiple effects: changes in A can cause changes in B OR C OR B and C</li>
+        <li><strong>Colours:</strong> variables are simply named after their colour, i.e. <span class='c-blue'>blue</span>, <span class='c-red'>red</span> and <span class='c-green'>green</span>.</li>
+        <li><strong>Labels:</strong> variables have labels of concepts you have seen during the Loopy task. In this case the task is the same but there will be an additional question asking you to report whether the relationships you observed during the task made sense to you.</li>
+    </ul>
+    </div>
+    Sections will vary in difficulty, this is perfectly normal. Each of them lasts for 60 seconds maximum, after which the game stops and the report page is displayed.
+    <br><br>
+    However, after 30 seconds, a stop button will appear on the bottom right in place of the start button, allowing you to stop early and display the report page if you feel you have understood the dynamics of the system before the end of the 60 seconds.
+    <br>
+    You will be shown sliders allowing you to indicate the relationship between variables, they will be displayed one at a time.
+    <br>
+    The sliders are initialized at 0 and can be moved to the left (-1, -2) to indicate a negative effect or to the right (+1, +2) to indicate a positive effect.
+    <br>
+    When you report you findings, keep in mind that the links between variables follow the same logic as what you have done with Loopy. Namely:
+    <ul>
+        <li>Variables can have multiple causes: changes in A can be caused by changes in B or C or both</li>
+        <li>Variables can have multiple effects: changes in A can cause changes in B or C or both</li>
         <li>Effects can be <u>positive</u> or <u>negative</u>: more A can mean more B OR more A can mean less B</li>
         <li>Effects can be <u>null</u> (i.e. no arrow), <u>moderate</u> (i.e. one arrow) or <u>strong</u> (i.e. two arrows)</li>
     </ul>
-    <br>
-    Watch this video that shows a brief extract of what the game looks like in real time.
+    Next page will show a brief video on how to report your findings.
 </p>`;
 
+var graph_intro_4 = `
+<p>
+Watch this video that shows a brief extract of how to report you findings. 
+<br>
+<strong> Next page will be a trial run with a simple causal model to practice the use of the interface.</strong>
+</p>
+<div class='video-container'>
+    <video controls>
+        <source src="./img/graphTuto2.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+</div>`;
+
+
+
+
 var graph_template = `
 <div class='game-display'>
+    <!-- Chart display -->
+    <div class='chart_container'>
+        <canvas id='progressPlot' style="width:100%;height:100%;"></canvas>
+    </div>
     <div class='slider_container'>
         <div class='slider_box' id='slider_container_1'>
             <label for='slider_X' class='slider-label' id='x_label'><span class='X'>X</span></label>
@@ -301,55 +355,257 @@ var graph_template = `
             <label for='slider_Z' class='slider-label' id='z_label'><span class='Z'>Z</span></label>
             <div class="slider" id='slider_Z'>
                 <div id="custom-handle-3" class="ui-slider-handle"></div>
+            </div> 
+        </div>
+
+        <div class='button_container'>
+            <button class='process' id='start_button'>Start</button>
+            <button class='process' id='stop_button'>Stop</button>
+        </div>
+
+        <!-- Feedback template-->
+        <div class='feedback-slider-container x-effects'>
+            <img class='fb_img' src='./img/varXY.png'>
+            <p style='text-align:center'>
+                <strong><span class='X'>X</span> -> <span class='Y'>Y</span></strong>
+            </p>
+            <div class='feedback-slider' id='XonY'>
+                <div id="handle-XonY" class="ui-slider-handle"></div>
             </div>
         </div>
+        <div class='feedback-slider-container x-effects'>
+            <img class='fb_img' src='./img/varXZ.png'>
+            <p style='text-align:center'>
+                <strong><span class='X'>X</span> -> <span class='Z'>Z</span></strong>
+            </p>
+            <div class='feedback-slider' id='XonZ'>
+                <div id="handle-XonZ" class="ui-slider-handle"></div>
+            </div>
+        </div>
+        <div class='feedback-slider-container y-effects'>
+            <img class='fb_img' src='./img/varYX.png'>
+            <p style='text-align:center'>
+                <strong><span class='Y'>Y</span> -> <span class='X'>X</span></strong>
+            </p>
+            <div class='feedback-slider' id='YonX'>
+                <div id="handle-YonX" class="ui-slider-handle"></div>
+            </div>
+        </div>
+        <div class='feedback-slider-container y-effects'>
+            <img class='fb_img' src='./img/varYZ.png'>
+            <p style='text-align:center'>
+                <strong><span class='Y'>Y</span> -> <span class='Z'>Z</span></strong>
+            </p>
+            <div class='feedback-slider' id='YonZ'>
+                <div id="handle-YonZ" class="ui-slider-handle"></div>
+            </div>
+        </div>
+        <div class='feedback-slider-container z-effects'>
+            <img class='fb_img' src='./img/varZX.png'>
+            <p style='text-align:center'>
+                <strong><span class='Z'>Z</span> -> <span class='X'>X</span></strong>
+            </p>
+            <div class='feedback-slider' id='ZonX'>
+                <div id="handle-ZonX" class="ui-slider-handle"></div>
+            </div>
+        </div>
+        <div class='feedback-slider-container z-effects'>
+            <img class='fb_img' src='./img/varZY.png'>
+            <p style='text-align:center'>
+                <strong><span class='Z'>Z</span> -> <span class='Y'>Y</span></strong>
+            </p>
+            <div class='feedback-slider' id='ZonY'>
+                <div id="handle-ZonY" class="ui-slider-handle"></div>
+            </div>
+        </div>
+
+        <div class='graph-pred-rec-right'>
+            <!-- Need RADIO with sense making -->
+            <fieldset class='label-fb'>
+                <legend>To what extent did the behaviour of the variables feel logical?</legend>
+                <label for="radio-1">Completely illogical</label>
+                <input type="radio" name="radio-1" id="radio-1"><br>
+                <label for="radio-2">Somewhat illogical</label>
+                <input type="radio" name="radio-1" id="radio-2"><br>
+                <label for="radio-3">Somewhat logical</label>
+                <input type="radio" name="radio-1" id="radio-3"><br>
+                <label for="radio-4">Completely logical</label>
+                <input type="radio" name="radio-1" id="radio-4"><br>
+            </fieldset>
+            <fieldset class='label-fb'>
+                <legend>Please write in a few words the logic behind you answer:</legend>
+                <textarea type='text' id='reason-qual' name='reason'></textarea>
+            </fieldset>
+        </div>
+
+        <div class='val-link-button'>
+            <button id='val-button'>Done</button>
+        </div>
     </div>
-    <!-- Chart display -->
-    <div class='chart_container'>
-        <canvas id='progressPlot'>
-        </canvas>
-    </div>
-</div>
-<div class='button_container'>
-    <button class='process' id='start_button'>Start</button>
-    <button class='process' id='stop_button'>Pause</button>
-    <button class='process' id='reset_button'>Reset</button>
 </div>`;
 
 
-var graph_template = `
-<div class='game-display'>
-    <div class='slider_container'>
-        <div class='slider_box' id='slider_container_1'>
-            <label for='slider_X' class='slider-label' id='x_label'><span class='X'>X</span></label>
-            <div class="slider" id='slider_X'>
-                <div id="custom-handle-1" class="ui-slider-handle"></div>
-            </div>
-        </div>
-        <div class='slider_box' id='slider_container_2'>
-            <label for='slider_Y' class='slider-label' id='y_label'><span class='Y'>Y</span></label>
-            <div class="slider" id='slider_Y'>
-                <div id="custom-handle-2" class="ui-slider-handle"></div>
-            </div>
-        </div>
-        <div class='slider_box' id='slider_container_3'>
-            <label for='slider_Z' class='slider-label' id='z_label'><span class='Z'>Z</span></label>
-            <div class="slider" id='slider_Z'>
-                <div id="custom-handle-3" class="ui-slider-handle"></div>
-            </div>
-        </div>
-    </div>
-    <!-- Chart display -->
-    <div class='chart_container'>
-        <canvas id='progressPlot'>
-        </canvas>
-    </div>
-</div>
-<div class='button_container'>
-    <button class='process' id='start_button'>Start</button>
-    <button class='process' id='stop_button'>Pause</button>
-    <button class='process' id='reset_button'>Reset</button>
-</div>`;
+var outro_1 = `
+<p>
+    <strong>Please tell us about you:</strong>
+    <form>
+    <fieldset class='age-field'>
+        <legend>How old are you?</legend>
+        <label for="age">Age:</label>
+        <input id="age" name="age">
+    </fieldset>
+    <br>
+    <fieldset class='gender-field'>
+        <legend>What is your gender?</legend>
+        <label for="female">Female</label>
+        <input type="radio" name="gender" id="female">
+        <label for="male">Male</label>
+        <input type="radio" name="gender" id="male">
+        <label for="other">Other</label>
+        <input type="radio" name="gender" id="other">
+    </fieldset>
+    <br>
+    <fieldset class='activity-field'>
+        <legend>Select the sector that best describes you field:</legend>
+        <select name="activity" id="activity_selector">
+            <option selected value='none'>Choose sector</option>
+            <option value='management'>Management of companies or enterprises</option>
+            <option value='transport'>Transportation or warehousing</option>
+            <option value='mining'>Mining</option>
+            <option value='finance'>Finance or insurance</option>
+            <option value='service'>Professional, scientific or technical services</option>
+            <option value='manufacturing'>Manufacturing</option>
+            <option value='build'>Construction</option>
+            <option value='info'>Information</option>
+            <option value='utils'>Utilities</option>
+            <option value='art'>Arts, entertainment or recreation</option>
+            <option value='edu'>Educational services</option>
+            <option value='retail'>Retail trade</option>
+            <option value='admin'>Admin, support, waste management or remediation services</option>
+            <option value='forest'>Forestry, fishing, hunting or agriculture support</option>
+            <option value='accomodation'>Accommodation or food services</option>
+            <option value='trade'>Wholesale trade</option>
+            <option value='realestate'>Real estate or rental and leasing</option>
+            <option value='healthcare'>Health care or social assistance</option>
+            <option value='unclassified'>Unclassified establishments</option>
+        </select>
+    </fieldset>
+    <br>
+    <fieldset class='causal-familiarity-field'>
+        <legend>To what extent were you familiar with causal modelling prior to this study?</legend>
+        <label for="never">Not at all familiar</label>
+        <input type="radio" name="causal-familiarity" id="never">
+        <label for="once">Not really familiar</label>
+        <input type="radio" name="causal-familiarity" id="once">
+        <label for="somewhat">Somewhat familiar</label>
+        <input type="radio" name="causal-familiarity" id="somewhat">
+        <label for="familiar">Familiar</label>
+        <input type="radio" name="causal-familiarity" id="familiar">
+        <label for="extreme">Extremely familiar</label>
+        <input type="radio" name="causal-familiarity" id="extreme">
+    </fieldset>
+    <br>
+    <fieldset class='loopy-fb-field'>
+        <legend>To what extent did you find the Loopy tool entertaining to use?</legend>
+        <label for="loopy-hate">I really disliked it</label>
+        <input type="radio" name="loopy-fb" id="loopy-hate">
+        <label for="loopy-annoy">I disliked it</label>
+        <input type="radio" name="loopy-fb" id="loopy-annoy">
+        <label for="loopy-indif">I don't mind it</label>
+        <input type="radio" name="loopy-fb" id="loopy-indif">
+        <label for="loopy-like">I liked it</label>
+        <input type="radio" name="loopy-fb" id="loopy-like">
+        <label for="loopy-love">I really liked it</label>
+        <input type="radio" name="loopy-fb" id="loopy-love">
+    </fieldset>
+    <br>
+    <fieldset class='graph-fb-field'>
+        <legend>To what extent did you find the graph and slider interface entertaining to use?</legend>
+        <label for="graph-hate">I really disliked it</label>
+        <input type="radio" name="graph-fb" id="graph-hate">
+        <label for="graph-annoy">I disliked it</label>
+        <input type="radio" name="graph-fb" id="graph-annoy">
+        <label for="graph-indif">I don't mind it</label>
+        <input type="radio" name="graph-fb" id="graph-indif">
+        <label for="graph-like">I liked it</label>
+        <input type="radio" name="graph-fb" id="graph-like">
+        <label for="graph-love">I really liked it</label>
+        <input type="radio" name="graph-fb" id="graph-love">
+    </fieldset>
+    </form>
+</p>`;
+
+var outro_2 = `
+<p> 
+    This experiment is a pilot, we are still correcting bugs and gathering feedback on its flow. 
+    <br>
+    There is no obligation to complete these if you do not feel comfortable sharing technical information.
+    <form style='width;70%;'>
+    <fieldset class='screen-field'>
+        <legend>What is the size of you screen?</legend>
+        <label for="11inch">11 inches</label>
+        <input type="radio" name="screen" id="11inch">
+        <label for="13inch">13 inches</label>
+        <input type="radio" name="screen" id="13inch">
+        <label for="15inch">15 inches</label>
+        <input type="radio" name="screen" id="15inch">
+        <label for="20inch">More than 15 inches</label>
+        <input type="radio" name="screen" id="20inch">
+    </fieldset>
+    <br>
+    <fieldset class='pc-field'>
+        <legend>Which PC operating system are you using?</legend>
+        <label for="mac">Apple Mac</label>
+        <input type="radio" name="pc" id="mac">
+        <label for="windows">Microsoft Windows</label>
+        <input type="radio" name="pc" id="windows">
+        <label for="linux">Linux</label>
+        <input type="radio" name="pc" id="linux">
+    </fieldset>
+    <br>
+    <fieldset class='browser-field'>
+        <legend>Which browser are you using?</legend>
+        <label for="chrome">Google Chrome</label>
+        <input type="radio" name="browser" id="chrome">
+        <label for="edge">Microsoft Edge</label>
+        <input type="radio" name="browser" id="edge">
+        <label for="firefox">Firefox</label>
+        <input type="radio" name="browser" id="firefox">
+        <label for="safari">Safari</label>
+        <input type="radio" name="browser" id="safari">
+        <label for="opera">Opera</label>
+        <input type="radio" name="browser" id="opera">
+    </fieldset>
+    <br>
+    <fieldset class='graph-tech-field'>
+        <legend>Did the graph and sliders...</legend>
+        <label for="running">... keep running between sections.</label>
+        <input type="checkbox" name="graph-tech" id="running"><br>
+        <label for="reset">... not reset between sections</label>
+        <input type="checkbox" name="graph-tech" id="reset"><br>
+        <label for="misalign">... misalign (i.e. the sliders did not follow the graph lines properly)</label>
+        <input type="checkbox" name="graph-tech" id="misalign">
+    </fieldset>
+    <br><br>
+    <fieldset class='technical-fb'>
+        <legend>Did you experience any other technical issues? (display, interface or otherwise)</legend>
+        <textarea type='text' id='tech-fb' name='tech'></textarea>
+    </fieldset>
+    </form>
+</p>`;
+
+var outro_3 = `
+<p>
+    All done, you have reached the end of this experiment, thank you very much for participating!
+    <br><br>
+    Please click on the link below to go back to the Prolific platform.
+    <br><br>
+    Back to prolific: <a id='prolific-link'>INSERT LINK</a>
+</p>`;
+
+
+
+// OLD VERSION OF PAGES
 
 var feedback_template = `
 <div class='graph-pred-label'>
@@ -360,6 +616,7 @@ var feedback_template = `
 <div class='graph-pred-rec'>
     <div class='graph-pred-rec-left'>
         <div class='feedback-slider-container'>
+            <img class='fb_img' src='./img/varXY.png'>
             <p style='text-align:center'>
                 <strong><span class='X'>X</span> -> <span class='Y'>Y</span></strong>
             </p>
@@ -368,6 +625,7 @@ var feedback_template = `
             </div>
         </div>
         <div class='feedback-slider-container'>
+            <img class='fb_img' src='./img/varXZ.png'>
             <p style='text-align:center'>
                 <strong><span class='X'>X</span> -> <span class='Z'>Z</span></strong>
             </p>
@@ -376,6 +634,7 @@ var feedback_template = `
             </div>
         </div>
         <div class='feedback-slider-container'>
+            <img class='fb_img' src='./img/varYX.png'>
             <p style='text-align:center'>
                 <strong><span class='Y'>Y</span> -> <span class='X'>X</span></strong>
             </p>
@@ -384,6 +643,7 @@ var feedback_template = `
             </div>
         </div>
         <div class='feedback-slider-container'>
+            <img class='fb_img' src='./img/varYZ.png'>
             <p style='text-align:center'>
                 <strong><span class='Y'>Y</span> -> <span class='Z'>Z</span></strong>
             </p>
@@ -392,6 +652,7 @@ var feedback_template = `
             </div>
         </div>
         <div class='feedback-slider-container'>
+            <img class='fb_img' src='./img/varZX.png'>
             <p style='text-align:center'>
                 <strong><span class='Z'>Z</span> -> <span class='X'>X</span></strong>
             </p>
@@ -400,6 +661,7 @@ var feedback_template = `
             </div>
         </div>
         <div class='feedback-slider-container'>
+            <img class='fb_img' src='./img/varZY.png'>
             <p style='text-align:center'>
                 <strong><span class='Z'>Z</span> -> <span class='Y'>Y</span></strong>
             </p>
@@ -407,6 +669,7 @@ var feedback_template = `
                 <div id="handle-ZonY" class="ui-slider-handle"></div>
             </div>
         </div>
+        <button class='val-link-button' id='val-button'>Done</button>
     </div>
     <div class='graph-pred-rec-right'>
         <!-- Need RADIO with sense making -->
@@ -429,25 +692,36 @@ var feedback_template = `
 </div>`;
 
 
-var outro_1 = `
-<p>
-    DEMOGRAPHICS
-</p>`;
-
-var outro_2 = `
-<p> 
-    This experiment is a pilot, we are still correcting bugs and gathering feedback on its flow. 
-    <br>
-    Please fill out the following form to do so before moving on.
-    <br>
-    INSERT FEEDBACK FORM
-</p>`;
-
-var outro_3 = `
-<p>
-    All done, you have reached the end of this experiment, thank you very much for participating!
-    <br><br>
-    Please click on the link below to go back to the Prolific platform.
-    <br><br>
-    Back to prolific: INSERT LINK HERE
-</p>`;
+var graph_template_old = `
+<div class='game-display'>
+    <div class='slider_container'>
+        <div class='slider_box' id='slider_container_1'>
+            <label for='slider_X' class='slider-label' id='x_label'><span class='X'>X</span></label>
+            <div class="slider" id='slider_X'>
+                <div id="custom-handle-1" class="ui-slider-handle"></div>
+            </div>
+        </div>
+        <div class='slider_box' id='slider_container_2'>
+            <label for='slider_Y' class='slider-label' id='y_label'><span class='Y'>Y</span></label>
+            <div class="slider" id='slider_Y'>
+                <div id="custom-handle-2" class="ui-slider-handle"></div>
+            </div>
+        </div>
+        <div class='slider_box' id='slider_container_3'>
+            <label for='slider_Z' class='slider-label' id='z_label'><span class='Z'>Z</span></label>
+            <div class="slider" id='slider_Z'>
+                <div id="custom-handle-3" class="ui-slider-handle"></div>
+            </div>
+        </div>
+    </div>
+    <!-- Chart display -->
+    <div class='chart_container'>
+        <canvas id='progressPlot'>
+        </canvas>
+    </div>
+</div>
+<div class='button_container'>
+    <button class='process' id='start_button'>Start</button>
+    <button class='process' id='stop_button'>Pause</button>
+    <button class='process' id='reset_button'>Reset</button>
+</div>`;

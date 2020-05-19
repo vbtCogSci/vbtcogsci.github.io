@@ -2,8 +2,12 @@
 
 // Logic variables
 var xclicked = yclicked = zclicked = false;
-var interval;
+var gameLoop;
+// 10 steps per second with time step of 100 and dt (frequency) 1/10 : 100 * 10 = 1000 ms
 var time_step = 100;
+var elapsed = 0; // Duration of the trial
+var endTrial = 60000; // Supposed to be 1 min, time at which all stops here 1 min,  60 sec or 60,000 ms
+var midTrial = Math.floor(endTrial / 6); // Time at which participants can stop, half the total duration
 var x = 0;
 var y = 0;
 var z = 0;
@@ -11,6 +15,7 @@ var count_step = 0;
 var display = true;
 
 // Ou Network computation variables
+// dt is ou network variable
 var dt = time_step/1000;
 var theta = 0.5;
 var causes = {
@@ -18,6 +23,7 @@ var causes = {
     'Y': [1,1,0],
     'Z': [0,-1,1]
 }
+var currentLabels;
 
 // Data storage variables
 var xHist = [0];
@@ -30,6 +36,7 @@ var steps = [0];
 
 var chart;
 var chart2;
+var chartHistory = 100; // Chart display duration
 var xPlot = [0];
 var yPlot = [0];
 var zPlot = [0];
@@ -49,42 +56,54 @@ var presets = {
             0, 1, 0, 
             0, 0, 1, 
             'X', 'Y', 'Z'],
+    'easy_1': [1, 0, 0, 
+               1, 1, 0, 
+               0, 0, 1, 
+               'Blue', 'Red', 'Green'],
+    'easy_2': [1, 0, 0, 
+               0, 1, 0, 
+               0, -1, 1, 
+               'Blue', 'Red', 'Green'],
+    'easy_3': [1, 0, 1, 
+               0, 1, 0, 
+               0, 0, 1, 
+               'Blue', 'Red', 'Green'],
     'pos_chain_1': [1, 0, 0, 
                     1, 1, 0, 
                     0, 1, 1, 
-                    'X', 'Y', 'Z'],
-    'pos_chain_2': [1, 1, 0, 
+                    'Blue', 'Red', 'Green'],
+    'pos_chain_2': [1, -1, 0, 
                     0, 1, 0, 
-                    1, 0, 1, 
-                    'X', 'Y', 'Z'],
+                    -1, 0, 1, 
+                    'Blue', 'Red', 'Green'],
     'pos_chain_3': [1, 1, 0, 
                     0, 1, 1, 
                     0, 0, 1, 
-                    'X', 'Y', 'Z'],
+                    'Blue', 'Red', 'Green'],
     'collider_1': [1, 0, 0,
                    0, 1, 0,
-                   1, 1, 1,
-                   'X', 'Y', 'Z'],
-    'collider_2': [1, 1, 1,
+                   -1, -1, 1,
+                   'Blue', 'Red', 'Green'],
+    'collider_2': [1, -1, -1,
                    0, 1, 0,
                    0, 0, 1,
-                  'X', 'Y', 'Z'],
+                   'Blue', 'Red', 'Green'],
     'collider_3': [1, 0, 0,
                    1, 1, 1,
                    0, 0, 1,
-                   'X', 'Y', 'Z'],
+                   'Blue', 'Red', 'Green'],
     'ccause_1': [1, 0, 0,
                  1, 1, 0,
                  1, 0, 1,
-                 'X', 'Y', 'Z'],
+                 'Blue', 'Red', 'Green'],
     'ccause_2': [1, 1, 0,
                  0, 1, 0,
                  0, 1, 1,
-                 'X', 'Y', 'Z'],
+                 'Blue', 'Red', 'Green'],
     'ccause_3': [1, 0, 1,
                  0, 1, 1,
                  0, 0, 1,
-                 'X', 'Y', 'Z'],
+                 'Blue', 'Red', 'Green'],
     'avg_z' : [1, 0, 0,
                 1, 1, 0,
                 1, -1, 1,
@@ -104,27 +123,29 @@ var presets = {
     'crime': [1, -1, 0,
               1, 1, 0, 
               -0.5, -0.5, 1, 
-              'Crime rate', 'Police action', 'Population satisfaction'],
+              'Crime rate', 'Police action', 'Population happiness',
+              'Crime<br>rate', 'Police action', 'Population happiness'],
     'crime_control': [1, -1, 0,
                       1, 1, 0, 
                       -0.5, -0.5, 1, 
-                      'X', 'Y', 'Z'],
+                      'Blue', 'Red', 'Green'],
     'finance': [1, -0.5, -1,
                 0, 1, -1,
                 -0.5, 1, 1, 
-                'Stock Prices', 'Covid-19 cases', 'Confinement measures'],
+                'Stock Prices', 'Virus cases', 'Confinement measures'],
     'finance_control': [1, -0.5, -1,
                         0, 1, -1,
                         -0.5, 1, 1, 
-                        'X', 'Y', 'Z'],
+                        'Blue', 'Red', 'Green'],
     'estate': [1, 1, 1,
                -0.5, 1, 0.5,
                -1, -1, 1, 
-               'House Prices', 'Neighbourhood population', 'Desireability'],
+               'House Prices', 'Population Density', 'Desirability',
+               'House Prices', 'Population Density', 'Desira-<br>bility'],
     'estate_control': [1, 1, 1,
                        -0.5, 1, 1,
                        -1, -1, 1, 
-                       'X', 'Y', 'Z'],
+                       'Blue', 'Red', 'Green'],
     'virus-2': [1, -0.5, -1,
                 0, 1, -1,
                 0.5, 1, 1, 
@@ -140,6 +161,8 @@ $('document').ready(function () {
     setupChart(['X', 'Y', 'Z']);
     // Setup user interface
     setupInterface();
+    // If last page was a graph, load the appropriate graph
+    setupPage();
 })
 
 
@@ -155,11 +178,46 @@ function setupInterface() {
         $('.coef_input').spinner( "option", "disabled", true);
         $('.condition_selector').checkboxradio( "option", "disabled", true);
         $('#preset_selector').selectmenu( "option", "disabled", true);
-        interval = setInterval(function() {
+
+        // Activate sliders for intervention and disable start button
+        $('.slider').slider({disabled: false});
+        $('#start_button').button({disabled: true});
+        $('#start_button').css({'display': 'none'});
+
+        // Reset elapsed time
+        elapsed = 0;
+
+        // Start the game loop
+        gameLoop = setInterval(function() {
+            // Stop trial if elapsed equal trial duration and activate stop button if elapsed passes midway point.
+            if (elapsed >= endTrial) {
+                // Stop trial all together
+                // Disable all interactable buttons
+                $('#stop_button').button({disabled: true});
+                $('#start_button').button({disabled: true});
+                $('.slider').slider({disabled: true});
+                $('#next_button').button({disabled: false});
+                // Display feeback
+                $('.slider_box').css({'display': 'none'})
+                $('.button_container').css({'display': 'none'})
+                // Feedback report
+                $(nodeList[0]).css({'display': 'flex'});
+                $('.val-link-button').css({'display': 'flex'});
+                $('#val-button').button({disabled: false});
+                // Clear interval
+                clearInterval(gameLoop);
+            } else if (elapsed >= midTrial) {
+                // Activate stop button
+                $('#stop_button').css({'display': 'flex'});
+            }
+            // OuNetwork
             ouNetwork();
+            // Records for database export
             var new_step = round(parseFloat(steps[steps.length - 1] + time_step / 1000), 2)
             record(x, y, z, xclicked, yclicked, zclicked, new_step);
-            if (count_step % 10 == 0) {
+
+            // Graph stuff every 10 steps
+            if (count_step % 1 == 0) {
                 if (xclicked == true) {
                     addData(chart, new_step, [x, y, z, 100, NaN, NaN]);
                     //addShade(chart, new_step, [x, y, z, 100], [0, 1, 2, 3]);
@@ -173,10 +231,13 @@ function setupInterface() {
                     addData(chart, new_step, [x, y, z, NaN, NaN, NaN]);
                 }
                 // Remove data if too much is plotted here max datapoints is 100
-                if (chart.data.datasets[0].data.length > 200) {
+                if (chart.data.datasets[0].data.length > 100) {
                     removeData(chart);
                 }
             }
+            // Adds the duration of the time step to elapsed to keep track of time
+            count_step += 1;
+            elapsed += time_step;
             //console.log(x);
         }, time_step)
     })
@@ -184,21 +245,30 @@ function setupInterface() {
     // Setup the stop button to stop the game and enable changes in the coef table.
     $('#stop_button').click(function () {
         console.log('Game paused');
-        clearInterval(interval);
+        clearInterval(gameLoop);
         $('.coef_input').spinner( "option", "disabled", false);
         $('.condition_selector').checkboxradio( "option", "disabled", false);
         $('#preset_selector').selectmenu( "option", "disabled", false);
+        //$('#next_button').button({disabled: false});
+
+        // Change display to feedback
+        $('.slider_box').css({'display': 'none'});
+        $('.button_container').css({'display': 'none'});
+        // Feedback report
+        $(nodeList[0]).css({'display': 'flex'});
+        $('.val-link-button').css({'display': 'flex'});
+        $('#val-button').button({disabled: false});
     })
 
     // Setup the reset button to stop the game and reset values to 0.
     $('#reset_button').click(function () {
         console.log('Game reset');
-        clearInterval(interval);
+        clearInterval(gameLoop);
         $('.coef_input').spinner( "option", "disabled", false);
         $('.condition_selector').checkboxradio( "option", "disabled", false);
         $('#preset_selector').selectmenu( "option", "disabled", false);
         $('.slider').slider("value", 0);
-        setupChart();
+        setupChart(['X', 'Y', 'Z']);
     })
 
     $('.process').button();
@@ -259,23 +329,29 @@ function updateModel(preset) {
     causes['X'] = presetValues.slice(0, 3);
     causes['Y'] = presetValues.slice(3, 6);
     causes['Z'] = presetValues.slice(6, 9);
-    var presetLabels = presetValues.slice(9);
+    if (presetValues.length > 12) {
+        var presetLabels = presetValues.slice(9, 12);
+        var labelsHandle = presetValues.slice(12);
+    } else {
+        var presetLabels = presetValues.slice(9, 12);
+        var labelsHandle = presetLabels;
+    }
+    
+    currentLabels = presetLabels;
 
-    $('#x_label').html(presetLabels[0]);
-    $('#y_label').html(presetLabels[1]);
-    $('#z_label').html(presetLabels[2]);
+    //$('#x_label').html(presetLabels[0]);
+    //$('#y_label').html(presetLabels[1]);
+    //$('#z_label').html(presetLabels[2]);
 
-    $('#X_0').spinner('value', causes['X'][0]);
-    $('#X_1').spinner('value', causes['X'][1]);
-    $('#X_2').spinner('value', causes['X'][2]);
+    $('#x_label').html('');
+    $('#y_label').html('');
+    $('#z_label').html('');
 
-    $('#Y_0').spinner('value', causes['Y'][0]);
-    $('#Y_1').spinner('value', causes['Y'][1]);
-    $('#Y_2').spinner('value', causes['Y'][2]);
-
-    $('#Z_0').spinner('value', causes['Z'][0]);
-    $('#Z_1').spinner('value', causes['Z'][1]);
-    $('#Z_2').spinner('value', causes['Z'][2]);
+    $('#custom-handle-1').html(labelsHandle[0])
+    $('#custom-handle-2').html(labelsHandle[1])
+    $('#custom-handle-3').html(labelsHandle[2])
+    console.log(presetLabels[0])
+    console.log($('#custom-handle-1').html())
 
     return presetLabels;
 }
@@ -417,19 +493,19 @@ function setupChart(labels) {
                 data: [0],
                 fill: false,
             }, {
-                label: 'X Intervention',
+                label: '',
                 data: [0],
                 borderColor: xShade,
                 backgroundColor: xShade,
                 fill: 'start',
             }, {
-                label: 'Y Intervention',
+                label: '',
                 data: [0],
                 borderColor: yShade,
                 backgroundColor: yShade,
                 fill: 'start',
             }, {
-                label: 'Z Intervention',
+                label: '',
                 data: [0],
                 borderColor: zShade,
                 backgroundColor: zShade,
@@ -445,6 +521,16 @@ function setupChart(labels) {
                 point:{
                     radius: 0
                 }
+            },
+            scales: {
+                yAxes: [{
+                    display: true,
+                    ticks: {
+                        suggestedMin: -100,    // minimum will be 0, unless there is a lower value.
+                        suggestedMax: 100,
+                        beginAtZero: false   // minimum value will be 0.
+                    }
+                }]
             }
         }
     });
@@ -458,14 +544,14 @@ function setupSliders() {
         create: function() {
             $('#slider_X').slider("value", x);
             //console.log(x);
-            $('#custom-handle-1').text( $('#slider_X').slider( "value" ) );
+            //$('#custom-handle-1').text( $('#slider_X').slider( "value" ) );
         },
         slide: function( event, ui ) {
-            $('#custom-handle-1').text( ui.value );
+            //$('#custom-handle-1').text( ui.value );
             x = parseInt($('#slider_X').slider("value"));
         },
         change: function(event, ui) {
-            $('#custom-handle-1').text( ui.value );
+            //$('#custom-handle-1').text( ui.value );
             x = parseInt($('#slider_X').slider("value"));
         },
         start: function(event, ui) {
@@ -479,14 +565,14 @@ function setupSliders() {
     $('#slider_Y').slider({
         create: function() {
             $('#slider_Y').slider("value", y);
-            $('#custom-handle-2').text( $('#slider_Y').slider( "value" ) );
+            //$('#custom-handle-2').text( $('#slider_Y').slider( "value" ) );
         },
         slide: function( event, ui ) {
-            $('#custom-handle-2').text( ui.value );
+            //$('#custom-handle-2').text( ui.value );
             y = parseInt($('#slider_Y').slider("value"));
         },
         change: function(event, ui) {
-            $('#custom-handle-2').text( ui.value );
+            //$('#custom-handle-2').text( ui.value );
             y = parseInt($('#slider_Y').slider("value"));
         },
         start: function(event, ui) {
@@ -500,14 +586,14 @@ function setupSliders() {
     $('#slider_Z').slider({
         create: function() {
             $('#slider_Z').slider("value", z);
-            $('#custom-handle-3').text( $('#slider_Z').slider( "value" ) );
+            //$('#custom-handle-3').text( $('#slider_Z').slider( "value" ) );
         },
         slide: function( event, ui ) {
-            $('#custom-handle-3').text( ui.value );
+            //$('#custom-handle-3').text( ui.value );
             z = parseInt($('#slider_Z').slider("value"));
         },
         change: function(event, ui) {
-            $('#custom-handle-3').text( ui.value );
+            //$('#custom-handle-3').text( ui.value );
             z = parseInt($('#slider_Z').slider("value"));
         },
         start: function(event, ui) {
@@ -519,24 +605,67 @@ function setupSliders() {
     });
 
     $('#custom-handle-1, #custom-handle-2, #custom-handle-3').css({
-        'width': '3em',
-        'height': '1.6em',
+        'width': '6em',
+        'height': '3em',
         'left': '-150%',
         'top':'auto',
         'margin-top': '-.8em',
-        'margin-left': '0',
+        'margin-left': '-1em',
+        'margin-bottom': '-1.5em',
         'text-align': 'center',
-        'line-height': '1.6em'
-      });
+        'line-height': '1.5em',
+        'font-size': 'smaller'
+    });
     
     if (display == true) {
-        $('#x_label').css('color', xColour);
-        $('#y_label').css('color', yColour);
-        $('#z_label').css('color', zColour);
+        $('#x_label').css({
+            'color': xColour,
+            'font-weight': 'bold',
+            'font-size': 'large'
+        });
+        $('#y_label').css({
+            'color': yColour,
+            'font-weight': 'bold',
+            'font-size': 'large'
+        });
+        $('#z_label').css({
+            'color': zColour,
+            'font-weight': 'bold',
+            'font-size': 'large'
+        });
+        $('.X').css({
+            'color': xColour,
+            'font-weight': 'bold',
+            'font-size': 'large'
+        });
+        $('.Y').css({
+            'color': yColour,
+            'font-weight': 'bold',
+            'font-size': 'large'
+        });
+        $('.Z').css({
+            'color': zColour,
+            'font-weight': 'bold',
+            'font-size': 'large'
+        });
     }
 
+    $('#custom-handle-1').css({
+        'background-color': xColour
+    })
+    $('#custom-handle-2').css({
+        'background-color': yColour
+    })
+    $('#custom-handle-3').css({
+        'background-color': zColour
+    })
+    
+    $('.c-blue').css('color', xColour);
+    $('.c-red').css('color', yColour);
+    $('.c-green').css('color', zColour);
+
     var $sliders = $('.slider');
-    console.log($sliders);
+    //console.log($sliders);
     $sliders.slider({
         orientation: 'vertical',
         animate: 'fast',
@@ -544,23 +673,6 @@ function setupSliders() {
         min: -100,
         max: 100,
     })
-
-    // Intervention setup and logic
-    //$('#custom-handle-1').mousedown(function() {
-    //    xclicked = true;
-    //})
-    //$('#custom-handle-2').mousedown(function() {
-    //    yclicked = true;
-    //})
-    //$('#custom-handle-3').mousedown(function() {
-    //    zclicked = true;
-    //})
-
-    // Clears the clicked, i.e. toggles off intervention booleans
-    //$('body').mouseup(function() {
-    //    //console.log('I work');
-    //    xclicked = yclicked = zclicked = false;
-    //})
 }
 
 
