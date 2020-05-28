@@ -73,7 +73,7 @@
     width: 100%;
   }
 
-  /* Specific CSS for Page 4*/
+  /* Specific CSS for Page 3-4*/
   .page-3-graph {
     height: 80%;
     width: 80%;
@@ -95,13 +95,28 @@
     justify-content: center;
 }
 
-  .page-4-middle {
-  display: flex;
-  height: 50%;
-  width: 100%;
-  align-content: flex-start;
-  justify-content: center;
-}
+  .page-4-left {
+    display: flex;
+    height: 100%;
+    width: 50%;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: center;
+  }
+  .page-4-right {
+    display: flex;
+    height: 100%;
+    width: 50%;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: center;
+  }
+
+  .page-4-graph {
+    width: 60%;
+    height: auto;
+    display: none;
+  }
 
   .graph-container {
     display: flex;

@@ -40,62 +40,104 @@ var causal_models_intro_2 = `
 </p>
 <img src='./img/pageTwo-graph.png'>`;
 
-var loopy_intro_1 = `
+var causal_models_intro_3 = `
 <div class='page-3-upper'>
     <p>
-        In today's task, you will first be presented with a set of concepts and asked to draw your own representation of their causal links using a tool called Loopy. 
-        Loopy is an online tool that allows you to draw causal models by simply drawing nodes as circles and arrows to show the relation between these. 
-        <br><br>
-        <strong>Here are how some example structures would look like in Loopy:<br></strong>
+        In today's task, you will first be presented with a set of concepts and asked to state your representation of their causal links. 
+        They will be reprensented as nodes and your task will be to provide your interpretation of the causal links between them.
+        <br>
+        <br>
+        Here are how more example structures, study them carefully. The sign of the effect, i.e. positive or negative, is given by the <strong>sign next to the arrow</strong> 
+        while its strength is given by the <strong>number of arrows</strong> going from a cause node to an effect node. 
+        <br>
+        <br>
+        <strong>In the next pages, you will see graphs and will be asked to provide the sign and strength of the effects for its node, so make sure you understand how it works<strong>:
     </p>
 </div>
 <div class='page-3-middle'>
     <div class='graph-container'>
         <p><u>1) Simple cause and effect where the node A is the cause and B is the effect</u></p>
-        <img class='page-3-graph'src='./img/pageFour-graphOne.png'>
+        <img class='page-3-graph'src='./img/pageThree-graphOne.PNG'>
     </div>
     <div class='graph-container'>
         <p><u>2) Simple common cause diagram where node A is the cause of both B and C </u></p>
-        <img class='page-3-graph' src='./img/pageFour-graphTwo.png'>
+        <img class='page-3-graph' src='./img/pageThree-graphTwo.PNG'>
     </div>
     <div class='graph-container'>
         <p><u>3) Simple common effect diagram where node A and Node B both cause the effect C</u></p>
-        <img class='page-3-graph' src='./img/pageFour-graphThree.PNG'>
+        <img class='page-3-graph' src='./img/pageThree-graphThree.PNG'>
     </div>
 </div>`;
 
-var loopy_intro_2 = `
-<div class='page-4-middle'>
-    <div class='graph-container'>
-        <img class='page-3-graph'src='./img/pageFour-graphOne.png'>
-    </div>
-    <div class='graph-container'>
-        <img class='page-3-graph' src='./img/pageFour-graphTwo.png'>
-    </div>
-    <div class='graph-container'>
-        <img class='page-3-graph' src='./img/pageFour-graphThree.PNG'>
-    </div>
+var links_template = `
+<div class='page-4-left'>
+    <img class='page-4-graph' id='page-4-graphOne' src='./img/pageFour-graphOne.PNG'>
+    <img class='page-4-graph' id='page-4-graphTwo' src='./img/pageFour-graphTwo.PNG'>
+    <img class='page-4-graph' id='page-4-graphThree' src='./img/pageFour-graphThree.PNG'>
+    <img class='page-4-graph' id='page-4-graph-crime' src='./img/pageFour-graph-crime.PNG'>
+    <img class='page-4-graph' id='page-4-graph-finance' src='./img/pageFour-graph-finance.PNG'>
+    <img class='page-4-graph' id='page-4-graph-estate' src='./img/pageFour-graph-estate.PNG'>
 </div>
-<p>
-    Now open loopy the loopy tab (following this link: <a target="_blank" href='https://ncase.me/loopy/v1.1/'>https://ncase.me/loopy/v1.1/</a>) and keep it open in a separate tab for the duration of this experiment. 
-    <br>
-    Delete anything on the initial screen using the ERASER tool and replicate each of the above diagrams as best as you can on the same page. 
-    <br>
-    To draw a node simply use the PENCIL tool to draw a circle. You can rename your node and change its colour using the options on the right hand of the screen. 
-    <br>
-    To draw an arrow between two nodes simply use the PENCIL tool to draw a line between them. The default arrow will have a "+" sign. However, in real life, causes can have negative effects.
-    <br>
-    With Loopy, you can use positive ('+' sign next to the arrow) AND negative ('-' sign next to the arrow) links by changing a selected link's type from 'more is more' to 'more is less' in the top right corner of the loopy page.
-    <br>
-    When you are done drawing each diagram (on the same page), go to the right-hand menu on the Loopy webpage and click "save as link".
-    Paste the link in the text entry box below.
-    <br><br>
-</p>
-<div class='loopy-link-container'>
-    <input class='loopy-input' id='loopy-1' value='Paste your loopy link here'></input>
-    <button class='loopy-validate' id='loopy-1-validate'>Validate</button>
-</div>
-<span class='loopy-alert' id='loopy-1-alert'></span>`;
+<div class='page-4-right'>
+    <!-- Feedback template-->
+    <div class='feedback-slider-container x-effects'>
+        <img class='fb_img' src='./img/varXY.png'>
+        <p style='text-align:center'>
+            <strong><span class='X'>X</span> -> <span class='Y'>Y</span></strong>
+        </p>
+        <div class='feedback-slider' id='AonB'>
+            <div id="handle-AonB" class="ui-slider-handle"></div>
+        </div>
+    </div>
+    <div class='feedback-slider-container x-effects'>
+        <img class='fb_img' src='./img/varXZ.png'>
+        <p style='text-align:center'>
+            <strong><span class='X'>X</span> -> <span class='Z'>Z</span></strong>
+        </p>
+        <div class='feedback-slider' id='AonC'>
+            <div id="handle-AonC" class="ui-slider-handle"></div>
+        </div>
+    </div>
+    <div class='feedback-slider-container y-effects'>
+        <img class='fb_img' src='./img/varYX.png'>
+        <p style='text-align:center'>
+            <strong><span class='Y'>Y</span> -> <span class='X'>X</span></strong>
+        </p>
+        <div class='feedback-slider' id='BonA'>
+            <div id="handle-BonA" class="ui-slider-handle"></div>
+        </div>
+    </div>
+    <div class='feedback-slider-container y-effects'>
+        <img class='fb_img' src='./img/varYZ.png'>
+        <p style='text-align:center'>
+            <strong><span class='Y'>Y</span> -> <span class='Z'>Z</span></strong>
+        </p>
+        <div class='feedback-slider' id='BonC'>
+            <div id="handle-BonC" class="ui-slider-handle"></div>
+        </div>
+    </div>
+    <div class='feedback-slider-container z-effects'>
+        <img class='fb_img' src='./img/varZX.png'>
+        <p style='text-align:center'>
+            <strong><span class='Z'>Z</span> -> <span class='X'>X</span></strong>
+        </p>
+        <div class='feedback-slider' id='ConA'>
+            <div id="handle-ConA" class="ui-slider-handle"></div>
+        </div>
+    </div>
+    <div class='feedback-slider-container z-effects'>
+        <img class='fb_img' src='./img/varZY.png'>
+        <p style='text-align:center'>
+            <strong><span class='Z'>Z</span> -> <span class='Y'>Y</span></strong>
+        </p>
+        <div class='feedback-slider' id='ConB'>
+            <div id="handle-ConB" class="ui-slider-handle"></div>
+        </div>
+    </div>
+    <div class='val-link-button'>
+        <button id='val-btn'>Done</button>
+    </div>
+</div>`;
 
 var loopy_intro_3 = `
 <p>
@@ -133,12 +175,12 @@ var loopy_intro_3 = `
 </div>
 <span class='loopy-alert' id='loopy-2-alert'></span>`;
 
-var loopy_crime = `
+var link_crime = `
 <div class='condition-container'>
     <p>
         <strong>Let us start. </strong>
         <br>
-        Please draw the arrows that correspond to your understanding of the causal dynamics in the following scenario. 
+        Please provide the links that correspond to your understanding of the causal dynamics in the following scenario:
         <br><br>
         <u>You are a small town mayor who is trying to understand the interplay between Criminality, Police action and the Satisfaction of your population.</u>
         <br>
@@ -150,34 +192,21 @@ var loopy_crime = `
         <br>
         - <strong>Population happiness</strong>, representing how happy the population of you town is.
         <br><br>
-        Without renaming, adding or removing nodes in the following loopy page, draw the arrows that you believe best represent how these concepts may affect each other.
-        <i style='font-size:small;'>Remember, you can use negative AND positive links and can represent stronger effect by adding additional arrows between the nodes. 
-        <br>
-        Additionally, we want your model to be easy to understand for you collaborators who are less versed in causal modelling. 
-        <br>
-        As before, to do so we apply the following rule: 
-        <ul>
-            <li>No arrow from node A to node B means no effect of node A on node B</li>
-            <li>One arrow from node A to node B means a moderate effect of node A on node B</li>
-            <li>Two arrows from node A to node B means a strong effect of node A on node B</li>
-        </ul></i>
-        Follow this link to a preset loopy page: <a target="_blank" href='https://ncase.me/loopy/v1.1/?data=[[[3,480,237,0.5,%22Crime%2520rate%22,4],[4,800,238,0.5,%22Police%2520action%22,0],[5,646,464,0.5,%22Population%2520Satisfaction%22,3]],[],[],5%5D'>Loopy Criminality</a>
+        Please provide your understanding of this causal model in the next page.
         <br><br>
-        Once you are done, click "save as link" on the right-hand side menu and paste the link in the text box below.  
-        <br>
-        Keep the diagram as simple as you can.
+        <i style='font-size:small;'>Reminder of the rules: 
+        <ul>
+            <li><strong>0</strong>: no arrow from node A to node B means no effect of node A on node B</li>
+            <li><strong>1 or -1</strong>: one arrow from node A to node B means a moderate effect of node A on node B</li>
+            <li><strong>2 or -2</strong>: two arrows from node A to node B means a strong effect of node A on node B</li>
+        </ul></i>
     </p>
-</div>
-<div class='loopy-link-container'>
-    <input class='loopy-input' id='loopy-5' value='Paste your loopy link here'></input>
-    <button class='loopy-validate' id='loopy-5-validate'>Validate</button>
-</div>
-<span class='loopy-alert' id='loopy-5-alert'></span>`;
+</div>`;
 
-var loopy_finance = `
+var link_finance = `
 <div class='condition-container'>
     <p>
-        Please draw the arrows that correspond to your understanding of the causal dynamics in the following scenario. 
+        Please provide the links that correspond to your understanding of the causal dynamics in the following scenario: 
         <br><br>
         <u>You are a state policy maker who is trying to manage a virus outbreak</u>.
         You have to decide on a confinement policy to protect to the population and limit the number of virus cases but want to balance it with the long term aim not to overly damage the economy.
@@ -192,77 +221,51 @@ var loopy_finance = `
         <br>
         - <strong>Virus Cases</strong>, the number of people affected by the virus.
         <br><br>
-        Without renaming, adding or removing nodes in the following loopy page, draw the arrows that you believe best represent how these concepts may affect each other.
-        <i style='font-size:small;'>Remember, you can use negative AND positive links and can represent stronger effect by adding additional arrows between the nodes.
-        <br>
-        Additionally, we want your model to be easy to understand for you collaborators who are less versed in causal modelling. 
-        <br>
-        To do so we apply the following rule: 
-        <ul>
-            <li>No arrow from node A to node B means no effect of node A on node B</li>
-            <li>One arrow from node A to node B means a moderate effect of node A on node B</li>
-            <li>Two arrows from node A to node B means a strong effect of node A on node B</li>
-        </ul></i>
-        Follow this link to a preset loopy page: <a target="_blank" href='https://ncase.me/loopy/v1.1/?data=[[[3,483,208,0.5,%22Stock%2520Prices%22,4],[4,803,209,0.5,%22Confinement%2520Measures%22,0],[5,649,435,0.5,%22Virus%2520Cases%22,3]],[],[],6%5D'>Loopy Outbreak</a>
+        Please provide your understanding of this causal model in the next page.
         <br><br>
-        Once you are done, click "save as link" on the right-hand side menu and paste the link in the text box below.  
-        <br>
-        Keep the diagram as simple as you can.
+        <i style='font-size:small;'>Reminder of the rules: 
+        <ul>
+            <li><strong>0</strong>: no arrow from node A to node B means no effect of node A on node B</li>
+            <li><strong>1 or -1</strong>: one arrow from node A to node B means a moderate effect of node A on node B</li>
+            <li><strong>2 or -2</strong>: two arrows from node A to node B means a strong effect of node A on node B</li>
+        </ul></i>
     </p>
-</div>
-<div class='loopy-link-container'>
-    <input class='loopy-input' id='loopy-6' value='Paste your loopy link here'></input>
-    <button class='loopy-validate' id='loopy-6-validate'>Validate</button>
-</div>
-<span class='loopy-alert' id='loopy-6-alert'></span>`;
+</div>`;
 
-var loopy_estate = `
+var link_estate = `
 <div class='condition-container'>
-<p>
-    Please draw the arrows that correspond to your understanding of the causal dynamics in the following scenario. 
-    <br><br>
-    <u>You are an urban planner in a developping city. You notice that the some neighbourhoods are more desireable than other.</u><br>
-    You want to model the interplay, in a given neighbourhood, between House Prices, its Population density and its overall Desirability.
-    <br>
-    This is a complex issue but sadly you only have access to three key indices:
-    <br><br>
-    - <strong>House Prices</strong>, representing a global index of the real-estate market in the neighbourhood.
-    <br>
-    - <strong>Population Density</strong>, representing the number of inhabitants per km squared.
-    <br>
-    - <strong>Desirability</strong>, an index of the desireability of the neighbourhood gathered via polls in the population.
-    <br><br>
-    Without renaming, adding or removing nodes in the following loopy page, draw the arrows that you believe best represent how these concepts may affect each other.
-    <i style='font-size:small;'>Remember, you can use negative AND positive links and can represent stronger effect by adding additional arrows between the nodes.
-    <br>
-    Additionally, we want your model to be easy to understand for you collaborators who are less versed in causal modelling. 
-    <br>
-    To do so we apply the following rule: 
-    <ul>
-        <li>No arrow from node A to node B means no effect of node A on node B</li>
-        <li>One arrow from node A to node B means a moderate effect of node A on node B</li>
-        <li>Two arrows from node A to node B means a strong effect of node A on node B</li>
-    </ul></i>
-    Follow this link to a preset loopy page: <a target="_blank" href='https://ncase.me/loopy/v1.1/?data=[[[3,483,208,0.5,%22Houses%2520Prices%22,4],[4,803,209,0.5,%22Population%2520Density%22,0],[5,649,435,0.5,%22Desireability%22,3]],[],[],5%5D'>Loopy Houses</a>
-    <br><br>
-    Once you are done, click "save as link" on the right-hand side menu and paste the link in the text box below.  
-    <br>
-    Keep the diagram as simple as you can.
-</p>
-</div>
-<div class='loopy-link-container'>
-<input class='loopy-input' id='loopy-7' value='Paste your loopy link here'></input>
-<button class='loopy-validate' id='loopy-7-validate'>Validate</button>
-</div>
-<span class='loopy-alert' id='loopy-7-alert'></span>`;
+    <p>
+        Please provide the links that correspond to your understanding of the causal dynamics in the following scenario: 
+        <br><br>
+        <u>You are an urban planner in a developping city. You notice that the some neighbourhoods are more desireable than other.</u><br>
+        You want to model the interplay, in a given neighbourhood, between House Prices, its Population density and its overall Desirability.
+        <br>
+        This is a complex issue but sadly you only have access to three key indices:
+        <br><br>
+        - <strong>House Prices</strong>, representing a global index of the real-estate market in the neighbourhood.
+        <br>
+        - <strong>Population Density</strong>, representing the number of inhabitants per km squared.
+        <br>
+        - <strong>Desirability</strong>, an index of the desireability of the neighbourhood gathered via polls in the population.
+        <br><br>
+        Please provide your understanding of this causal model in the next page.
+        <br><br>
+        <i style='font-size:small;'>Reminder of the rules: 
+        <ul>
+            <li><strong>0</strong>: no arrow from node A to node B means no effect of node A on node B</li>
+            <li><strong>1 or -1</strong>: one arrow from node A to node B means a moderate effect of node A on node B</li>
+            <li><strong>2 or -2</strong>: two arrows from node A to node B means a strong effect of node A on node B</li>
+        </ul></i>
+    </p>
+</div>`;
 
 var graph_intro_1 = `
 <p>
     <strong> Thank you for sharing you models! </strong>
     <br><br>
-    With Loopy, you were able to represent causes and effects in a static way. However, in reality, interactions between causes and effects happen over time. 
+    With these models, you were able to represent causes and effects in a static way. However, in reality, interactions between causes and effects happen over time. 
     <br>
-    In the next section, you will be introduced to another way to represent causal dynamics. One that takes time into account. 
+    In the next section, we will add another way to represent causal dynamics. One that takes time into account. 
     Here we will ask you to first attempt to understand the causal model underling the patterns you observe in a limited amount of time by interacting with the interface in a timely manner.
     <br>
     Then you will be asked to report the sign, i.e. is it a negative (more is less) or a positive (more is more) effect, and the strength, i.e. 0, 1 or 2 arrows, of the relationships you observed. 
@@ -420,16 +423,16 @@ var graph_template = `
         </div>
 
         <div class='graph-pred-rec-right'>
-            <!-- Need RADIO with sense making -->
+            <!-- RADIO with sense making -->
             <fieldset class='label-fb'>
-                <legend>To what extent did the behaviour of the variables feel logical?</legend>
-                <label for="radio-1">Completely illogical</label>
+                <legend>To what extent did the behaviour of the variables make sense?</legend>
+                <label for="radio-1">Made no sense at all</label>
                 <input type="radio" name="radio-1" id="radio-1"><br>
-                <label for="radio-2">Somewhat illogical</label>
+                <label for="radio-2">Made very little sense</label>
                 <input type="radio" name="radio-1" id="radio-2"><br>
-                <label for="radio-3">Somewhat logical</label>
+                <label for="radio-3">Somewhat made sense</label>
                 <input type="radio" name="radio-1" id="radio-3"><br>
-                <label for="radio-4">Completely logical</label>
+                <label for="radio-4">Made complete sense</label>
                 <input type="radio" name="radio-1" id="radio-4"><br>
             </fieldset>
             <fieldset class='label-fb'>

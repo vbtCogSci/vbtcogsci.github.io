@@ -31,11 +31,14 @@ var easyBlocks = [
 // If the condition is label, assign labelled presets, otherwise add control presets
 
 // Variables that define the number of experimental block of each type.
-var numLoopyBlocks = 1;
+var numLinkBlocks = 4;
+var numLinkScenario = 3;
 var numGenBlocks = 3;
 var numLabelBlocks = 4;
 
 // Define variables that keep track of block indices
+var linkTrainingIdx = [];
+var linkScenarioIdx = [];
 var genGraphIdx = [];
 var labGraphIdx = [];
 
@@ -111,6 +114,38 @@ if (uid == null) {
 }
 
 
+function setupLinkTraining(condIdx) {
+    $('.page-4-graph').css('display', 'none')
+    
+    
+    resetInterface();
+    if (linkTrainingIdx.includes(condIdx)) {
+        var linkNum = linkTrainingIdx.indexOf(condIdx) + 1;
+        currentModel = 'links'.concat(linkNum.toString());
+        if (linkNum == 1) {
+            $('#page-4-graphOne').css('display', 'flex');
+        } else if (linkNum == 2) {
+            $('#page-4-graphTwo').css('display', 'flex');
+        } else if (linkNum == 3) {
+            $('#page-4-graphThree').css('display', 'flex');
+        } else if (linkNum == 4) {
+            $('#page-4-graphFour').css('display', 'flex');
+        }
+        var localPreset = ['A', 'B', 'C'];
+    } else {
+        // Do Labelled stuff
+        linkScenarioIdx.shift()
+        var scenario = condLabel[2 - linkScenarioIdx.length];
+        currentModel = 'links'.concat(scenario);
+        var localPreset = presets[scenario].slice(9, 12);
+        $('#page-4-graph-'.concat(scenario)).css('display', 'flex');
+    }
+    
+    resetFeedback(localPreset);
+    // Feedback report
+    $(nodeList[0]).css({'display': 'flex'});
+    $('.val-link-button').css({'display': 'flex'});
+}
 
 // Flow is always loopy labels x3 > Easy graphs x3 > Labelled or unlabelled hard graphs x3
 // Condition A is labels
@@ -168,6 +203,19 @@ function saveState() {
     
     localStorage.setItem('condIdx', condIdx);
     localStorage.setItem('currentModel', currentModel);
+}
+
+function saveLinkData() {
+    // Feedback sliders values
+    var report = [
+        $('#AonB').slider("value"),
+        $('#AonC').slider("value"),
+        $('#BonA').slider("value"),
+        $('#BonC').slider("value"),
+        $('#ConA').slider("value"),
+        $('#ConB').slider("value")
+    ];
+    db.ref('data').child(uid).child(currentModel).child('report').set(report);
 }
 
 function saveGraphData() {
@@ -274,6 +322,9 @@ function resetFeedback(presetLabels) {
     $('.X').html(presetLabels[0]);
     $('.Y').html(presetLabels[1]);
     $('.Z').html(presetLabels[2]);
+    $('#val-button').button({disabled: true});
+    $('#val-btn').button({disabled: true});
+    nodeIdx = 0;
     
     //console.log(presetLabels)
     if (presetLabels[1] == 'Red') {
@@ -296,6 +347,14 @@ function resetFeedback(presetLabels) {
     $('input[type="radio"]').button( "refresh" );
 
     $('#reason-qual').val('')
+
+    $('.feedback-slider').each(function(index, element) {
+        // Init sliders
+        var $slider = $(element);
+        //console.log($slider);
+        var $handle = $('#handle-'.concat($slider.attr('id'))).addClass( "fb-handle" );
+        $handle.text('?')
+    });
 }
 
 

@@ -4,7 +4,7 @@
 var xclicked = yclicked = zclicked = false;
 var gameLoop;
 // 10 steps per second with time step of 100 and dt (frequency) 1/10 : 100 * 10 = 1000 ms
-var time_step = 100;
+var time_step = 200;
 var elapsed = 0; // Duration of the trial
 var endTrial = 60000; // Supposed to be 1 min, time at which all stops here 1 min,  60 sec or 60,000 ms
 var midTrial = Math.floor(endTrial / 6); // Time at which participants can stop, half the total duration
@@ -203,7 +203,7 @@ function setupInterface() {
                 // Feedback report
                 $(nodeList[0]).css({'display': 'flex'});
                 $('.val-link-button').css({'display': 'flex'});
-                $('#val-button').button({disabled: false});
+                //$('#val-button').button({disabled: false});
                 // Clear interval
                 clearInterval(gameLoop);
             } else if (elapsed >= midTrial) {
@@ -257,7 +257,7 @@ function setupInterface() {
         // Feedback report
         $(nodeList[0]).css({'display': 'flex'});
         $('.val-link-button').css({'display': 'flex'});
-        $('#val-button').button({disabled: false});
+        //$('#val-button').button({disabled: false});
     })
 
     // Setup the reset button to stop the game and reset values to 0.

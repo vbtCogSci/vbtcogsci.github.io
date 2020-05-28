@@ -9,7 +9,10 @@ var currentPage;
 
 // Define navigation global variables
 var introIdx = [];
-var loopyIdx = [];
+var linkIdx = [];
+var crimeIdx = [];
+var financeIdx = [];
+var estateIdx = [];
 var intgraphIdx = [];
 var graphIdx = [];
 var fbIdx = [];
@@ -77,7 +80,6 @@ function setupNavigation() {
         }
     })
 
-    //$('.accordion').accordion({ heightStyle: "content" });
 }
 
 function updatePage(pageIdx) {
@@ -91,9 +93,9 @@ function updatePage(pageIdx) {
 function setupPage() {
     // Disable next if next page has a loopy input
     $('#next_button').button('enable');
-    if ($(currentPage).find('.loopy-link-container').length != 0) {
-        //console.log($(currentPage).find('.loopy-link-container').length);
+    if ($(currentPage).find('.page-4-right').length != 0) {
         $('#next_button').button('disable');
+        setupLinkTraining(condIdx);
     } else if ($(currentPage).find('#spanLabels').length != 0) {
         if (condition == 'control') {
             $('#spanLabels').css('display', 'none');
@@ -183,14 +185,65 @@ function setupFeedback() {
             step: 1,
             value: 0,
             create: function() {
-              $handle.text( $( this ).slider( "value" ) );
+                $handle.text( $( this ).slider( "value" ) );
             },
             slide: function( event, ui ) {
-              $handle.text( ui.value );
+                $handle.text( ui.value );
             }
-          });
-
+        });
     });
+
+    // Link training
+    $('#handle-AonB').on('mousedown', function() {
+        $('#handle-AonB').text($('#AonB').slider('value'));
+        checkValButton('A');
+    })
+    $('#handle-AonC').on('mousedown', function() {
+        $('#handle-AonC').text($('#AonC').slider('value'));
+        checkValButton('A');
+    })
+    $('#handle-BonA').on('mousedown', function() {
+        $('#handle-BonA').text($('#BonA').slider('value'));
+        checkValButton('B');
+    })
+    $('#handle-BonC').on('mousedown', function() {
+        $('#handle-BonC').text($('#BonC').slider('value'));
+        checkValButton('B');
+    })
+    $('#handle-ConA').on('mousedown', function() {
+        $('#handle-ConA').text($('#ConA').slider('value'));
+        checkValButton('C');
+    })
+    $('#handle-ConB').on('mousedown', function() {
+        $('#handle-ConB').text($('#ConB').slider('value'));
+        checkValButton('C');
+    })
+
+    // Graphs feedback
+    $('#handle-XonY').on('mousedown', function() {
+        $('#handle-XonY').text($('#XonY').slider('value'));
+        checkValButton('X');
+    })
+    $('#handle-XonZ').on('mousedown', function() {
+        $('#handle-XonZ').text($('#XonZ').slider('value'));
+        checkValButton('X');
+    })
+    $('#handle-YonX').on('mousedown', function() {
+        $('#handle-YonX').text($('#YonX').slider('value'));
+        checkValButton('Y');
+    })
+    $('#handle-YonZ').on('mousedown', function() {
+        $('#handle-YonZ').text($('#YonZ').slider('value'));
+        checkValButton('Y');
+    })
+    $('#handle-ZonX').on('mousedown', function() {
+        $('#handle-ZonX').text($('#ZonX').slider('value'));
+        checkValButton('Z');
+    })
+    $('#handle-ZonY').on('mousedown', function() {
+        $('#handle-ZonY').text($('#ZonY').slider('value'));
+        checkValButton('Z');
+    })
 
     $('.ui-slider-handle').css({
         'width': '3em',
@@ -205,6 +258,9 @@ function setupFeedback() {
 
     // Set up validate button
     $('#val-button').button().click(function () {
+        nextNode();
+    });
+    $('#val-btn').button().click(function () {
         nextNode();
     });
 
@@ -227,30 +283,70 @@ function setupFeedback() {
 }
 
 function nextNode () {
+    console.log('Prev Idx: '.concat(nodeIdx.toString()))
     if (nodeIdx < 2) {
+        console.log('Less than 2')
         var prev = nodeList[nodeIdx];
         $(prev).css('display', 'none');
         nodeIdx += 1;
         var next = nodeList[nodeIdx];
         $(next).css('display', 'flex');
+        $('#val-button').button({disabled: true});
+        $('#val-btn').button({disabled: true});
     } else if (nodeIdx == 2 && ['crime', 'finance', 'estate'].includes(currentModel)) {
+        console.log('2 and going for qual')
         var prev = nodeList[nodeIdx];
         $(prev).css('display', 'none');
         nodeIdx += 1;
         $('.graph-pred-rec-right').css('display', 'flex');
         $('#val-button').button({disabled: true});
-
+        $('#val-btn').button({disabled: true});
     } else {
+        console.log('resetting')
         nodeIdx = 0;
         $('#start_button').button({disabled: false});
         $('#val-button').button({disabled: true});
+        $('#val-btn').button({disabled: true});
         $('#next_button').button({disabled: false});
 
         // SEND TO DATABASE
-        saveGraphData();
+        if (currentModel.slice(0,4) == 'link') {
+            saveLinkData();
+        } else {
+            saveGraphData();
+        }
     }
-    
+    console.log('Next Idx: '.concat(nodeIdx.toString()))
 }
+
+function checkValButton(V) {
+    if (V == 'X') {
+        if (($('#handle-XonY').text() != '?') && $('#handle-XonZ').text() != '?') {
+            $('#val-button').button({disabled: false});
+        }
+    } else if (V == 'Y') {
+        if ($('#handle-YonX').text() != '?' && $('#handle-YonZ').text() != '?') {
+            $('#val-button').button({disabled: false});
+        }
+    } else if (V == 'Z') {
+        if ($('#handle-ZonX').text() != '?' && $('#handle-ZonY').text() != '?') {
+            $('#val-button').button({disabled: false});
+        }
+    } else if (V == 'A') {
+        if ($('#handle-AonB').text() != '?' && $('#handle-AonC').text() != '?') {
+            $('#val-btn').button({disabled: false});
+        }
+    } else if (V == 'B') {
+        if ($('#handle-BonA').text() != '?' && $('#handle-BonC').text() != '?') {
+            $('#val-btn').button({disabled: false});
+        }
+    } else if (V == 'C') {
+        if (($('#handle-ConA').text() != '?') && ($('#handle-ConB').text() != '?')) {
+            $('#val-btn').button({disabled: false});
+        }
+    }
+}
+
 
 // SET UP OUTRO FIELDS
 function setupOutro () {
@@ -350,13 +446,14 @@ function buildSurvey() {
     var survey_pages;
 
     // Intro content
-    var intro_loopy = [];
-    intro_loopy.push(consent_page);
-    intro_loopy.push(causal_models_intro_1);
-    intro_loopy.push(causal_models_intro_2);
-    intro_loopy.push(loopy_intro_1);
-    intro_loopy.push(loopy_intro_2);
-    intro_loopy.push(loopy_intro_3);
+    var intro_content = [];
+    intro_content.push(consent_page);
+    intro_content.push(causal_models_intro_1);
+    intro_content.push(causal_models_intro_2);
+    intro_content.push(causal_models_intro_3);
+
+    var link_content = [];
+    link_content.push(links_template);
 
     var intro_graph = [];
     intro_graph.push(graph_intro_1);
@@ -370,24 +467,32 @@ function buildSurvey() {
     outro_content.push(outro_3);
 
     // Experimental content
-    var loopy_content = [];
-    loopy_content.push(loopy_crime);
-    loopy_content.push(loopy_finance);
-    loopy_content.push(loopy_estate);
+    var crime_links = [];
+    crime_links.push(link_crime);
+    var finance_links = [];
+    finance_links.push(link_finance);
+    var estate_links = [];
+    estate_links.push(link_estate);
 
     var graph_content = [];
     graph_content.push(graph_template);
     
     // Survey pages
-    survey_pages = intro_loopy.concat(loopy_content).concat(intro_graph).concat(graph_content).concat(outro_content);
+    survey_pages = intro_content.concat(link_content).concat(crime_links).concat(finance_links).concat(estate_links).concat(intro_graph).concat(graph_content).concat(outro_content);
     for (i=0; i < survey_pages.length; i++) {
-        if (i < intro_loopy.length) {
+        if (i < intro_content.length) {
             introIdx.push(i);
-        } else if (i < intro_loopy.length + loopy_content.length) {
-            loopyIdx.push(i);
-        } else if (i < intro_loopy.length + loopy_content.length + intro_graph.length) {
+        } else if (i < intro_content.length + link_content.length) {
+            linkIdx.push(i);
+        } else if (i < intro_content.length + link_content.length + crime_links.length) {
+            crimeIdx.push(i)
+        } else if (i < intro_content.length + link_content.length + crime_links.length + finance_links.length) {
+            financeIdx.push(i)
+        } else if (i < intro_content.length + link_content.length + crime_links.length + finance_links.length + estate_links.length) {
+            estateIdx.push(i)
+        } else if (i < intro_content.length + link_content.length + crime_links.length + finance_links.length + estate_links.length + intro_graph.length) {
             intgraphIdx.push(i);
-        } else if (i < intro_loopy.length + loopy_content.length + intro_graph.length + graph_content.length) {
+        } else if (i < intro_content.length + link_content.length + crime_links.length + finance_links.length + estate_links.length + intro_graph.length + graph_content.length) {
             graphIdx.push(i);
         } else {
             outroIdx.push(i);
@@ -418,14 +523,26 @@ function buildBlockSeq() {
     var sequence = introIdx;
     
 
-    // Loopy blocks
-    for (i = 0; i < numLoopyBlocks; i++) {
-        sequence = sequence.concat(loopyIdx); 
+    // link blocks
+    for (i = 0; i < numLinkBlocks; i++) {
+        sequence = sequence.concat(linkIdx); 
+        console.log('Hello link'.concat(i.toString()))
+        linkTrainingIdx.push(sequence.length - 1);
     }
 
-    // DEV COMMENT OUT TO START AT BEGINNING //
-    //var sequence = [introIdx[0]];
-    // DEV COMMENT OUT TO START AT BEGINNING //
+    // Link Scenario
+    // Criminality
+    sequence = sequence.concat(crimeIdx)
+    sequence = sequence.concat(linkIdx)
+    linkScenarioIdx.push(sequence.length - 1)
+    // Finance
+    sequence = sequence.concat(financeIdx)
+    sequence = sequence.concat(linkIdx)
+    linkScenarioIdx.push(sequence.length - 1)
+    // Estate
+    sequence = sequence.concat(estateIdx)
+    sequence = sequence.concat(linkIdx)
+    linkScenarioIdx.push(sequence.length - 1)
 
     // Graph intro
     sequence = sequence.concat(intgraphIdx);
@@ -434,10 +551,10 @@ function buildBlockSeq() {
         sequence = sequence.concat(graphIdx);
         if (i == 0 || i % 2 != 0) {
             // 0 and odd indices are generic
-            genGraphIdx.push(sequence.length -1)
+            genGraphIdx.push(sequence.length - 1)
         } else {
             // Even numbers are labelled / control labelled
-            labGraphIdx.push(sequence.length -1);
+            labGraphIdx.push(sequence.length - 1);
         }
     }
 
