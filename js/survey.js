@@ -20,6 +20,9 @@ var outroIdx = [];
 // Feedback indices
 var nodeIdx = 0;
 var nodeList = ['.x-effects', '.y-effects', '.z-effects'];
+// Check for response order
+var first_moved = false;
+var second_moved = false;
 
 var condSeq;
 
@@ -30,7 +33,8 @@ $('document').ready(function () {
     survey_pages = buildSurvey();
 
     // Build the sequencing of blocks
-    condSeq = buildBlockSeq();
+    condSeq = buildBlockSeq(condition);
+
     // Set up number of pages and current page
     pageIdx = condSeq[condIdx];
     numPages = condSeq.length;
@@ -176,6 +180,12 @@ function setupFeedback() {
     $('.feedback-slider').each(function(index, element) {
         // Init sliders
         var $slider = $(element);
+        var f_l = $slider.attr('id');
+        if (f_l == 'XonY' | f_l == 'YonX' | f_l == 'ZonX' | f_l == 'AonB' | f_l == 'BonA' | f_l == 'ConA') {
+            $slider.addClass('first-slider');
+        } else {
+            $slider.addClass('second-slider');
+        }
         //console.log($slider);
         var $handle = $('#handle-'.concat($slider.attr('id'))).addClass( "fb-handle" );
         //console.log($handle);
@@ -189,6 +199,18 @@ function setupFeedback() {
             },
             slide: function( event, ui ) {
                 $handle.text( ui.value );
+                console.log($(this).hasClass('first-slider'))
+                if (($(this).hasClass('first-slider')) && !first_moved) {
+                    first_moved = true
+                } else if (($(this).hasClass('second-slider')) && !second_moved) {
+                    second_moved = true
+                }
+            },
+            stop: function( event, ui) {
+                if (second_moved && first_moved) {
+                    $('#val-btn').button({disabled: false});
+                    $('#val-button').button({disabled: false});
+                }
             }
         });
     });
@@ -196,53 +218,101 @@ function setupFeedback() {
     // Link training
     $('#handle-AonB').on('mousedown', function() {
         $('#handle-AonB').text($('#AonB').slider('value'));
-        checkValButton('A');
+        first_moved = true;
+        if (second_moved && first_moved) {
+            $('#val-btn').button({disabled: false});
+            $('#val-button').button({disabled: false});
+        }
     })
     $('#handle-AonC').on('mousedown', function() {
         $('#handle-AonC').text($('#AonC').slider('value'));
-        checkValButton('A');
+        second_moved = true;
+        if (second_moved && first_moved) {
+            $('#val-btn').button({disabled: false});
+            $('#val-button').button({disabled: false});
+        }
     })
     $('#handle-BonA').on('mousedown', function() {
         $('#handle-BonA').text($('#BonA').slider('value'));
-        checkValButton('B');
+        first_moved = true;
+        if (second_moved && first_moved) {
+            $('#val-btn').button({disabled: false});
+            $('#val-button').button({disabled: false});
+        }
     })
     $('#handle-BonC').on('mousedown', function() {
         $('#handle-BonC').text($('#BonC').slider('value'));
-        checkValButton('B');
+        second_moved = true;
+        if (second_moved && first_moved) {
+            $('#val-btn').button({disabled: false});
+            $('#val-button').button({disabled: false});
+        }
     })
     $('#handle-ConA').on('mousedown', function() {
         $('#handle-ConA').text($('#ConA').slider('value'));
-        checkValButton('C');
+        first_moved = true;
+        if (second_moved && first_moved) {
+            $('#val-btn').button({disabled: false});
+            $('#val-button').button({disabled: false});
+        }
     })
     $('#handle-ConB').on('mousedown', function() {
         $('#handle-ConB').text($('#ConB').slider('value'));
-        checkValButton('C');
+        second_moved = true;
+        if (second_moved && first_moved) {
+            $('#val-btn').button({disabled: false});
+            $('#val-button').button({disabled: false});
+        }
     })
 
     // Graphs feedback
     $('#handle-XonY').on('mousedown', function() {
         $('#handle-XonY').text($('#XonY').slider('value'));
-        checkValButton('X');
+        first_moved = true;
+        if (second_moved && first_moved) {
+            $('#val-btn').button({disabled: false});
+            $('#val-button').button({disabled: false});
+        }
     })
     $('#handle-XonZ').on('mousedown', function() {
         $('#handle-XonZ').text($('#XonZ').slider('value'));
-        checkValButton('X');
+        second_moved = true;
+        if (second_moved && first_moved) {
+            $('#val-btn').button({disabled: false});
+            $('#val-button').button({disabled: false});
+        }
     })
     $('#handle-YonX').on('mousedown', function() {
         $('#handle-YonX').text($('#YonX').slider('value'));
-        checkValButton('Y');
+        first_moved = true;
+        if (second_moved && first_moved) {
+            $('#val-btn').button({disabled: false});
+            $('#val-button').button({disabled: false});
+        }
     })
     $('#handle-YonZ').on('mousedown', function() {
         $('#handle-YonZ').text($('#YonZ').slider('value'));
-        checkValButton('Y');
+        second_moved = true;
+        if (second_moved && first_moved) {
+            $('#val-btn').button({disabled: false});
+            $('#val-button').button({disabled: false});
+        }
     })
     $('#handle-ZonX').on('mousedown', function() {
         $('#handle-ZonX').text($('#ZonX').slider('value'));
-        checkValButton('Z');
+        first_moved = true;
+        if (second_moved && first_moved) {
+            $('#val-btn').button({disabled: false});
+            $('#val-button').button({disabled: false});
+        }
     })
     $('#handle-ZonY').on('mousedown', function() {
         $('#handle-ZonY').text($('#ZonY').slider('value'));
-        checkValButton('Z');
+        second_moved = true;
+        if (second_moved && first_moved) {
+            $('#val-btn').button({disabled: false});
+            $('#val-button').button({disabled: false});
+        }
     })
 
     $('.ui-slider-handle').css({
@@ -290,9 +360,14 @@ function nextNode () {
         $(prev).css('display', 'none');
         nodeIdx += 1;
         var next = nodeList[nodeIdx];
+        $(next).css("visibility", "visible")
         $(next).css('display', 'flex');
         $('#val-button').button({disabled: true});
         $('#val-btn').button({disabled: true});
+        
+        // Reset moved
+        first_moved = false;
+        second_moved = false;
     } else if (nodeIdx == 2 && ['crime', 'finance', 'estate'].includes(currentModel)) {
         console.log('2 and going for qual')
         var prev = nodeList[nodeIdx];
@@ -301,9 +376,15 @@ function nextNode () {
         $('.graph-pred-rec-right').css('display', 'flex');
         $('#val-button').button({disabled: true});
         $('#val-btn').button({disabled: true});
+
     } else {
         console.log('resetting')
+        var prev = nodeList[nodeIdx];
+        // Disable sliders to prevent moving more
+        $(prev).css("visibility", "hidden")
+        // Reset node index
         nodeIdx = 0;
+        // Disable nav buttons and enable next to move forward
         $('#start_button').button({disabled: false});
         $('#val-button').button({disabled: true});
         $('#val-btn').button({disabled: true});
@@ -317,34 +398,6 @@ function nextNode () {
         }
     }
     console.log('Next Idx: '.concat(nodeIdx.toString()))
-}
-
-function checkValButton(V) {
-    if (V == 'X') {
-        if (($('#handle-XonY').text() != '?') && $('#handle-XonZ').text() != '?') {
-            $('#val-button').button({disabled: false});
-        }
-    } else if (V == 'Y') {
-        if ($('#handle-YonX').text() != '?' && $('#handle-YonZ').text() != '?') {
-            $('#val-button').button({disabled: false});
-        }
-    } else if (V == 'Z') {
-        if ($('#handle-ZonX').text() != '?' && $('#handle-ZonY').text() != '?') {
-            $('#val-button').button({disabled: false});
-        }
-    } else if (V == 'A') {
-        if ($('#handle-AonB').text() != '?' && $('#handle-AonC').text() != '?') {
-            $('#val-btn').button({disabled: false});
-        }
-    } else if (V == 'B') {
-        if ($('#handle-BonA').text() != '?' && $('#handle-BonC').text() != '?') {
-            $('#val-btn').button({disabled: false});
-        }
-    } else if (V == 'C') {
-        if (($('#handle-ConA').text() != '?') && ($('#handle-ConB').text() != '?')) {
-            $('#val-btn').button({disabled: false});
-        }
-    }
 }
 
 
@@ -517,7 +570,7 @@ function buildSurvey() {
 
 
 // BUILD BLOCK SEQUENCE, ORDER OF PAGES TO GO THROUGH
-function buildBlockSeq() {
+function buildBlockSeq(condition) {
     // Generate the sequence of pages based on the desired flow
 
     var sequence = introIdx;
@@ -526,34 +579,43 @@ function buildBlockSeq() {
     // link blocks
     for (i = 0; i < numLinkBlocks; i++) {
         sequence = sequence.concat(linkIdx); 
-        console.log('Hello link'.concat(i.toString()))
+        //console.log('Hello link'.concat(i.toString()))
         linkTrainingIdx.push(sequence.length - 1);
     }
 
     // Link Scenario
     // Criminality
-    sequence = sequence.concat(crimeIdx)
-    sequence = sequence.concat(linkIdx)
-    linkScenarioIdx.push(sequence.length - 1)
+    if (condition != 'control') {
+        sequence = sequence.concat(crimeIdx)
+        sequence = sequence.concat(linkIdx)
+        linkScenarioIdx.push(sequence.length - 1)
+    } 
+    
     // Finance
-    sequence = sequence.concat(financeIdx)
-    sequence = sequence.concat(linkIdx)
-    linkScenarioIdx.push(sequence.length - 1)
-    // Estate
-    sequence = sequence.concat(estateIdx)
-    sequence = sequence.concat(linkIdx)
-    linkScenarioIdx.push(sequence.length - 1)
+    //sequence = sequence.concat(financeIdx)
+    //sequence = sequence.concat(linkIdx)
+    //linkScenarioIdx.push(sequence.length - 1)
+    //// Estate
+    //sequence = sequence.concat(estateIdx)
+    //sequence = sequence.concat(linkIdx)
+    //linkScenarioIdx.push(sequence.length - 1)
 
     // Graph intro
     sequence = sequence.concat(intgraphIdx);
 
     for (i=0; i < numGenBlocks + numLabelBlocks ; i++) {
         sequence = sequence.concat(graphIdx);
-        if (i == 0 || i % 2 != 0) {
-            // 0 and odd indices are generic
-            genGraphIdx.push(sequence.length - 1)
+        //if (i == 0 || i % 2 != 0) {
+        //    // 0 and odd indices are generic
+        //    genGraphIdx.push(sequence.length - 1)
+        //} else {
+        //    // Even numbers are labelled / control labelled
+        //    labGraphIdx.push(sequence.length - 1);
+        //}
+        if (i < numGenBlocks) {
+            //console.log(i)
+            genGraphIdx.push(sequence.length - 1);
         } else {
-            // Even numbers are labelled / control labelled
             labGraphIdx.push(sequence.length - 1);
         }
     }

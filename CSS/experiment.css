@@ -118,6 +118,11 @@
     display: none;
   }
 
+  #page-4-graphFour-p {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
   .graph-container {
     display: flex;
     height: 100%;

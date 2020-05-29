@@ -10,8 +10,10 @@ var pageFour_Two = 'https://ncase.me/loopy/v1.1/?data=[[[1,477,245,1,%22A%22,4],
 
 var pageFour_Three = 'https://ncase.me/loopy/v1.1/?data=[[[1,501,229,1,%22A%22,4],[2,799,232,1,%22B%22,0],[3,646,448,1,%22C%22,3]],[[2,3,42,-1,0],[1,3,-44,-1,0]],[],3%5D'
 
-var pageFour_crime = 'https://ncase.me/loopy/v1.1/?data=[[[3,483,208,1,%22Crime%2520rate%22,4],[4,803,209,1,%22Police%2520action%22,0],[5,649,435,1,%22Population%2520Satisfaction%22,3]],[],[[642,218,%22%253F%22],[750,337,%22%253F%22],[536,342,%22%253F%22]],5%5D'
+var pageFour_Four = 'https://ncase.me/loopy/v1.1/?data=[[[1,440,199,1,%22Asthma%22,4],[2,741,207,1,%22Flu%22,0],[3,581,417,1,%22Cough%22,3]],[],[[501,326,%22%253F%22],[671,324,%22%253F%22],[585,212,%22%253F%22]],3%5D'
+
+var pageFour_crime = 'https://ncase.me/loopy/v1.1/?data=[[[3,483,208,1,%22Crime%2520rate%22,4],[4,803,209,1,%22Police%2520action%22,0],[5,649,435,1,%22Population%2520Happiness%22,3]],[],[[642,218,%22%253F%22],[750,337,%22%253F%22],[536,342,%22%253F%22]],5%5D'
 
 var pageFour_finance = 'https://ncase.me/loopy/v1.1/?data=[[[3,490,209,1,%22Stock%2520Prices%22,4],[4,803,209,1,%22Confinement%2520Measures%22,0],[5,649,435,1,%22Virus%2520Cases%22,3]],[],[[545,337,%22%253F%22],[648,214,%22%253F%22],[746,337,%22%253F%22]],6%5D'
 
-var pageFour_estate = 'https://ncase.me/loopy/v1.1/?data=[[[3,485,210,1,%22Houses%2520Prices%22,4],[4,803,209,1,%22Population%2520Density%22,0],[5,640,435,1,%22Desireability%22,3]],[],[[541,338,%22%253F%22],[640,221,%22%253F%22],[732,343,%22%253F%22]],5%5D'
+var pageFour_estate = 'https://ncase.me/loopy/v1.1/?data=[[[3,484,209,1,%22Houses%2520Prices%22,4],[4,802,208,1,%22Population%2520Density%22,0],[5,639,434,1,%22Desirability%22,3]],[],[[540,337,%22%253F%22],[639,220,%22%253F%22],[731,342,%22%253F%22]],5%5D'

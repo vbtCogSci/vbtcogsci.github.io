@@ -31,10 +31,10 @@ var easyBlocks = [
 // If the condition is label, assign labelled presets, otherwise add control presets
 
 // Variables that define the number of experimental block of each type.
-var numLinkBlocks = 4;
-var numLinkScenario = 3;
-var numGenBlocks = 3;
-var numLabelBlocks = 4;
+var numLinkBlocks = 3;
+var numLinkScenario = 1;
+var numGenBlocks = 4;
+var numLabelBlocks = 1;
 
 // Define variables that keep track of block indices
 var linkTrainingIdx = [];
@@ -74,12 +74,18 @@ if (uid == null) {
                 condLabel[1],
                 condLabel[2]
             ]
+            // Select only crime
+            labBlocks = [condLabel[condLabel.indexOf('crime')]];
         } else {
             labBlocks = [
                 condControl[0],
                 condControl[1],
                 condControl[2]
             ]
+            // Select only crime
+            labBlocks = [condControl[condControl.indexOf('crime_control')]];
+            // Adjust sequence 
+            condSeq = buildBlockSeq(condition);
         }
 
         db.ref('data').child(uid).child('condition').set(condition);
@@ -104,12 +110,17 @@ if (uid == null) {
             condLabel[1],
             condLabel[2]
         ]
+        // Select only crime
+        labBlocks = [condLabel[condLabel.indexOf('crime')]];
     } else {
         labBlocks = [
             condControl[0],
             condControl[1],
             condControl[2]
         ]
+        // Select only crime
+        labBlocks = [condControl[condControl.indexOf('crime_control')]];
+        
     }
 }
 
@@ -124,18 +135,24 @@ function setupLinkTraining(condIdx) {
         currentModel = 'links'.concat(linkNum.toString());
         if (linkNum == 1) {
             $('#page-4-graphOne').css('display', 'flex');
+            var localPreset = ['A', 'B', 'C'];
         } else if (linkNum == 2) {
-            $('#page-4-graphTwo').css('display', 'flex');
-        } else if (linkNum == 3) {
             $('#page-4-graphThree').css('display', 'flex');
-        } else if (linkNum == 4) {
+            var localPreset = ['A', 'B', 'C'];
+        } else if (linkNum == 3) {
+            $('#page-4-graphFour-p').css('display', 'flex');
             $('#page-4-graphFour').css('display', 'flex');
+            var localPreset = ['Asthma', 'Flu', 'Cough'];
+        } else if (linkNum == 4) {
+            $('#page-4-graphTwo').css('display', 'flex');
+            var localPreset = ['A', 'B', 'C'];
         }
-        var localPreset = ['A', 'B', 'C'];
+        
     } else {
         // Do Labelled stuff
         linkScenarioIdx.shift()
-        var scenario = condLabel[2 - linkScenarioIdx.length];
+        //var scenario = condLabel[2 - linkScenarioIdx.length];
+        var scenario = condLabel[condLabel.indexOf('crime')];
         currentModel = 'links'.concat(scenario);
         var localPreset = presets[scenario].slice(9, 12);
         $('#page-4-graph-'.concat(scenario)).css('display', 'flex');
@@ -325,6 +342,10 @@ function resetFeedback(presetLabels) {
     $('#val-button').button({disabled: true});
     $('#val-btn').button({disabled: true});
     nodeIdx = 0;
+
+    // Reset moved
+    first_moved = false;
+    second_moved = false;
     
     //console.log(presetLabels)
     if (presetLabels[1] == 'Red') {

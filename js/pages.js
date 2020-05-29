@@ -74,6 +74,28 @@ var links_template = `
     <img class='page-4-graph' id='page-4-graphOne' src='./img/pageFour-graphOne.PNG'>
     <img class='page-4-graph' id='page-4-graphTwo' src='./img/pageFour-graphTwo.PNG'>
     <img class='page-4-graph' id='page-4-graphThree' src='./img/pageFour-graphThree.PNG'>
+    <div class='page-4-graph' id='page-4-graphFour-p' style='width:100%;'>
+        <p>
+            <strong>Let's try something different!</strong>
+            <br>
+            Here, please represent the information below using the interface you just learned to use.
+            <br>
+            <u>"Tom has a cough. The doctor thinks that it could be a symptom of either asthma or the flu. He also believes that the flu is twice as likely as asthma to be the cause of the cough. 
+            <br>
+            Moreover, he read in a research paper that having asthma increased the chance of getting the flu." </u>
+            <br>
+            As you can see, no links are drawn, provide them using the sliders on the right.
+            Do not add links that are not in the text. 
+            <br>
+        </p>
+        <i style='font-size:small;'>Reminder of the rules: 
+        <ul>
+                <li><strong>0</strong>: no arrow from node A to node B means no effect of node A on node B</li>
+                <li><strong>1 or -1</strong>: one arrow from node A to node B means a moderate effect of node A on node B</li>
+                <li><strong>2 or -2</strong>: two arrows from node A to node B means a strong effect of node A on node B</li>
+        </ul></i>
+    </div>
+    <img class='page-4-graph' id='page-4-graphFour' src='./img/pageFour-graphFour.PNG'>
     <img class='page-4-graph' id='page-4-graph-crime' src='./img/pageFour-graph-crime.PNG'>
     <img class='page-4-graph' id='page-4-graph-finance' src='./img/pageFour-graph-finance.PNG'>
     <img class='page-4-graph' id='page-4-graph-estate' src='./img/pageFour-graph-estate.PNG'>
