@@ -97,7 +97,7 @@ var causal_models_intro_3 = `
     </div>
     <div class='graph-container'>
         <p><u>2) Simple common cause diagram where node A is the cause of both B and C </u></p>
-        <img class='page-3-graph' src='./img/pageThree-graphTwo.PNG'>
+        <img class='page-3-graph' src='./img/pageThree-graphTwo.png'>
     </div>
     <div class='graph-container'>
         <p><u>3) Simple common effect diagram where node A and Node B both cause the effect C</u></p>
@@ -107,8 +107,8 @@ var causal_models_intro_3 = `
 
 var links_template = `
 <div class='page-4-left'>
-    <img class='page-4-graph' id='page-4-graphOne' src='./img/pageFour-graphOne.PNG'>
-    <img class='page-4-graph' id='page-4-graphTwo' src='./img/pageFour-graphTwo.PNG'>
+    <img class='page-4-graph' id='page-4-graphOne' src='./img/pageFour-graphOne.png'>
+    <img class='page-4-graph' id='page-4-graphTwo' src='./img/pageFour-graphTwo.png'>
     <img class='page-4-graph' id='page-4-graphThree' src='./img/pageFour-graphThree.PNG'>
     <div class='page-4-graph' id='page-4-graphFour-p' style='width:100%;'>
         <p>
