@@ -27,9 +27,9 @@ var condLabel = shuffleArray(['crime', 'finance', 'estate']);
 var condControl = shuffleArray(['crime_control', 'finance_control', 'estate_control']);
 
 var easyBlocks = [
-    easyLink,
     chains,
     colliders,
+    easyLink,
     commonCause
 ];
 
