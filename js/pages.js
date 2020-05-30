@@ -323,7 +323,10 @@ var graph_intro_1 = `
     <br><br>
     With these models, you were able to represent causes and effects in a static way. However, in reality, interactions between causes and effects happen over time. 
     <br>
-    In the next section, we will add another way to represent causal dynamics. One that takes time into account. 
+    In the next section, we will add another way to represent causal dynamics. 
+    <br>
+    One that takes time into account. 
+    <br><br>
     Here we will ask you to first attempt to understand the causal model underling the patterns you observe in a limited amount of time by interacting with the interface in a timely manner.
     <br>
     Then you will be asked to report the sign, i.e. is it a negative (more is less) or a positive (more is more) effect, and the strength, i.e. 0, 1 or 2 arrows, of the relationships you observed. 
@@ -352,22 +355,25 @@ var graph_intro_2 = `
 </div>`;
 
 var graph_intro_3 = `
-<p> 
-    <div id='spanLabels'>There are two kinds of trial:
+
+<div id='spanLabels'>There are two kinds of trial:
     <ul>
         <li><strong>Colours:</strong> variables are simply named after their colour, i.e. <span class='c-blue'>blue</span>, <span class='c-red'>red</span> and <span class='c-green'>green</span>.</li>
-        <li><strong>Labels:</strong> variables have labels of concepts you have seen during the Loopy task. In this case the task is the same but there will be an additional question asking you to report whether the relationships you observed during the task made sense to you.</li>
+        <li><strong>Labels:</strong> variables have labels of concepts you have seen during the causal model task. In this case the task is the same but there will be an additional question asking you to report whether the relationships you observed during the task made sense to you.</li>
     </ul>
-    </div>
-    Sections will vary in difficulty, this is perfectly normal. Each of them lasts for 60 seconds maximum, after which the game stops and the report page is displayed.
+</div>
+<p> 
+    Sections will vary in difficulty, this is perfectly normal. Each of them lasts for <strong>60 seconds maximum</strong>, after which the game stops and the report page is displayed.
     <br><br>
-    However, after 30 seconds, a stop button will appear on the bottom right in place of the start button, allowing you to stop early and display the report page if you feel you have understood the dynamics of the system before the end of the 60 seconds.
-    <br>
-    You will be shown sliders allowing you to indicate the relationship between variables, they will be displayed one at a time.
+    However, <strong>after 30 seconds</strong>, a stop button will appear on the bottom right in place of the start button, allowing you to stop early and display the report page if you feel you have understood the dynamics of the system before the end of the trial.
+    <br><br>
+    After you press <strong>stop</strong> or 60 seconds pass, you will be shown sliders allowing you to indicate the relationship between variables, they will be displayed two at a time exactly like what you have previously done.
+    <br><br>
+    When you report you findings, keep in mind that the links between variables follow the same logic as the causal models. 
     <br>
     The sliders are initialized at 0 and can be moved to the left (-1, -2) to indicate a negative effect or to the right (+1, +2) to indicate a positive effect.
     <br>
-    When you report you findings, keep in mind that the links between variables follow the same logic as what you have done with Loopy. Namely:
+    Rules are as follows:
     <ul>
         <li>Variables can have multiple causes: changes in A can be caused by changes in B or C or both</li>
         <li>Variables can have multiple effects: changes in A can cause changes in B or C or both</li>

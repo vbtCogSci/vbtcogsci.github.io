@@ -7,7 +7,7 @@
     src: url("../fonts/Bellerose.ttf");
   }
   html, input, button, .ui-slider-handle {
-  font-family: 'Fira Mono', 'Ubuntu Mono', monospace;
+  font-family: 'Arial', 'Fira Mono', 'Ubuntu Mono', monospace;
   }
   
   html {
