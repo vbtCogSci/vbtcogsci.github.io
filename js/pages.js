@@ -1,16 +1,52 @@
-var consent_page = `
+var consent_page_1 = `
 <p>
     <strong>Welcome to the dynamic inference experiment</strong>
+    <br><br>
+    Note: Fluent English speakers only.
+    <br><br>
+    <strong>Identification of Investigator and Purpose of Study</strong>
     <br>
-    This experiment has been approved by the UCL ethics commitee. Please read the following carefully before moving on.
+    You are invited to participate in a research study conducted by Victor Btesh (victor.btesh.19@ucl.ac.uk) under the supervision of Professor David Lagnado at University College London. The purpose of this research study is to examine how people reason and learn about systems in continuous time. You are free to contact the investigators at the above email address if you wish to discuss the study. 
+    <br><br>
+    <strong>About the study:</strong>
+    <br>This task is part of a research study. For this task you will answer questions about topics such as public policy and health. No prior experience or expertise is necessary. The task will take approximately 20 minutes and at the end there will be a questionnaire to obtain demographic information. 
+    <br><br>
+    You are required to remain in a fully maximised tab throughout the study.
     <br>
-    If you feel the interface or too small, do not hesitate to zoom in or out by holding the Ctrl key and scrolling up (zoom in) or down (zoom out).
-    Please make sure you consent to the following
-    <br>                
-    - Your data being used for research purposes but will be anonymised
-    <br>
-    - You can stop the experiment at anytime if you feel uncomfortable with the content or simply wish to.
+    <u>**Please do not use mobile devices.**</u>
+    <br><br>
+    Please do not accept or attempt multiple surveys. If you have been rejected from previous surveys, you will not be able to participate. To proceed forward at each point, you will have to use the ‘next’ button. An disabled ‘next’ button means that you still have an ongoing task on the current page.
 </p>`;
+
+var consent_page_2 = `
+<p>
+    <strong>Risks, Benefits and Data Confidentiality</strong>
+    <br>
+    There are no known risks in participating in this study, and no health or cognitive benefits. Whilst your data will be provided anonymously, at the point of data collection, your responses in the survey could, theoretically, be linked back to you via your Prolific ID, or your IP address. 
+    <br>
+    The former is collected to enable your payment, the latter to ensure that there are no duplicate responses in the database. After we have used the data for this purpose, this information will be deleted from the data file. The data will subsequently be stored anonymously, such that your individual responses will not be traceable back to you. 
+    All personal information will remain confidential and the data gathered will be stored anonymously and securely. It will not be possible to identify you in any publications. Any anonymised research data may be shared with, and used by, others for future research.
+    <br><br>
+    <strong>Participation or Withdrawal</strong>
+    <br>
+    Your participation in the study is voluntary. You may decline to answer any question and have the right to withdraw from participation at any time. Withdrawal will not affect your relationship with University College London in any way. 
+    Simply close your browser if you wish to withdraw.
+    <br><br>
+    <strong>**The study has been processed by the Research Ethics Committee at University College London and the study number is EP/2017/005.**</strong>
+</p>
+<fieldset class='consent-field'>
+    <legend>Answer the following question concerning you consent before starting the experiment:</legend>
+    <label for="read">I have read the information on this page.</label>
+    <input type="checkbox" name="consent-cb" id="read"><br>
+    <label for="contact">I have been given contact details of the researcher to ask questions, should I wish to.</label>
+    <input type="checkbox" name="consent-cb" id="contact"><br>
+    <label for="data-prot">I understand that my data will be held anonymously and as such, my responses cannot be tracked to me individually.</label>
+    <input type="checkbox" name="consent-cb" id="data-prot">
+    <label for="withdrawal">I understand that I am free to withdraw from the study without penalty if I so wish, simply by closing the browser.</label>
+    <input type="checkbox" name="consent-cb" id="withdrawal">
+    <label for="consent">I understand that my data will be held anonymously and as such, my responses cannot be tracked to me individually.</label>
+    <input type="checkbox" name="consent-cb" id="consent">
+</fieldset>`;
 
 var causal_models_intro_1 = `
 <p>
@@ -623,9 +659,14 @@ var outro_3 = `
 <p>
     All done, you have reached the end of this experiment, thank you very much for participating!
     <br><br>
-    Please click on the link below to go back to the Prolific platform.
+    Please click on the link below to go back to the Prolific platform and receive your compensation.
     <br><br>
-    Back to prolific: <a id='prolific-link'>INSERT LINK</a>
+    Back to prolific: <a id='prolific-link' href='#'>Back to Prolific.co</a>
+</p>`;
+
+var outro_4 = `
+<p>
+    Thank you for you participation!
 </p>`;
 
 

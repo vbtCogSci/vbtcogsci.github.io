@@ -3,6 +3,7 @@ var uid = localStorage.getItem('uid');
 console.log(uid);
 // Generate firebase reference
 var db = firebase.database();
+var prolific;
 
 // OTHER GLOBAL VARIABLES
 // String containing the current model preset
@@ -11,6 +12,10 @@ var condition;
 var condIdx;
 var dbCond;
 var labBlocks = [0, 0, 0];
+
+// Time data
+var startTime;
+var endTime;
 
 // Strings correspond to preset names in the sliders.js presets variable
 var easyLink = ['easy_1', 'easy_2', 'easy_2'];
@@ -42,66 +47,144 @@ var linkScenarioIdx = [];
 var genGraphIdx = [];
 var labGraphIdx = [];
 
+
 // Generate a new uid if it not a new user
 if (uid == null) {
     console.log('No uid in localStorage')
     // if does not exists, generate a new one
-    uid = 'pilot_'.concat(Math.random().toString().slice(2, 11));
+    uid = getQueryVariable('PROLIFIC_PID')
+    if (uid == false) {
+        uid = 'pilot_'.concat(Math.random().toString().slice(2, 11));
+        prolific = false;
+        // Change href for prolific return as person is not from prolific
+    } else {
+        prolific = true
+    }
+    localStorage.setItem('prolific', prolific)
+
     // Generate a list of all user ids.
     // Generate a new uid and push it to the db
-    db.ref('uids').push(uid);
+    db.ref('uids').orderByValue().equalTo(uid).once('value').then(function(snapshot) {
+        request = snapshot;
+        console.log(request.val())
+        if (request.val() != undefined) {
+            // Retrieve state and bring user back there
+            db.ref('states').child(uid).once('value').then(function (snapshot) {
+                var states = snapshot.val();
+                //console.log(states)
+                condIdx = states.condIdx;
+                //console.log(condIdx)
+                condition = states.condition;
+                currentModel = states.state;
+
+                // Redefine condition
+                if (condition == 'label') {
+                    labBlocks = [
+                        condLabel[0],
+                        condLabel[1],
+                        condLabel[2]
+                    ]
+                    // Select only crime
+                    labBlocks = [condLabel[condLabel.indexOf('crime')]];
+                } else {
+                    labBlocks = [
+                        condControl[0],
+                        condControl[1],
+                        condControl[2]
+                    ]
+                    // Select only crime
+                    labBlocks = [condControl[condControl.indexOf('crime_control')]];
+                }
+
+                // Rebuild survey
+                // Build the sequencing of blocks
+                condSeq = buildBlockSeq(condition);
+
+                // Set up number of pages and current page
+                pageIdx = condSeq[condIdx];
+                numPages = condSeq.length;
+
+                // Set current page to page idx
+                currentPage = '#page-'.concat(pageIdx.toString());
+
+                // Display current page
+                $(currentPage).css({'display':'flex'});
+                
+                setupPage(true);
+                console.log(condIdx)
+
+                localStorage.setItem('condition', condition)
+                localStorage.setItem('condIdx', condIdx)
+                localStorage.setItem('currentModel', currentModel)
+
+            })
+        } else {
+            // No entry in DB means new user id
+            console.log('Hello, I work')
+            db.ref('uids').push(uid);
+
+            // Define condition
+            // Get condition list from db, shift element and replace
+            db.ref('cond').once('value').then(function(snapshot) {
+                dbCond= snapshot.val().toString()
+            
+                if (dbCond == "label") {
+                    console.log('changing to control')
+                    db.ref('cond').set('control');
+                } else {
+                    console.log('changing to label')
+                    db.ref('cond').set('label');
+                }
+            
+                condition = dbCond;
+            
+                if (condition == 'label') {
+                    labBlocks = [
+                        condLabel[0],
+                        condLabel[1],
+                        condLabel[2]
+                    ]
+                    // Select only crime
+                    labBlocks = [condLabel[condLabel.indexOf('crime')]];
+                } else {
+                    labBlocks = [
+                        condControl[0],
+                        condControl[1],
+                        condControl[2]
+                    ]
+                    // Select only crime
+                    labBlocks = [condControl[condControl.indexOf('crime_control')]];
+                    // Adjust sequence 
+                    condSeq = buildBlockSeq(condition);
+                }
+            
+                db.ref('states').child(uid).child('condition').set(condition);
+                localStorage.setItem('condition', condition)
+                localStorage.setItem('condIdx', condIdx)
+                localStorage.setItem('currentModel', currentModel)
+                // Save state to DB
+                saveState()
+            });
+        }
+    })
     // Push it also to localstorage
     localStorage.setItem('uid', uid);
-
-    // Define condition
-    // Get condition list from db, shift element and replace
-    db.ref('cond').once('value').then(function(snapshot) {
-        dbCond= snapshot.val().toString()
-
-        if (dbCond == "label") {
-            console.log('changing to control')
-            db.ref('cond').set('control');
-        } else {
-            console.log('changing to label')
-            db.ref('cond').set('label');
-        }
-
-        condition = dbCond;
-
-        if (condition == 'label') {
-            labBlocks = [
-                condLabel[0],
-                condLabel[1],
-                condLabel[2]
-            ]
-            // Select only crime
-            labBlocks = [condLabel[condLabel.indexOf('crime')]];
-        } else {
-            labBlocks = [
-                condControl[0],
-                condControl[1],
-                condControl[2]
-            ]
-            // Select only crime
-            labBlocks = [condControl[condControl.indexOf('crime_control')]];
-            // Adjust sequence 
-            condSeq = buildBlockSeq(condition);
-        }
-
-        db.ref('data').child(uid).child('condition').set(condition);
-        localStorage.setItem('condition', condition)
-        localStorage.setItem('condIdx', condIdx)
-        localStorage.setItem('currentModel', currentModel)
-    });
-    
     // Set condition to be bd cond and replace condition in database
     //condition = dbCond;
     condIdx = 0;
-
+    //console.log(condIdx)
+    
 } else {
-    // Recover state from database
+    // Recover state from localstorage
+    console.log(localStorage)
     condition = localStorage.getItem('condition');
     condIdx = parseInt(localStorage.getItem('condIdx'));
+    prolific = localStorage.getItem('prolific');
+    if (prolific == 'true') {
+        prolific = true;
+    } else {
+        prolific = false;
+    }
     currentModel = localStorage.getItem('currentModel');
 
     if (condition == 'label') {
@@ -120,7 +203,6 @@ if (uid == null) {
         ]
         // Select only crime
         labBlocks = [condControl[condControl.indexOf('crime_control')]];
-        
     }
 }
 
@@ -215,11 +297,17 @@ function setupGame(condIdx) {
 // UTILITY FUNCTIONS
 
 function saveState() {
-    db.ref('data').child(uid).child('state').set(currentModel);
-    db.ref('data').child(uid).child('condIdx').set(condIdx);
+    db.ref('states').child(uid).child('state').set(currentModel);
+    db.ref('states').child(uid).child('condIdx').set(condIdx);
     
     localStorage.setItem('condIdx', condIdx);
     localStorage.setItem('currentModel', currentModel);
+
+    if (condIdx < 2) {
+        // Save date and time of submission
+        startTime = Date.now();
+        db.ref('date').child(uid).child('start').set(Date.now());
+    }
 }
 
 function saveLinkData() {
@@ -292,7 +380,9 @@ function saveDemographics () {
     db.ref('demo').child(uid).child('graph_fb').set(radioGraph);
 
     // Save date and time of submission
-    db.ref('date').child(uid).set(Date.now());
+    endTime = Date.now();
+    db.ref('date').child(uid).child('end').set(Date.now());
+    db.ref('date').child(uid).child('duration').set(endTime - startTime);
 }
 
 function saveTechnicalFb () {
@@ -378,6 +468,20 @@ function resetFeedback(presetLabels) {
     });
 }
 
+
+// Get uid from prolific string
+function getQueryVariable(variable) {
+    var query = window.location.search.substring(1);
+    var vars = query.split('&');
+    for (var i = 0; i < vars.length; i++) {
+        var pair = vars[i].split('=');
+        if (decodeURIComponent(pair[0]) == variable) {
+            return decodeURIComponent(pair[1]);
+        }
+    }
+    console.log('Query variable %s not found', variable);
+    return false
+}
 
 function shuffleArray(array) {
     for (var i = array.length - 1; i > 0; i--) {

@@ -7,7 +7,7 @@ var gameLoop;
 var time_step = 200;
 var elapsed = 0; // Duration of the trial
 var endTrial = 60000; // Supposed to be 1 min, time at which all stops here 1 min,  60 sec or 60,000 ms
-var midTrial = Math.floor(endTrial / 6); // Time at which participants can stop, half the total duration
+var midTrial = Math.floor(endTrial / 2); // Time at which participants can stop, half the total duration
 var x = 0;
 var y = 0;
 var z = 0;
@@ -154,16 +154,16 @@ var presets = {
 
 // --- Global function run at page load --- //
 
-$('document').ready(function () {
-    // Setup initial slider positions
-    setupSliders();
-     // Setup chart logic and look
-    setupChart(['X', 'Y', 'Z']);
-    // Setup user interface
-    setupInterface();
-    // If last page was a graph, load the appropriate graph
-    setupPage();
-})
+//$('document').ready(function () {
+//    // Setup initial slider positions
+//    setupSliders();
+//     // Setup chart logic and look
+//    setupChart(['X', 'Y', 'Z']);
+//    // Setup user interface
+//    setupInterface();
+//    // If last page was a graph, load the appropriate graph
+//    setupPage(true);
+//})
 
 
 // --- Interface setup: Button, parameters and coefficients --- //
@@ -193,8 +193,6 @@ function setupInterface() {
             if (elapsed >= endTrial) {
                 // Stop trial all together
                 // Disable all interactable buttons
-                $('#stop_button').button({disabled: true});
-                $('#start_button').button({disabled: true});
                 $('.slider').slider({disabled: true});
                 $('#next_button').button({disabled: false});
                 // Display feeback

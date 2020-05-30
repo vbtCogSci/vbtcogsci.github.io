@@ -52,6 +52,15 @@ $('document').ready(function () {
     setupFeedback();
     // Set up logic for outro feedback (demographics and technical issues)
     setupOutro();
+
+    // Setup initial slider positions
+    setupSliders();
+    // Setup chart logic and look
+    setupChart(['X', 'Y', 'Z']);
+    // Setup user interface
+    setupInterface();
+    // If last page was a graph, load the appropriate graph
+    setupPage(true);
 });
 
 
@@ -73,31 +82,54 @@ function setupNavigation() {
     }).css('display', 'none');
     $('#next_button').click(function () {
         if (condIdx < numPages-1) {
+            console.log('next clicked')
             condIdx += 1;
             pageIdx = condSeq[condIdx];
             // Update showed page
-            updatePage(pageIdx);
+            //updatePage(pageIdx);
             // Setup page according to current page
-            setupPage();
+            setupPage(false);
         } else {
             $('#next_button').css('display', 'none');
         }
     })
 
+    $('#prolific-link').click(function () {
+        // Put participants to last page without link once they have participated
+        condIdx += 1;
+        console.log('Hello')
+        pageIdx = condSeq[condIdx];
+        setupPage(false)
+        saveState();
+    })
+
+    if (prolific == true) {
+        $('#prolific-link').attr("href", 'https://app.prolific.co/submissions/complete?cc=49081850')
+    }
+
 }
 
 function updatePage(pageIdx) {
-    $(currentPage).css('display', 'none');
+    console.log('cond idx: '.concat(condIdx))
+    console.log('Page idx: '.concat(pageIdx))
+    $('.survey-page').css('display', 'none');
+    //$(currentPage).css('display', 'none');
+
     //console.log(currentPage)
     currentPage = '#page-'.concat(pageIdx.toString());
     $(currentPage).css('display', 'flex');
     //console.log(currentPage)
 }
 
-function setupPage() {
+function setupPage(init) {
+    updatePage(pageIdx)
     // Disable next if next page has a loopy input
     $('#next_button').button('enable');
-    if ($(currentPage).find('.page-4-right').length != 0) {
+    if ($(currentPage).find('#data-prot').length != 0) {
+        console.log('consent')
+        $('#next_button').button('disable');
+        setupConsent();
+    } else if ($(currentPage).find('.page-4-right').length != 0) {
         $('#next_button').button('disable');
         setupLinkTraining(condIdx);
     } else if ($(currentPage).find('#spanLabels').length != 0) {
@@ -119,7 +151,9 @@ function setupPage() {
     // clear game interval
     clearInterval(gameLoop);
     // Save current survey state
-    saveState();
+    if (init == false) {
+        saveState();
+    }
 }
 
 // LOOPY LINK SUBMIT LOGIC AND PARSING
@@ -174,6 +208,25 @@ function parseLoopyLink(link, loopyNum) {
     }
 }
 
+// Setup consent page
+function setupConsent() {
+    $("input:checkbox[name=consent-cb]").each(function(index, element) {
+        var $checkbox = $(element);
+        $checkbox.click(function () {
+            var consent_counter = 0;
+            $("input:checkbox[name=consent-cb]").each(function(index, element2) {
+                if ($(element2).is(':checked')) {
+                    consent_counter ++;
+                }
+            })
+            if (consent_counter > 4) {
+                $('#next_button').button('enable');
+            } else {
+                $('#next_button').button('disable');
+            }
+        })
+    })
+}
 
 // SETUP FEEDBACK PAGES
 function setupFeedback() {
@@ -353,9 +406,9 @@ function setupFeedback() {
 }
 
 function nextNode () {
-    console.log('Prev Idx: '.concat(nodeIdx.toString()))
+    //console.log('Prev Idx: '.concat(nodeIdx.toString()))
     if (nodeIdx < 2) {
-        console.log('Less than 2')
+        //console.log('Less than 2')
         var prev = nodeList[nodeIdx];
         $(prev).css('display', 'none');
         nodeIdx += 1;
@@ -369,7 +422,7 @@ function nextNode () {
         first_moved = false;
         second_moved = false;
     } else if (nodeIdx == 2 && ['crime', 'finance', 'estate'].includes(currentModel)) {
-        console.log('2 and going for qual')
+        //console.log('2 and going for qual')
         var prev = nodeList[nodeIdx];
         $(prev).css('display', 'none');
         nodeIdx += 1;
@@ -397,7 +450,7 @@ function nextNode () {
             saveGraphData();
         }
     }
-    console.log('Next Idx: '.concat(nodeIdx.toString()))
+    //console.log('Next Idx: '.concat(nodeIdx.toString()))
 }
 
 
@@ -500,7 +553,8 @@ function buildSurvey() {
 
     // Intro content
     var intro_content = [];
-    intro_content.push(consent_page);
+    intro_content.push(consent_page_1);
+    intro_content.push(consent_page_2);
     intro_content.push(causal_models_intro_1);
     intro_content.push(causal_models_intro_2);
     intro_content.push(causal_models_intro_3);
@@ -518,6 +572,7 @@ function buildSurvey() {
     outro_content.push(outro_1);
     outro_content.push(outro_2);
     outro_content.push(outro_3);
+    outro_content.push(outro_4);
 
     // Experimental content
     var crime_links = [];
@@ -565,7 +620,7 @@ function buildSurvey() {
         $('#'.concat(page)).html(survey_pages[i]);
     }
 
-    return survey_pages;
+    //return survey_pages;
 }
 
 
