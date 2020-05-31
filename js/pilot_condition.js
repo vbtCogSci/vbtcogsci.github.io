@@ -29,7 +29,6 @@ var condControl = shuffleArray(['crime_control', 'finance_control', 'estate_cont
 var easyBlocks = [
     chains,
     colliders,
-    easyLink,
     commonCause
 ];
 
@@ -38,7 +37,7 @@ var easyBlocks = [
 // Variables that define the number of experimental block of each type.
 var numLinkBlocks = 3;
 var numLinkScenario = 1;
-var numGenBlocks = 4;
+var numGenBlocks = 3;
 var numLabelBlocks = 1;
 
 // Define variables that keep track of block indices

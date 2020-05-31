@@ -124,7 +124,7 @@ var presets = {
               1, 1, 0, 
               -0.5, -0.5, 1, 
               'Crime rate', 'Police action', 'Population happiness',
-              'Crime<br>rate', 'Police action', 'Population happiness'],
+              'Crime<br>rate', 'Police<br>action', 'Population happiness'],
     'crime_control': [1, -1, 0,
                       1, 1, 0, 
                       -0.5, -0.5, 1, 
@@ -527,6 +527,12 @@ function setupChart(labels) {
                         suggestedMin: -100,    // minimum will be 0, unless there is a lower value.
                         suggestedMax: 100,
                         beginAtZero: false   // minimum value will be 0.
+                    }
+                }],
+                xAxes: [{
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Time (seconds)'
                     }
                 }]
             }

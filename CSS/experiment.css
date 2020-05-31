@@ -248,7 +248,7 @@
 
     /* Chart.js specific CSS */
     #progressPlot {
-      width: 100px;
+      width: 100%;
 }
 
   /* Slider and chart container for experiment page */
@@ -273,7 +273,7 @@
     padding: 0%;
     display: flex;
     flex-wrap: wrap;
-    height: 90%;
+    height: 100%;
     width: 60%;
     justify-content: center;
     align-content: center;
@@ -310,8 +310,8 @@
   }
 
   .slider {
-      height: 60%;
-      margin-bottom: 65%;
+      height: 55%;
+      margin-bottom: 25%;
       align-self: center;
   }
 
