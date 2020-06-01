@@ -323,15 +323,15 @@ var graph_intro_1 = `
     <br><br>
     With these models, you were able to represent causes and effects in a static way. However, in reality, interactions between causes and effects happen over time. 
     <br>
-    In the next section, we will add another way to represent causal dynamics. 
+    In the next section, we will add another way to represent causal dynamics. One that takes time into account. 
     <br>
-    One that takes time into account. 
+    In the next blocks, you will see a graph with three lines representing the values of three variables changing through time according to a causal model like the ones you drew before.
     <br><br>
     Here we will ask you to first attempt to understand the causal model underling the patterns you observe in a limited amount of time by interacting with the interface in a timely manner.
     <br>
     Then you will be asked to report the sign, i.e. is it a negative (more is less) or a positive (more is more) effect, and the strength, i.e. 0, 1 or 2 arrows, of the relationships you observed. 
     <br>
-    The window will be layed out as shown in the picture below. To start the game, press the <strong>start button on the bottom right</strong>. You will have two tools at your disposal:
+    The next page will show you a short video to observe the layout and get a first impression of the task. To start the game, press the <strong>start button on the bottom right</strong>. You will have two tools at your disposal:
     <ul>
         <li><strong>Interventions</strong>: the three handles on the right allow you to voluntarily change the value of one of the variables as long as you keep hold of it with your mouse.</li>
         <li><strong>Observations</strong>: the graph on the left plots the values (i.e. vertical axis is the value) that the three variables took in the last 10 seconds (i.e. horizontal axis is time in seconds), 
@@ -339,7 +339,8 @@ var graph_intro_1 = `
     </ul>
     The colours of the variables' names always corresponds to their respective colours on the graph.
     Watch next page's video. It shows a brief extract of what the game looks like in real time.
-</p>`;
+</p>
+<img class='graph-intro-img' id='layout-ex' src='./img/layout-ex.PNG'>`;
 
 var graph_intro_2 = `
 <p>
