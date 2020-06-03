@@ -54,7 +54,7 @@ var causal_models_intro_1 = `
     For example, you might use causal reasoning when deciding what to eat (e.g. avoiding certain <strong>foods</strong> you know might <strong>cause</strong> you <strong>stomach pains</strong>).
     Any situation involving reasoning about causes and effects can be represented in what we call a <strong>"causal model"</strong>. 
     <br>
-    Causal models are essentially diagramming that allow you to represent objects, events, items of information etc. as” NODES" <strong>(circles)</strong> 
+    Causal models are essentially diagrams that allow you to represent objects, events, items of information etc. as” NODES" <strong>(circles)</strong> 
     and draw arrows between these nodes to represent the relationship between them (e.g. cause and effect). 
     <br>
     For example, if you wanted to represent the following information in a causal model: 
@@ -319,38 +319,52 @@ var link_estate = `
 
 var graph_intro_1 = `
 <p>
-    <strong> Thank you for sharing you models! </strong>
+    <strong> Thank you for sharing your models! </strong>
     <br><br>
     With these models, you were able to represent causes and effects in a static way. However, in reality, interactions between causes and effects happen over time. 
     <br>
-    In the next section, we will add another way to represent causal dynamics. One that takes time into account. 
+    In the next section, we will see another way to represent causal dynamics. One that takes time into account. 
     <br>
     In the next blocks, you will see a graph with three lines representing the values of three variables changing through time according to a causal model like the ones you drew before.
     <br><br>
-    Here we will ask you to first attempt to understand the causal model underling the patterns you observe in a limited amount of time by interacting with the interface in a timely manner.
+    Here we will ask you use handles on the right hand side of a graph to manually change the value of variables. Your goal is to understand the causal model underling the behaviour of the lines by using the handle of one variable at a time and observe if there are changes in the other two.
     <br>
-    Then you will be asked to report the sign, i.e. is it a negative (more is less) or a positive (more is more) effect, and the strength, i.e. 0, 1 or 2 arrows, of the relationships you observed. 
+    Then you will be asked to report the sign, i.e. is it a negative or a positive effect, and the strength, i.e. 0, 1 or 2 arrows, of the relationships you observed.
     <br>
-    The next page will show you a short video to observe the layout and get a first impression of the task. To start the game, press the <strong>start button on the bottom right</strong>. You will have two tools at your disposal:
-    <ul>
-        <li><strong>Interventions</strong>: the three handles on the right allow you to voluntarily change the value of one of the variables as long as you keep hold of it with your mouse.</li>
-        <li><strong>Observations</strong>: the graph on the left plots the values (i.e. vertical axis is the value) that the three variables took in the last 10 seconds (i.e. horizontal axis is time in seconds), 
-            allowing you to observe their variations through time and the result of you interventions. These will be represented by a shading in the graph of variable's colour.</li> 
-    </ul>
-    The colours of the variables' names always corresponds to their respective colours on the graph.
-    Watch next page's video. It shows a brief extract of what the game looks like in real time.
+    The next page will show you a short video to observe the layout and get a first impression of the task. You will have two tools at your disposal:
 </p>
-<img class='graph-intro-img' id='layout-ex' src='./img/layout-ex.PNG'>`;
+<ul>
+    <li><strong>Interventions</strong>: the three handles on the right allow you to voluntarily change the value of one of the variables as long as you keep hold of it with your mouse.</li>
+    <li><strong>Observations</strong>: the graph on the left plots the values (i.e. vertical axis is the value) that the three variables took in the last 10 seconds (i.e. horizontal axis is time in seconds), 
+        allowing you to observe their variations through time and the result of you interventions. These will be represented by a shading in the graph of variable's colour.</li> 
+</ul>
+<div id='spanLabels'>There are two kinds of trial, the colours of the variables' names always corresponds to their respective colours on the graph:
+    <ul>
+        <li><strong>Colours:</strong> variables are simply named after their colour, i.e. <span class='c-blue'>blue</span>, <span class='c-red'>red</span> and <span class='c-green'>green</span>.</li>
+        <li><strong>Labels:</strong> variables have labels of concepts you have seen during the causal model task. In this case the task is the same but there will be an additional question asking you to report whether the relationships you observed during the task made sense to you.</li>
+    </ul>
+</div>
+<p>
+    Watch next page's video. It shows a brief extract of what the game looks like in real time.
+</p>`;
+
+//<img class='graph-intro-img' id='layout-ex' src='./img/layout-ex.PNG'>`;
 
 var graph_intro_2 = `
 <p>
-    <strong>Watch carefully to familiarise yourself with the interface.</strong> 
+    To start the game, press the <strong>start button on the bottom right</strong>.
     <br>
-    Next page will provide a few more indications before you start.
+    Sections will vary in difficulty, this is perfectly normal. Each of them lasts for <strong>60 seconds maximum</strong>, after which the game stops and the report page is displayed.
+    <br>
+    However, <strong>after 30 seconds</strong>, a stop button will appear on the bottom right in place of the start button, allowing you to stop early and display the report page if you feel you have understood the dynamics of the system before the end of the trial.
+    <br><br>
+    After you press <strong>stop</strong> or 60 seconds pass, you will be shown sliders allowing you to indicate the relationship between variables, they will be displayed two at a time exactly like what you have previously done.
+    <br>
+    <strong>Watch carefully to familiarise yourself with the interface.</strong> The first trial starts next page.
 </p>
 <div class='video-container'>
     <video controls>
-        <source src="./img/graphTuto1.mp4" type="video/mp4">
+        <source src="./img/graphTuto3.mp4" type="video/mp4">
         Your browser does not support the video tag.
     </video>
 </div>`;
@@ -574,7 +588,7 @@ var outro_1 = `
     </fieldset>
     <br>
     <fieldset class='loopy-fb-field'>
-        <legend>To what extent did you find the Loopy tool entertaining to use?</legend>
+        <legend>To what extent did you find the causal model section entertaining?</legend>
         <label for="loopy-hate">I really disliked it</label>
         <input type="radio" name="loopy-fb" id="loopy-hate">
         <label for="loopy-annoy">I disliked it</label>
@@ -588,7 +602,7 @@ var outro_1 = `
     </fieldset>
     <br>
     <fieldset class='graph-fb-field'>
-        <legend>To what extent did you find the graph and slider interface entertaining to use?</legend>
+        <legend>To what extent did you find the graph interface entertaining to use?</legend>
         <label for="graph-hate">I really disliked it</label>
         <input type="radio" name="graph-fb" id="graph-hate">
         <label for="graph-annoy">I disliked it</label>

@@ -565,8 +565,8 @@ function buildSurvey() {
     var intro_graph = [];
     intro_graph.push(graph_intro_1);
     intro_graph.push(graph_intro_2);
-    intro_graph.push(graph_intro_3);
-    intro_graph.push(graph_intro_4);
+    //intro_graph.push(graph_intro_3);
+    //intro_graph.push(graph_intro_4);
 
     var outro_content = [];
     outro_content.push(outro_1);

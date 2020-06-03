@@ -411,6 +411,7 @@ function saveTechnicalFb () {
 
 function resetInterface() {
     $('.slider').slider({disabled: true});
+    $('#start_button').button({disabled: false});
     //$('#stop_button').button({disabled: true});
     $('#start_button').css({'display': 'flex'});
     $('#stop_button').css({'display': 'none'});
