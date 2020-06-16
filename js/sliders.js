@@ -6,8 +6,8 @@ var gameLoop;
 // 10 steps per second with time step of 100 and dt (frequency) 1/10 : 100 * 10 = 1000 ms
 var time_step = 200;
 var elapsed = 0; // Duration of the trial
-var endTrial = 60000; // Supposed to be 1 min, time at which all stops here 1 min,  60 sec or 60,000 ms
-var midTrial = Math.floor(endTrial / 2); // Time at which participants can stop, half the total duration
+var endTrial = 6000; // Supposed to be 1 min, time at which all stops here 1 min,  60 sec or 60,000 ms
+var midTrial = endTrial*2;//Math.floor(endTrial / 2); // Time at which participants can stop, half the total duration
 var x = 0;
 var y = 0;
 var z = 0;
@@ -33,6 +33,12 @@ var xInter = [0];
 var yInter = [0];
 var zInter = [0];
 var steps = [0];
+var firstHist = ['?'];
+var secondHist = ['?'];
+var thirdHist = ['?'];
+var fourthHist = ['?'];
+var fifthHist = ['?'];
+var sixthHist = ['?'];
 
 var chart;
 var chart2;
@@ -120,15 +126,60 @@ var presets = {
               0, 1, 0, 
               0.2, -0.8, 1, 
               'Positive tests', 'Infected cases', 'Negative tests'],
-    'crime': [1, -1, 0,
-              1, 1, 0, 
+    'crime': [[1, -1, 0,
+               1, 1, 0, 
               -0.5, -0.5, 1, 
               'Crime rate', 'Police action', 'Population happiness',
               'Crime<br>rate', 'Police<br>action', 'Population happiness'],
-    'crime_control': [1, -1, 0,
-                      1, 1, 0, 
+              [1, 0, -1,
+               -0.5, 1, -0.5, 
+               1, 0, 1, 
+               'Crime rate', 'Population happiness', 'Police action', 
+               'Crime<br>rate', 'Population happiness', 'Police<br>action'],
+               [1, 1, 0,
+                -1, 1, 0, 
+               -0.5, -0.5, 1, 
+               'Police action', 'Crime rate', 'Population happiness',
+               'Police<br>action', 'Crime<br>rate', 'Population happiness'],
+               [1, 0, 1,
+                -0.5, 1, -0.5, 
+               -1, 0, 1, 
+               'Police action', 'Population happiness', 'Crime rate',
+               'Police<br>action', 'Population happiness','Crime<br>rate'],
+               [1, -0.5, -0.5,
+                0, 1, -1, 
+                0, 1, 1, 
+               'Population happiness', 'Crime rate', 'Police action', 
+               'Population happiness', 'Crime<br>rate', 'Police<br>action'],
+               [1, -0.5, -0.5,
+                0, 1, 1, 
+                0, -1, 1, 
+               'Population happiness', 'Police action', 'Crime rate',
+               'Population happiness', 'Police<br>action', 'Crime<br>rate']],
+    'crime_control': [[1, -1, 0,
+                       1, 1, 0, 
                       -0.5, -0.5, 1, 
                       'Blue', 'Red', 'Green'],
+                      [1, 0, -1,
+                       -0.5, 1, -0.5, 
+                       1, 0, 1, 
+                       'Blue', 'Red', 'Green'],
+                       [1, 1, 0,
+                        -1, 1, 0, 
+                       -0.5, -0.5, 1, 
+                       'Blue', 'Red', 'Green'],
+                       [1, 0, 1,
+                        -0.5, 1, -0.5, 
+                       -1, 0, 1, 
+                       'Blue', 'Red', 'Green'],
+                       [1, -0.5, -0.5,
+                        0, 1, -1, 
+                        0, 1, 1, 
+                        'Blue', 'Red', 'Green'],
+                       [1, -0.5, -0.5,
+                        0, 1, 1, 
+                        0, -1, 1, 
+                        'Blue', 'Red', 'Green']],
     'finance': [1, -0.5, -1,
                 0, 1, -1,
                 -0.5, 1, 1, 
@@ -181,6 +232,7 @@ function setupInterface() {
 
         // Activate sliders for intervention and disable start button
         $('.slider').slider({disabled: false});
+        $('.feedback-slider').slider({disabled: false});
         $('#start_button').button({disabled: true});
         $('#start_button').css({'display': 'none'});
 
@@ -194,12 +246,13 @@ function setupInterface() {
                 // Stop trial all together
                 // Disable all interactable buttons
                 $('.slider').slider({disabled: true});
-                $('#next_button').button({disabled: false});
+                //$('#next_button').button({disabled: false});
                 // Display feeback
-                $('.slider_box').css({'display': 'none'})
+                //$('.slider_box').css({'display': 'none'})
                 $('.button_container').css({'display': 'none'})
                 // Feedback report
-                $(nodeList[0]).css({'display': 'flex'});
+                //$(nodeList[0]).css({'display': 'flex'});
+                $('.feedback-slider').slider({disabled: false});
                 $('.val-link-button').css({'display': 'flex'});
                 //$('#val-button').button({disabled: false});
                 // Clear interval
@@ -323,19 +376,37 @@ function setupInterface() {
 
 // Updates the values of the input table with the selects preset 
 function updateModel(preset) {
-    var presetValues = presets[preset];
-    causes['X'] = presetValues.slice(0, 3);
-    causes['Y'] = presetValues.slice(3, 6);
-    causes['Z'] = presetValues.slice(6, 9);
-    if (presetValues.length > 12) {
+    //var presetValues = presets[preset];
+    if (preset == 'crime') {
+        modelNo = getRandomInt(6);
+        var presetValues = presets[preset][modelNo];
         var presetLabels = presetValues.slice(9, 12);
         var labelsHandle = presetValues.slice(12);
-    } else {
+        causes['X'] = presetValues.slice(0, 3);
+        causes['Y'] = presetValues.slice(3, 6);
+        causes['Z'] = presetValues.slice(6, 9);
+        currentLabels = presetLabels;
+        
+    } else if (preset == 'crime_control') {
+        modelNo = getRandomInt(6);
+        var presetValues = presets[preset][modelNo];
         var presetLabels = presetValues.slice(9, 12);
         var labelsHandle = presetLabels;
+        causes['X'] = presetValues.slice(0, 3);
+        causes['Y'] = presetValues.slice(3, 6);
+        causes['Z'] = presetValues.slice(6, 9);
+        currentLabels = presetLabels;
+    } else {
+        var presetValues = presets[preset];
+        var presetLabels = presetValues.slice(9, 12);
+        var labelsHandle = presetLabels;
+        causes['X'] = presetValues.slice(0, 3);
+        causes['Y'] = presetValues.slice(3, 6);
+        causes['Z'] = presetValues.slice(6, 9);
+        currentLabels = presetLabels;
     }
     
-    currentLabels = presetLabels;
+    
 
     //$('#x_label').html(presetLabels[0]);
     //$('#y_label').html(presetLabels[1]);
@@ -434,6 +505,12 @@ function record(x, y, z, int_x, int_y, int_z, new_step) {
     yInter.push(+ int_y);
     zInter.push(+ int_z);
     steps.push(new_step);
+    firstHist.push($('#handle-XonY').html());
+    secondHist.push($('#handle-XonZ').html());
+    thirdHist.push($('#handle-YonX').html());
+    fourthHist.push($('#handle-YonZ').html());
+    fifthHist.push($('#handle-ZonX').html());
+    sixthHist.push($('#handle-ZonY').html());
 }
 
 
@@ -563,6 +640,7 @@ function setupSliders() {
         },
         stop: function(event, ui) {
             xclicked = false
+            $(':focus').blur()
         }
     })
 
@@ -584,6 +662,7 @@ function setupSliders() {
         },
         stop: function(event, ui) {
             yclicked = false
+            $(':focus').blur()
         }
     });
 
@@ -605,6 +684,7 @@ function setupSliders() {
         },
         stop: function(event, ui) {
             zclicked = false;
+            $(':focus').blur()
         }
     });
 
@@ -640,17 +720,17 @@ function setupSliders() {
         $('.X').css({
             'color': xColour,
             'font-weight': 'bold',
-            'font-size': 'large'
+            'font-size': 'small'
         });
         $('.Y').css({
             'color': yColour,
             'font-weight': 'bold',
-            'font-size': 'large'
+            'font-size': 'small'
         });
         $('.Z').css({
             'color': zColour,
             'font-weight': 'bold',
-            'font-size': 'large'
+            'font-size': 'small'
         });
     }
 
@@ -681,6 +761,14 @@ function setupSliders() {
 
 
 // --- Normal distribution and math functions --- //
+
+function stringify(list) {
+    var outString = "";
+    for (i=0; i<list.length; i++) {
+        outString = outString.concat('_').concat(list[i]);
+    }
+    return outString;
+}
 // https://gist.github.com/bluesmoon/7925696
 
 function round(value, decimals) {

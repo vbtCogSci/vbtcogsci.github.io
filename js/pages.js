@@ -1,5 +1,5 @@
 var consent_page_1 = `
-<p>
+<p class='base-p'>
     <strong>Welcome to the dynamic inference experiment</strong>
     <br><br>
     Note: Fluent English speakers only.
@@ -19,7 +19,7 @@ var consent_page_1 = `
 </p>`;
 
 var consent_page_2 = `
-<p>
+<p class='base-p'>
     <strong>Risks, Benefits and Data Confidentiality</strong>
     <br>
     There are no known risks in participating in this study, and no health or cognitive benefits. Whilst your data will be provided anonymously, at the point of data collection, your responses in the survey could, theoretically, be linked back to you via your Prolific ID, or your IP address. 
@@ -49,7 +49,7 @@ var consent_page_2 = `
 </fieldset>`;
 
 var causal_models_intro_1 = `
-<p>
+<p class='base-p'>
     Forms of causal reasoning (reasoning about causes and effects) are extremely common in everyday situations.
     For example, you might use causal reasoning when deciding what to eat (e.g. avoiding certain <strong>foods</strong> you know might <strong>cause</strong> you <strong>stomach pains</strong>).
     Any situation involving reasoning about causes and effects can be represented in what we call a <strong>"causal model"</strong>. 
@@ -61,13 +61,13 @@ var causal_models_intro_1 = `
     <br>
 </p>
 <span style='align-self: center;'><strong>"<u>rain</u> and a <u>sprinkler</u> can both make the <u>grass wet</u>"</strong></span><br>
-<p>
+<p class='base-p'>
     You would first identify your elements of interest (nodes; RAIN, SPRINKLER, WET GRASS) and using arrows represent <strong>RAIN and SPRINKLER</strong> as causes of the effect: <strong>WET GRASS</strong>.                 The causal model would therefore look like the one below:
 </p>
 <img src='./img/pageOne-graph.png'></img>`;
 
 var causal_models_intro_2 = `
-<p>
+<p class='base-p'>
     Sometimes, you might also want to say whether the cause makes the effect <strong>MORE</strong> or <strong>LESS</strong> likely  e.g. rain makes wet grass MORE likely but if you had another node representing "sunshine" this would make the effect (wet grass) LESS likely.
     <br><br>
     To show this, you can either have a plus (+) or (-) sign next to the arrow to say if the cause makes the effect more likely (+) or less likely (-).
@@ -78,7 +78,7 @@ var causal_models_intro_2 = `
 
 var causal_models_intro_3 = `
 <div class='page-3-upper'>
-    <p>
+    <p class='base-p'>
         In today's task, you will first be presented with a set of concepts and asked to state your representation of their causal links. 
         They will be reprensented as nodes and your task will be to provide your interpretation of the causal links between them.
         <br>
@@ -132,7 +132,9 @@ var links_template = `
         </ul></i>
     </div>
     <img class='page-4-graph' id='page-4-graphFour' src='./img/pageFour-graphFour.PNG'>
-    <img class='page-4-graph' id='page-4-graph-crime' src='./img/pageFour-graph-crime.PNG'>
+    <img class='page-4-graph' id='page-4-graph-crime-1' src='./img/pageFour-graph-crime-1.PNG'>
+    <img class='page-4-graph' id='page-4-graph-crime-2' src='./img/pageFour-graph-crime-2.PNG'>
+    <img class='page-4-graph' id='page-4-graph-crime-3' src='./img/pageFour-graph-crime-3.PNG'>
     <img class='page-4-graph' id='page-4-graph-finance' src='./img/pageFour-graph-finance.PNG'>
     <img class='page-4-graph' id='page-4-graph-estate' src='./img/pageFour-graph-estate.PNG'>
 </div>
@@ -143,7 +145,7 @@ var links_template = `
         <p style='text-align:center'>
             <strong><span class='X'>X</span> -> <span class='Y'>Y</span></strong>
         </p>
-        <div class='feedback-slider' id='AonB'>
+        <div class='feedback-slider first-slider' id='AonB'>
             <div id="handle-AonB" class="ui-slider-handle"></div>
         </div>
     </div>
@@ -152,7 +154,7 @@ var links_template = `
         <p style='text-align:center'>
             <strong><span class='X'>X</span> -> <span class='Z'>Z</span></strong>
         </p>
-        <div class='feedback-slider' id='AonC'>
+        <div class='feedback-slider second-slider' id='AonC'>
             <div id="handle-AonC" class="ui-slider-handle"></div>
         </div>
     </div>
@@ -161,7 +163,7 @@ var links_template = `
         <p style='text-align:center'>
             <strong><span class='Y'>Y</span> -> <span class='X'>X</span></strong>
         </p>
-        <div class='feedback-slider' id='BonA'>
+        <div class='feedback-slider third-slider' id='BonA'>
             <div id="handle-BonA" class="ui-slider-handle"></div>
         </div>
     </div>
@@ -170,7 +172,7 @@ var links_template = `
         <p style='text-align:center'>
             <strong><span class='Y'>Y</span> -> <span class='Z'>Z</span></strong>
         </p>
-        <div class='feedback-slider' id='BonC'>
+        <div class='feedback-slider fourth-slider' id='BonC'>
             <div id="handle-BonC" class="ui-slider-handle"></div>
         </div>
     </div>
@@ -179,7 +181,7 @@ var links_template = `
         <p style='text-align:center'>
             <strong><span class='Z'>Z</span> -> <span class='X'>X</span></strong>
         </p>
-        <div class='feedback-slider' id='ConA'>
+        <div class='feedback-slider fifth-slider' id='ConA'>
             <div id="handle-ConA" class="ui-slider-handle"></div>
         </div>
     </div>
@@ -188,7 +190,7 @@ var links_template = `
         <p style='text-align:center'>
             <strong><span class='Z'>Z</span> -> <span class='Y'>Y</span></strong>
         </p>
-        <div class='feedback-slider' id='ConB'>
+        <div class='feedback-slider sixth-slider' id='ConB'>
             <div id="handle-ConB" class="ui-slider-handle"></div>
         </div>
     </div>
@@ -318,7 +320,7 @@ var link_estate = `
 </div>`;
 
 var graph_intro_1 = `
-<p>
+<p class='base-p'>
     <strong> Thank you for sharing your models! </strong>
     <br><br>
     With these models, you were able to represent causes and effects in a static way. However, in reality, interactions between causes and effects happen over time. 
@@ -344,14 +346,14 @@ var graph_intro_1 = `
         <li><strong>Labels:</strong> variables have labels of concepts you have seen during the causal model task. In this case the task is the same but there will be an additional question asking you to report whether the relationships you observed during the task made sense to you.</li>
     </ul>
 </div>
-<p>
+<p class='base-p'>
     Watch next page's video. It shows a brief extract of what the game looks like in real time.
 </p>`;
 
 //<img class='graph-intro-img' id='layout-ex' src='./img/layout-ex.PNG'>`;
 
 var graph_intro_2 = `
-<p>
+<p class='base-p'>
     To start the game, press the <strong>start button on the bottom right</strong>.
     <br>
     Sections will vary in difficulty, this is perfectly normal. Each of them lasts for <strong>60 seconds maximum</strong>, after which the game stops and the report page is displayed.
@@ -377,7 +379,7 @@ var graph_intro_3 = `
         <li><strong>Labels:</strong> variables have labels of concepts you have seen during the causal model task. In this case the task is the same but there will be an additional question asking you to report whether the relationships you observed during the task made sense to you.</li>
     </ul>
 </div>
-<p> 
+<p class='base-p'> 
     Sections will vary in difficulty, this is perfectly normal. Each of them lasts for <strong>60 seconds maximum</strong>, after which the game stops and the report page is displayed.
     <br><br>
     However, <strong>after 30 seconds</strong>, a stop button will appear on the bottom right in place of the start button, allowing you to stop early and display the report page if you feel you have understood the dynamics of the system before the end of the trial.
@@ -399,7 +401,7 @@ var graph_intro_3 = `
 </p>`;
 
 var graph_intro_4 = `
-<p>
+<p class='base-p'>
 Watch this video that shows a brief extract of how to report you findings. 
 <br>
 <strong> Next page will be a trial run with a simple causal model to practice the use of the interface.</strong>
@@ -421,84 +423,90 @@ var graph_template = `
         <canvas id='progressPlot' style="width:100%;height:100%;"></canvas>
     </div>
     <div class='slider_container'>
-        <div class='slider_box' id='slider_container_1'>
-            <label for='slider_X' class='slider-label' id='x_label'><span class='X'>X</span></label>
-            <div class="slider" id='slider_X'>
-                <div id="custom-handle-1" class="ui-slider-handle"></div>
+        <div class='slider_box_container'>
+            <div class='slider_box' id='slider_container_1'>
+                <label for='slider_X' class='slider-label' id='x_label'><span class='X'>X</span></label>
+                <div class="slider" id='slider_X'>
+                    <div id="custom-handle-1" class="ui-slider-handle"></div>
+                </div>
+            </div>
+            <div class='slider_box' id='slider_container_2'>
+                <label for='slider_Y' class='slider-label' id='y_label'><span class='Y'>Y</span></label>
+                <div class="slider" id='slider_Y'>
+                    <div id="custom-handle-2" class="ui-slider-handle"></div>
+                </div>
+            </div>
+            <div class='slider_box' id='slider_container_3'>
+                <label for='slider_Z' class='slider-label' id='z_label'><span class='Z'>Z</span></label>
+                <div class="slider" id='slider_Z'>
+                    <div id="custom-handle-3" class="ui-slider-handle"></div>
+                </div> 
             </div>
         </div>
-        <div class='slider_box' id='slider_container_2'>
-            <label for='slider_Y' class='slider-label' id='y_label'><span class='Y'>Y</span></label>
-            <div class="slider" id='slider_Y'>
-                <div id="custom-handle-2" class="ui-slider-handle"></div>
+
+        
+
+        <!-- Feedback template-->
+        <div class='feedback-container'>
+            <div class='feedback-slider-container x-effects'>
+                <img class='fb_img' src='./img/varXY.png'>
+                <p class='fb-p' style='text-align:center'>
+                    <strong><span class='X'>X</span> -> <span class='Y'>Y</span></strong>
+                </p>
+                <div class='feedback-slider first-slider' id='XonY'>
+                    <div id="handle-XonY" class="ui-slider-handle"></div>
+                </div>
             </div>
-        </div>
-        <div class='slider_box' id='slider_container_3'>
-            <label for='slider_Z' class='slider-label' id='z_label'><span class='Z'>Z</span></label>
-            <div class="slider" id='slider_Z'>
-                <div id="custom-handle-3" class="ui-slider-handle"></div>
-            </div> 
+            <div class='feedback-slider-container x-effects'>
+                <img class='fb_img' src='./img/varXZ.png'>
+                <p class='fb-p' style='text-align:center'>
+                    <strong><span class='X'>X</span> -> <span class='Z'>Z</span></strong>
+                </p>
+                <div class='feedback-slider second-slider' id='XonZ'>
+                    <div id="handle-XonZ" class="ui-slider-handle"></div>
+                </div>
+            </div>
+            <div class='feedback-slider-container y-effects'>
+                <img class='fb_img' src='./img/varYX.png'>
+                <p class='fb-p' style='text-align:center'>
+                    <strong><span class='Y'>Y</span> -> <span class='X'>X</span></strong>
+                </p>
+                <div class='feedback-slider third-slider' id='YonX'>
+                    <div id="handle-YonX" class="ui-slider-handle"></div>
+                </div>
+            </div>
+            <div class='feedback-slider-container y-effects'>
+                <img class='fb_img' src='./img/varYZ.png'>
+                <p class='fb-p' style='text-align:center'>
+                    <strong><span class='Y'>Y</span> -> <span class='Z'>Z</span></strong>
+                </p>
+                <div class='feedback-slider fourth-slider' id='YonZ'>
+                    <div id="handle-YonZ" class="ui-slider-handle"></div>
+                </div>
+            </div>
+            <div class='feedback-slider-container z-effects'>
+                <img class='fb_img' src='./img/varZX.png'>
+                <p class='fb-p' style='text-align:center'>
+                    <strong><span class='Z'>Z</span> -> <span class='X'>X</span></strong>
+                </p>
+                <div class='feedback-slider fifth-slider' id='ZonX'>
+                    <div id="handle-ZonX" class="ui-slider-handle"></div>
+                </div>
+            </div>
+            <div class='feedback-slider-container z-effects'>
+                <img class='fb_img' src='./img/varZY.png'>
+                <p class='fb-p' style='text-align:center'>
+                    <strong><span class='Z'>Z</span> -> <span class='Y'>Y</span></strong>
+                </p>
+                <div class='feedback-slider sixth-slider' id='ZonY'>
+                    <div id="handle-ZonY" class="ui-slider-handle"></div>
+                </div>
+            </div>
         </div>
 
         <div class='button_container'>
             <button class='process' id='start_button'>Start</button>
             <button class='process' id='stop_button'>Stop</button>
-        </div>
-
-        <!-- Feedback template-->
-        <div class='feedback-slider-container x-effects'>
-            <img class='fb_img' src='./img/varXY.png'>
-            <p style='text-align:center'>
-                <strong><span class='X'>X</span> -> <span class='Y'>Y</span></strong>
-            </p>
-            <div class='feedback-slider' id='XonY'>
-                <div id="handle-XonY" class="ui-slider-handle"></div>
-            </div>
-        </div>
-        <div class='feedback-slider-container x-effects'>
-            <img class='fb_img' src='./img/varXZ.png'>
-            <p style='text-align:center'>
-                <strong><span class='X'>X</span> -> <span class='Z'>Z</span></strong>
-            </p>
-            <div class='feedback-slider' id='XonZ'>
-                <div id="handle-XonZ" class="ui-slider-handle"></div>
-            </div>
-        </div>
-        <div class='feedback-slider-container y-effects'>
-            <img class='fb_img' src='./img/varYX.png'>
-            <p style='text-align:center'>
-                <strong><span class='Y'>Y</span> -> <span class='X'>X</span></strong>
-            </p>
-            <div class='feedback-slider' id='YonX'>
-                <div id="handle-YonX" class="ui-slider-handle"></div>
-            </div>
-        </div>
-        <div class='feedback-slider-container y-effects'>
-            <img class='fb_img' src='./img/varYZ.png'>
-            <p style='text-align:center'>
-                <strong><span class='Y'>Y</span> -> <span class='Z'>Z</span></strong>
-            </p>
-            <div class='feedback-slider' id='YonZ'>
-                <div id="handle-YonZ" class="ui-slider-handle"></div>
-            </div>
-        </div>
-        <div class='feedback-slider-container z-effects'>
-            <img class='fb_img' src='./img/varZX.png'>
-            <p style='text-align:center'>
-                <strong><span class='Z'>Z</span> -> <span class='X'>X</span></strong>
-            </p>
-            <div class='feedback-slider' id='ZonX'>
-                <div id="handle-ZonX" class="ui-slider-handle"></div>
-            </div>
-        </div>
-        <div class='feedback-slider-container z-effects'>
-            <img class='fb_img' src='./img/varZY.png'>
-            <p style='text-align:center'>
-                <strong><span class='Z'>Z</span> -> <span class='Y'>Y</span></strong>
-            </p>
-            <div class='feedback-slider' id='ZonY'>
-                <div id="handle-ZonY" class="ui-slider-handle"></div>
-            </div>
         </div>
 
         <div class='graph-pred-rec-right'>
@@ -677,7 +685,7 @@ var outro_2 = `
 </p>`;
 
 var outro_3 = `
-<p>
+<p class='base-p'>
     All done, you have reached the end of this experiment, thank you very much for participating!
     <br><br>
     Please click on the link below to go back to the Prolific platform and receive your compensation.
@@ -686,7 +694,7 @@ var outro_3 = `
 </p>`;
 
 var outro_4 = `
-<p>
+<p class='base-p'>
     Thank you for you participation!
 </p>`;
 

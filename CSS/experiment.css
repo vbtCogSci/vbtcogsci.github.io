@@ -22,9 +22,9 @@
   }
   
   .survey-window {
-    margin: 2%;
-    width: 95%;
-    height: 95%;
+    margin: 1%;
+    width: 98%;
+    height: 98%;
     display: flex;
     flex-wrap: wrap;
     align-content: center;
@@ -65,12 +65,16 @@
   }
 
   .fb_img {
-    height: 100%;
+    height: 60%;
     width: auto;
   }
 
   p {
     width: 100%;
+  }
+
+  .base-p {
+    max-width: 1300px;
   }
 
   /* Specific CSS for Page 3-4*/
@@ -113,7 +117,7 @@
   }
 
   .page-4-graph {
-    width: 60%;
+    width: 75%;
     height: auto;
     display: none;
   }
@@ -188,7 +192,7 @@
   .graph-pred-rec-right {
     display: flex;
     flex-wrap: wrap;
-    height: 60%;
+    height: 75%;
     width: 80%;
     flex-flow: column;
     margin-left: 2%;
@@ -203,6 +207,98 @@
     margin-right: 2%;
   }
 
+  
+    /* Chart.js specific CSS */
+  #progressPlot {
+      width: 100%;
+  }
+
+  /* Slider and chart container for experiment page */
+  .game-display {
+    display: flex;
+    height: 100%;
+    width: 100%;
+    flex-wrap: nowrap;
+  }
+
+  .slider_container {
+    padding: 0%;
+    display: flex;
+    flex-wrap: wrap;
+    height: 100%;
+    width: 45%;
+    justify-content: left;
+    align-content: center;
+  }
+
+  .chart_container {
+    padding: 0%;
+    display: flex;
+    flex-wrap: wrap;
+    height: 100%;
+    width: 55%;
+    justify-content: center;
+    align-content: center;
+  }
+
+  /* Button container */
+   .button_container {
+    width: 40%;
+    height: 10%;
+    display: flex;
+    flex-flow: column;
+    flex-wrap: nowrap;
+    justify-content: flex-end;
+    align-content: flex-end;
+}
+
+ button {
+    margin: 3px;
+    justify-content: center;
+ }
+
+  /* Slider specific CSS */
+  .slider_box_container {
+    width: 45%;
+    height: 90%;
+    display: flex;
+  }
+
+  .slider_box {
+    width: 32%;
+    height: 100%;
+    display: flex;
+    flex-wrap: nowrap;
+    align-content: center;
+    justify-content: center;
+  }
+
+  .slider-label {
+      margin: auto 10% auto 5%;
+  }
+
+  .slider {
+      height: 55%;
+      margin-bottom: -45%;
+      align-self: center;
+  }
+
+  #custom-handle-1, #custom-handle-2, #custom-handle-3 {
+    width: 3em;
+    height: 1.6em;
+    left: -150%;
+    margin-top: -.8em;
+    text-align: center;
+    line-height: 1.6em;
+  }
+
+  .feedback-container {
+    width: 55%;
+    height: 90%;
+    display: flex;
+    flex-wrap: wrap;
+  }
+
   .feedback-slider-container {
     width: 100%;
     height: 15%;
@@ -215,13 +311,17 @@
   }
 
   .feedback-slider {
-    width: 300px;
-    margin-left: 5%;
+    width: 120px;
+    margin-left:2%;
   }
 
   .label-fb {
     height: 50%;
     width: 90%;
+  }
+
+  .fb-p {
+    font-size: smaller;
   }
 
   .val-link-button {
@@ -244,84 +344,6 @@
   #tech-fb {
     width: 100%;
     align-self: center;
-  }
-
-    /* Chart.js specific CSS */
-    #progressPlot {
-      width: 100%;
-}
-
-  /* Slider and chart container for experiment page */
-  .game-display {
-    display: flex;
-    height: 100%;
-    width: 100%;
-    flex-wrap: nowrap;
-  }
-
-  .slider_container {
-    padding: 0%;
-    display: flex;
-    flex-wrap: wrap;
-    height: 100%;
-    width: 40%;
-    justify-content: left;
-    align-content: center;
-  }
-
-  .chart_container {
-    padding: 0%;
-    display: flex;
-    flex-wrap: wrap;
-    height: 100%;
-    width: 60%;
-    justify-content: center;
-    align-content: center;
-  }
-
-  /* Button container */
-   .button_container {
-    width: 40%;
-    height: 100%;
-    display: flex;
-    flex-flow: column;
-    flex-wrap: nowrap;
-    justify-content: flex-end;
-    align-content: flex-end;
-}
-
- button {
-    margin: 3px;
-    justify-content: center;
- }
-
-  /* Slider specific CSS */
-  .slider_box {
-    width: 15%;
-    height: 100%;
-    display: flex;
-    flex-wrap: nowrap;
-    align-content: center;
-    justify-content: center;
-  }
-
-  .slider-label {
-      margin: auto 10% auto 5%;
-  }
-
-  .slider {
-      height: 55%;
-      margin-bottom: 25%;
-      align-self: center;
-  }
-
-  #custom-handle-1, #custom-handle-2, #custom-handle-3 {
-    width: 3em;
-    height: 1.6em;
-    left: -150%;
-    margin-top: -.8em;
-    text-align: center;
-    line-height: 1.6em;
   }
 
    /* Option containers */

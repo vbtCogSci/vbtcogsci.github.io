@@ -8,10 +8,12 @@ var prolific;
 // OTHER GLOBAL VARIABLES
 // String containing the current model preset
 var currentModel = 'none';
+var modelName;
 var condition;
 var condIdx;
 var dbCond;
 var labBlocks = [0, 0, 0];
+var modelNo;
 
 // Time data
 var startTime;
@@ -24,6 +26,11 @@ var colliders = ['collider_1', 'collider_2', 'collider_3'];
 var commonCause = ['ccause_1', 'ccause_2', 'ccause_3'];
 // Labelled and control preset names
 var condLabel = shuffleArray(['crime', 'finance', 'estate']);
+var labelOptions = {
+    'linkscrime': [['Crime rate', 'Police action', 'Population happiness'], 
+              ['Police action', 'Population happiness', 'Crime rate'], 
+              ['Population happiness', 'Crime rate', 'Police action']]
+}
 var condControl = shuffleArray(['crime_control', 'finance_control', 'estate_control']);
 
 var easyBlocks = [
@@ -125,7 +132,7 @@ if (uid == null) {
             // Define condition
             // Get condition list from db, shift element and replace
             db.ref('cond').once('value').then(function(snapshot) {
-                dbCond= snapshot.val().toString()
+                dbCond = snapshot.val().toString();
             
                 if (dbCond == "label") {
                     console.log('changing to control')
@@ -236,12 +243,19 @@ function setupLinkTraining(condIdx) {
         var scenario = condLabel[condLabel.indexOf('crime')];
         currentModel = 'links'.concat(scenario);
         var localPreset = presets[scenario].slice(9, 12);
-        $('#page-4-graph-'.concat(scenario)).css('display', 'flex');
+        
+        var randint = getRandomInt(3)
+        currentLabels = labelOptions[currentModel][randint];
+        randint += 1;
+        $('#page-4-graph-'.concat(scenario).concat("-").concat(randint.toString())).css('display', 'flex');
     }
     
-    resetFeedback(localPreset);
+    
+    resetFeedback(currentLabels);
+    
     // Feedback report
-    $(nodeList[0]).css({'display': 'flex'});
+    //$(nodeList[0]).css({'display': 'flex'});
+    $('.feedback-slider').slider({disabled:false})
     $('.val-link-button').css({'display': 'flex'});
 }
 
@@ -319,32 +333,17 @@ function saveLinkData() {
         $('#ConA').slider("value"),
         $('#ConB').slider("value")
     ];
-    db.ref('data').child(uid).child(currentModel).child('report').set(report);
+    if (['linkscrime', 'linksestate', 'linksfinance'].includes(currentModel)) {
+        var modelName = 'links_'.concat(stringify(currentLabels));
+        db.ref('data').child(uid).child(modelName).child('report').set(report);
+    } else {
+        db.ref('data').child(uid).child(currentModel).child('report').set(report);
+    }
+    
 }
 
 function saveGraphData() {
     // SEND TO DATABASE
-
-    // Graph data
-    // Times 
-    db.ref('data').child(uid).child(currentModel).child('times').set(steps);
-    // Values
-    db.ref('data').child(uid).child(currentModel).child('xVals').set(xHist);
-    db.ref('data').child(uid).child(currentModel).child('yVals').set(yHist);
-    db.ref('data').child(uid).child(currentModel).child('zVals').set(zHist);
-    // Interventions
-    db.ref('data').child(uid).child(currentModel).child('xInt').set(xInter);
-    db.ref('data').child(uid).child(currentModel).child('yInt').set(yInter);
-    db.ref('data').child(uid).child(currentModel).child('zInt').set(zInter);
-
-    // Reset Data storage variables
-    xHist = [0];
-    yHist = [0];
-    zHist = [0];
-    xInter = [0];
-    yInter = [0];
-    zInter = [0];
-    steps = [0];
 
     // Feedback sliders values
     var report = [
@@ -355,14 +354,56 @@ function saveGraphData() {
         $('#ZonX').slider("value"),
         $('#ZonY').slider("value")
     ];
-    db.ref('data').child(uid).child(currentModel).child('report').set(report);
     if (['crime', 'finance', 'estate'].includes(currentModel)) {
-        // Save qual feedback as well
+        var modelName = currentModel.concat('_').concat(modelNo.toString());
+        db.ref('data').child(uid).child(modelName).child('report').set(report);
+        
         var $radioSense = $("input:radio[name=radio-1]:checked").attr('id');
-        db.ref('data').child(uid).child(currentModel).child('sense').set($radioSense);
-        db.ref('data').child(uid).child(currentModel).child('reason').set($('#reason-qual').val())
+        db.ref('data').child(uid).child(modelName).child('sense').set($radioSense);
+        db.ref('data').child(uid).child(modelName).child('reason').set($('#reason-qual').val());
+
+    } else if (['crime_control', 'finance_control', 'estate_control'].includes(currentModel)) {
+        var modelName = currentModel.concat('_').concat(modelNo.toString());
+        db.ref('data').child(uid).child(modelName).child('report').set(report);
+
+    } else {
+        var modelName = currentModel;
+        db.ref('data').child(uid).child(modelName).child('report').set(report);
     }
     
+        // Graph data
+    // Times 
+    db.ref('data').child(uid).child(modelName).child('times').set(steps);
+    // Values
+    db.ref('data').child(uid).child(modelName).child('xVals').set(xHist);
+    db.ref('data').child(uid).child(modelName).child('yVals').set(yHist);
+    db.ref('data').child(uid).child(modelName).child('zVals').set(zHist);
+    // Interventions
+    db.ref('data').child(uid).child(modelName).child('xInt').set(xInter);
+    db.ref('data').child(uid).child(modelName).child('yInt').set(yInter);
+    db.ref('data').child(uid).child(modelName).child('zInt').set(zInter);
+    // Slider history
+    db.ref('data').child(uid).child(modelName).child('XonY').set(firstHist);
+    db.ref('data').child(uid).child(modelName).child('XonZ').set(secondHist);
+    db.ref('data').child(uid).child(modelName).child('YonX').set(thirdHist);
+    db.ref('data').child(uid).child(modelName).child('YonZ').set(fourthHist);
+    db.ref('data').child(uid).child(modelName).child('ZonX').set(fifthHist);
+    db.ref('data').child(uid).child(modelName).child('ZonY').set(sixthHist);
+
+    // Reset Data storage variables
+    xHist = [0];
+    yHist = [0];
+    zHist = [0];
+    xInter = [0];
+    yInter = [0];
+    zInter = [0];
+    steps = [0];
+    firstHist = ['?'];
+    secondHist = ['?'];
+    thirdHist = ['?'];
+    fourthHist = ['?'];
+    fifthHist = ['?'];
+    sixthHist = ['?'];
 }
 
 function saveDemographics () {
@@ -411,13 +452,14 @@ function saveTechnicalFb () {
 
 function resetInterface() {
     $('.slider').slider({disabled: true});
+    $('.feedback-slider').slider({disabled: true});
     $('#start_button').button({disabled: false});
     //$('#stop_button').button({disabled: true});
     $('#start_button').css({'display': 'flex'});
     $('#stop_button').css({'display': 'none'});
     $('.slider_box').css({'display': 'flex'})
     $('.button_container').css({'display': 'flex'})
-    $('.feedback-slider-container').css({'display': 'none'});
+    $('.feedback-slider-container').css({'display': 'flex'});
     $('.val-link-button').css({'display': 'none'});
     $('.graph-pred-rec-right').css({'display': 'none'});
 }
@@ -431,11 +473,15 @@ function resetFeedback(presetLabels) {
     $('.Z').html(presetLabels[2]);
     $('#val-button').button({disabled: true});
     $('#val-btn').button({disabled: true});
-    nodeIdx = 0;
+    nodeIdx = 2;
 
     // Reset moved
     first_moved = false;
     second_moved = false;
+    third_moved = false;
+    fourth_moved = false;
+    fifth_moved = false;
+    sixth_moved = false;
     
     //console.log(presetLabels)
     if (presetLabels[1] == 'Red') {
@@ -492,3 +538,7 @@ function shuffleArray(array) {
     }
     return array;
 }
+
+function getRandomInt(max) {
+    return Math.floor(Math.random() * Math.floor(max));
+  }

@@ -18,11 +18,16 @@ var graphIdx = [];
 var fbIdx = [];
 var outroIdx = [];
 // Feedback indices
-var nodeIdx = 0;
+var nodeIdx = 2;
 var nodeList = ['.x-effects', '.y-effects', '.z-effects'];
 // Check for response order
 var first_moved = false;
 var second_moved = false;
+var third_moved = false;
+var fourth_moved = false;
+var fifth_moved = false;
+var sixth_moved = false;
+
 
 var condSeq;
 
@@ -234,11 +239,11 @@ function setupFeedback() {
         // Init sliders
         var $slider = $(element);
         var f_l = $slider.attr('id');
-        if (f_l == 'XonY' | f_l == 'YonX' | f_l == 'ZonX' | f_l == 'AonB' | f_l == 'BonA' | f_l == 'ConA') {
-            $slider.addClass('first-slider');
-        } else {
-            $slider.addClass('second-slider');
-        }
+        //if (f_l == 'XonY' | f_l == 'YonX' | f_l == 'ZonX' | f_l == 'AonB' | f_l == 'BonA' | f_l == 'ConA') {
+        //    $slider.addClass('first-slider');
+        //} else {
+        //    $slider.addClass('second-slider');
+        //}
         //console.log($slider);
         var $handle = $('#handle-'.concat($slider.attr('id'))).addClass( "fb-handle" );
         //console.log($handle);
@@ -254,13 +259,21 @@ function setupFeedback() {
                 $handle.text( ui.value );
                 console.log($(this).hasClass('first-slider'))
                 if (($(this).hasClass('first-slider')) && !first_moved) {
-                    first_moved = true
+                    first_moved = true;
                 } else if (($(this).hasClass('second-slider')) && !second_moved) {
-                    second_moved = true
+                    second_moved = true;
+                } else if (($(this).hasClass('third-slider')) && !third_moved) {
+                    third_moved = true;
+                } else if (($(this).hasClass('fourth-slider')) && !fourth_moved) {
+                    fourth_moved = true;
+                } else if (($(this).hasClass('fifth-slider')) && !fifth_moved) {
+                    fifth_moved = true;
+                } else if (($(this).hasClass('sixth-slider')) && !sixth_moved) {
+                    sixth_moved = true;
                 }
             },
             stop: function( event, ui) {
-                if (second_moved && first_moved) {
+                if (second_moved && first_moved && third_moved && fourth_moved && fifth_moved && sixth_moved) {
                     $('#val-btn').button({disabled: false});
                     $('#val-button').button({disabled: false});
                 }
@@ -272,7 +285,7 @@ function setupFeedback() {
     $('#handle-AonB').on('mousedown', function() {
         $('#handle-AonB').text($('#AonB').slider('value'));
         first_moved = true;
-        if (second_moved && first_moved) {
+        if (second_moved && first_moved && third_moved && fourth_moved && fifth_moved && sixth_moved) {
             $('#val-btn').button({disabled: false});
             $('#val-button').button({disabled: false});
         }
@@ -280,39 +293,39 @@ function setupFeedback() {
     $('#handle-AonC').on('mousedown', function() {
         $('#handle-AonC').text($('#AonC').slider('value'));
         second_moved = true;
-        if (second_moved && first_moved) {
+        if (second_moved && first_moved && third_moved && fourth_moved && fifth_moved && sixth_moved) {
             $('#val-btn').button({disabled: false});
             $('#val-button').button({disabled: false});
         }
     })
     $('#handle-BonA').on('mousedown', function() {
         $('#handle-BonA').text($('#BonA').slider('value'));
-        first_moved = true;
-        if (second_moved && first_moved) {
+        third_moved = true;
+        if (second_moved && first_moved && third_moved && fourth_moved && fifth_moved && sixth_moved) {
             $('#val-btn').button({disabled: false});
             $('#val-button').button({disabled: false});
         }
     })
     $('#handle-BonC').on('mousedown', function() {
         $('#handle-BonC').text($('#BonC').slider('value'));
-        second_moved = true;
-        if (second_moved && first_moved) {
+        fourth_moved = true;
+        if (second_moved && first_moved && third_moved && fourth_moved && fifth_moved && sixth_moved) {
             $('#val-btn').button({disabled: false});
             $('#val-button').button({disabled: false});
         }
     })
     $('#handle-ConA').on('mousedown', function() {
         $('#handle-ConA').text($('#ConA').slider('value'));
-        first_moved = true;
-        if (second_moved && first_moved) {
+        fifth_moved = true;
+        if (second_moved && first_moved && third_moved && fourth_moved && fifth_moved && sixth_moved) {
             $('#val-btn').button({disabled: false});
             $('#val-button').button({disabled: false});
         }
     })
     $('#handle-ConB').on('mousedown', function() {
         $('#handle-ConB').text($('#ConB').slider('value'));
-        second_moved = true;
-        if (second_moved && first_moved) {
+        sixth_moved = true;
+        if (second_moved && first_moved && third_moved && fourth_moved && fifth_moved && sixth_moved) {
             $('#val-btn').button({disabled: false});
             $('#val-button').button({disabled: false});
         }
@@ -322,7 +335,7 @@ function setupFeedback() {
     $('#handle-XonY').on('mousedown', function() {
         $('#handle-XonY').text($('#XonY').slider('value'));
         first_moved = true;
-        if (second_moved && first_moved) {
+        if (second_moved && first_moved && third_moved && fourth_moved && fifth_moved && sixth_moved) {
             $('#val-btn').button({disabled: false});
             $('#val-button').button({disabled: false});
         }
@@ -330,51 +343,51 @@ function setupFeedback() {
     $('#handle-XonZ').on('mousedown', function() {
         $('#handle-XonZ').text($('#XonZ').slider('value'));
         second_moved = true;
-        if (second_moved && first_moved) {
+        if (second_moved && first_moved && third_moved && fourth_moved && fifth_moved && sixth_moved) {
             $('#val-btn').button({disabled: false});
             $('#val-button').button({disabled: false});
         }
     })
     $('#handle-YonX').on('mousedown', function() {
         $('#handle-YonX').text($('#YonX').slider('value'));
-        first_moved = true;
-        if (second_moved && first_moved) {
+        third_moved = true;
+        if (second_moved && first_moved && third_moved && fourth_moved && fifth_moved && sixth_moved) {
             $('#val-btn').button({disabled: false});
             $('#val-button').button({disabled: false});
         }
     })
     $('#handle-YonZ').on('mousedown', function() {
         $('#handle-YonZ').text($('#YonZ').slider('value'));
-        second_moved = true;
-        if (second_moved && first_moved) {
+        fourth_moved = true;
+        if (second_moved && first_moved && third_moved && fourth_moved && fifth_moved && sixth_moved) {
             $('#val-btn').button({disabled: false});
             $('#val-button').button({disabled: false});
         }
     })
     $('#handle-ZonX').on('mousedown', function() {
         $('#handle-ZonX').text($('#ZonX').slider('value'));
-        first_moved = true;
-        if (second_moved && first_moved) {
+        fifth_moved = true;
+        if (second_moved && first_moved && third_moved && fourth_moved && fifth_moved && sixth_moved) {
             $('#val-btn').button({disabled: false});
             $('#val-button').button({disabled: false});
         }
     })
     $('#handle-ZonY').on('mousedown', function() {
         $('#handle-ZonY').text($('#ZonY').slider('value'));
-        second_moved = true;
-        if (second_moved && first_moved) {
+        sixth_moved = true;
+        if (second_moved && first_moved && third_moved && fourth_moved && fifth_moved && sixth_moved) {
             $('#val-btn').button({disabled: false});
             $('#val-button').button({disabled: false});
         }
     })
 
     $('.ui-slider-handle').css({
-        'width': '3em',
+        'width': '1.5em',
         'height': '1.6em',
         'top': '50%',
         'left': '50%',
         'margin-top': '-.8em',
-        'margin-left': '-1.5em',
+        'margin-left': '-0.75em',
         'text-align': 'center',
         'line-height': '1.6em'
       });
@@ -424,7 +437,8 @@ function nextNode () {
     } else if (nodeIdx == 2 && ['crime', 'finance', 'estate'].includes(currentModel)) {
         //console.log('2 and going for qual')
         var prev = nodeList[nodeIdx];
-        $(prev).css('display', 'none');
+        $('.feedback-container').css('display', 'none');
+        $('.slider_box_container').css('display', 'none');
         nodeIdx += 1;
         $('.graph-pred-rec-right').css('display', 'flex');
         $('#val-button').button({disabled: true});
@@ -434,9 +448,10 @@ function nextNode () {
         console.log('resetting')
         var prev = nodeList[nodeIdx];
         // Disable sliders to prevent moving more
-        $(prev).css("visibility", "hidden")
+        //$(prev).css("visibility", "hidden")
+        $('.feedback-slider').slider({disabled: true});
         // Reset node index
-        nodeIdx = 0;
+        nodeIdx = 2;
         // Disable nav buttons and enable next to move forward
         $('#start_button').button({disabled: false});
         $('#val-button').button({disabled: true});
