@@ -28,6 +28,10 @@ var fourth_moved = false;
 var fifth_moved = false;
 var sixth_moved = false;
 
+var video_elapsed = 0;
+var videorun;
+var video_watched = false;
+
 
 var condSeq;
 
@@ -57,6 +61,9 @@ $('document').ready(function () {
     setupFeedback();
     // Set up logic for outro feedback (demographics and technical issues)
     setupOutro();
+
+    // Set up graph checks
+    setupGraphChecks();
 
     // Setup initial slider positions
     setupSliders();
@@ -141,7 +148,14 @@ function setupPage(init) {
         if (condition == 'control') {
             $('#spanLabels').css('display', 'none');
         }
-    } else if ($(currentPage).find('.game-display').length != 0) {
+    } else if ($(currentPage).find('#pres-video').length != 0) {
+        if (!video_watched) {
+            $('#next_button').button('disable');
+        }
+    } else if ($(currentPage).find('#submit-quiz').length != 0) {
+        $('#next_button').button('disable');
+        $('#submit-quiz').button('disable');
+    }else if ($(currentPage).find('.game-display').length != 0) {
         console.log('Game')
         $('#next_button').button('disable');
         setupGame(condIdx);
@@ -396,8 +410,22 @@ function setupFeedback() {
     $('#val-button').button().click(function () {
         nextNode();
     });
+
+    // Val button for link training, with checks
     $('#val-btn').button().click(function () {
-        nextNode();
+        var report = [
+            $('#AonB').slider("value"),
+            $('#AonC').slider("value"),
+            $('#BonA').slider("value"),
+            $('#BonC').slider("value"),
+            $('#ConA').slider("value"),
+            $('#ConB').slider("value")
+        ];
+        if (['linkscrime', 'linksestate', 'linksfinance'].includes(currentModel)) {
+            nextNode();
+        } else if (checkReport(report, currentModel) == true) {
+            nextNode()
+        }
     });
 
     $("input:radio[name=radio-1]").each(function (index, element) {
@@ -468,6 +496,171 @@ function nextNode () {
     //console.log('Next Idx: '.concat(nodeIdx.toString()))
 }
 
+function checkReport(report, currentModel) {
+    if (JSON.stringify(report) == '[0,0,0,0,0,0]') {
+        $('#error-msg').html('Incorrect: there is at least one link in the diagram.')
+        return false;
+    }
+
+    if (currentModel == 'links1') {
+        var correct = [-1, 0, 0, 0, 0, 0];
+        console.log(report)
+        console.log(correct)
+        if (arraysEqual(report, correct)) {
+            $('#error-msg').html('')
+            return true;
+        } else if (arraysEqual(report.slice(2), correct.slice(2))) {
+            if (report[1] != correct[1]) {
+                $('#error-msg').html('Incorrect: think about the direction of the arrow, it goes from A to B.')
+            } else if (report[0] != correct[0]) {
+                $('#error-msg').html('Incorrect: almost there, what is the sign of the arrow? Does it indicates a positive or negative link?')
+            }
+            return false;
+        } else if (!arraysEqual(report.slice(2), correct.slice(2))) {
+            $('#error-msg').html('Incorrect: which variables are causally linked?')
+            return false;
+        }
+    } else if (currentModel == 'links2') {
+        var correct = [0, -1, 1, -1, 0, 0];
+        console.log(report)
+        console.log(correct)
+        if (arraysEqual(report, correct)) {
+            $('#error-msg').html('')
+            return true;
+        } else if (!arraysEqual(report.slice(4), [0, 0])) {
+            $('#error-msg').html('Incorrect: C does not cause other variables, look at the direction of the arrows.')
+            return false;
+        } else if (!arraysEqual(report.slice(2, 4), [1, -1])) {
+            if (report.slice(2, 4).includes(0)) {
+                $('#error-msg').html('Incorrect: look at B, it affects both A and C')
+            } else {
+                $('#error-msg').html('Incorrect: look at the signs of the arrows from B, are they positive or negative?')
+            }
+            return false;
+        } else if (!arraysEqual(report.slice(1, 2), [0, -1])) {
+            $('#error-msg').html('Incorrect: check the links of variable A, something is wrong.')
+            return false;
+        }
+    } else if (currentModel == 'links3') {
+        var correct = [1, 1, 0, 2, 0, 0];
+        console.log(report)
+        console.log(correct)
+        if (arraysEqual(report, correct)) {
+            $('#error-msg').html('')
+            return true;
+        } else if (!arraysEqual(report.slice(4), [0, 0])) {
+            $('#error-msg').html('Incorrect: is cough the cause or the effect?')
+            return false;
+        } else if (!arraysEqual(report.slice(2, 4), [0, 2])) {
+            if (report[2] != 0) {
+                $('#error-msg').html('Incorrect: does the flu causes asthma?')
+            } else if (report[3] != 2) {
+                $('#error-msg').html('Incorrect: what is the size and the sign of the effects of the flu on cough?')
+            }
+            return false;
+        } else if (!arraysEqual(report.slice(1, 2), [0, 1])) {
+            if (report[0] != 1) {
+                $('#error-msg').html('Incorrect: what does the research paper say about asthma and the flu?')
+            } else if (report[1] != 1) {
+                $('#error-msg').html('Incorrect: what is the size and the sign of the effects of asthma on cough?')
+            }
+            return false;
+        }
+    } 
+}
+
+function setupGraphChecks() {
+    // Check graph comprehension
+    $('.video-control').button();
+    $('#play_btn').click(function () {
+        var video = $('#pres-video')[0];
+        if( video.paused ) {
+            video.play();
+        }
+        console.log('clicked')
+        var videorun = setInterval(function () {
+            console.log(video_elapsed)
+            video_elapsed += 1;
+            if (video_elapsed > 20) {
+                $('#next_button').button({disabled: false});
+                clearInterval(videorun);
+                video_watched = true;
+            }
+        }, 2000)
+    });
+
+    $('#pause_btn').click(function () {
+        var video = $('#pres-video')[0];
+        if( !video.paused ) {
+            video.pause();
+        }
+    });
+
+    // Verification quiz
+
+    $("input:radio[name=quiz-1]").each(function (index, element) {
+        var $radioB = $(element)
+        $radioB.click(function () {
+            if (checkValidQuiz() == true) {
+                $('#submit-quiz').button({disabled: false});
+            }
+        }) 
+    })
+
+    $("input:radio[name=quiz-2]").each(function (index, element) {
+        var $radioB = $(element)
+        $radioB.click(function () {
+            if (checkValidQuiz() == true) {
+                $('#submit-quiz').button({disabled: false});
+            }
+        }) 
+    })
+
+    $("input:radio[name=quiz-3]").each(function (index, element) {
+        var $radioB = $(element)
+        $radioB.click(function () {
+            if (checkValidQuiz() == true) {
+                $('#submit-quiz').button({disabled: false});
+            }
+        }) 
+    })
+
+    $('#submit-quiz').button().click(function () {
+        var responses = [
+            $("input:radio[name=quiz-1]:checked").attr('id'),
+            $("input:radio[name=quiz-2]:checked").attr('id'),
+            $("input:radio[name=quiz-3]:checked").attr('id')
+        ]
+        var correct = ["quiz-1-2","quiz-2-2","quiz-3-3"];
+        if (arraysEqual(correct, responses)) {
+            $('#submit-quiz').button({disabled: true});
+            $('#next_button').button({disabled: false});
+        } else {
+            condIdx = condIdx - 2;
+            pageIdx = condSeq[condIdx];
+            setupPage(false);
+            $('#change-onfail').html('You got the answers wrong, you can reread the instructions and, if necessary, rewatch the video before trying it again.');
+            $('#change-onfail').css('color', 'red');
+        }
+        
+    });
+}
+
+function checkValidQuiz() {
+    var $quiz1 = $("input:radio[name=quiz-1]:checked").attr('id');
+    if ($quiz1 == null) {
+       return false 
+    }
+    var $quiz2 = $("input:radio[name=quiz-2]:checked").attr('id');
+    if ($quiz2 == null) {
+        return false
+    }
+    var $quiz3 = $("input:radio[name=quiz-3]:checked").attr('id');
+    if ($quiz3 == null) {
+        return false
+    }
+    return true
+}
 
 // SET UP OUTRO FIELDS
 function setupOutro () {
@@ -580,7 +773,7 @@ function buildSurvey() {
     var intro_graph = [];
     intro_graph.push(graph_intro_1);
     intro_graph.push(graph_intro_2);
-    //intro_graph.push(graph_intro_3);
+    intro_graph.push(graph_intro_3);
     //intro_graph.push(graph_intro_4);
 
     var outro_content = [];
@@ -694,4 +887,9 @@ function buildBlockSeq(condition) {
     sequence = sequence.concat(outroIdx);
 
     return sequence;
+}
+
+function arraysEqual(a1,a2) {
+    /* WARNING: arrays must not contain {objects} or behavior may be undefined */
+    return JSON.stringify(a1)==JSON.stringify(a2);
 }

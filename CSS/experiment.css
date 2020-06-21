@@ -19,6 +19,7 @@
 
   ul {
     width: 100%;
+    max-width: 1300px;
   }
   
   .survey-window {
@@ -33,7 +34,7 @@
 
   .survey-display {
     width: 100%;
-    height: 92%;
+    height: 93%;
     display: flex;
     flex-wrap: nowrap;
     align-content: center;
@@ -52,7 +53,7 @@
 
   .nav-bar {
     width: 100%;
-    height: 8%;
+    height: 7%;
     display: flex;
     align-content: center;
     justify-content: flex-end;
@@ -76,6 +77,7 @@
   .base-p {
     max-width: 1300px;
   }
+
 
   /* Specific CSS for Page 3-4*/
   .page-3-graph {
@@ -158,14 +160,6 @@
 
   /* CSS for graph tutorial */
 
-  .accordion-tab {
-    display: flex;
-    width: 90%;
-    height: 80%;
-    flex-flow: column;
-    justify-content: center;
-  }
-
   .video-container {
     width: 90%;
   }
@@ -174,6 +168,10 @@
     width: 70%;
   }
 
+  #submit-quiz-container {
+    display: flex;
+    justify-content: flex-end;
+  }
   /* Feedback page CSS for dynamical inference */ 
   .graph-pred-label {
     display: flex;
@@ -187,15 +185,15 @@
     width: 100%;
     height: 90%;
     flex-wrap: nowrap;
-  }
+  } 
 
   .graph-pred-rec-right {
     display: flex;
     flex-wrap: wrap;
-    height: 75%;
-    width: 80%;
+    height: 88%;
+    width: 98%;
     flex-flow: column;
-    margin-left: 2%;
+    margin: 2%;
   }
 
   .graph-pred-rec-left {
@@ -235,10 +233,28 @@
     padding: 0%;
     display: flex;
     flex-wrap: wrap;
+    width: 100%;
+    height: 90%;
+    justify-content: center;
+    align-content: center;
+  }
+ 
+  .graph-left-side {
+    padding: 0%;
+    display: flex;
+    flex-wrap: wrap;
     height: 100%;
     width: 55%;
     justify-content: center;
     align-content: center;
+  }
+
+  .instruction-reminder {
+    padding: 0%;
+    display: flex;
+    width: 100%;
+    height: 10%;
+    font-size: 8pt;
   }
 
   /* Button container */
@@ -251,6 +267,17 @@
     justify-content: flex-end;
     align-content: flex-end;
 }
+
+ .val-link-button {
+   height: 7%;
+   width: 100%;
+   display: flex;
+   justify-content: flex-end;
+ }
+
+ #start_button {
+   align-self: flex-end;
+ }
 
  button {
     margin: 3px;
@@ -279,7 +306,7 @@
 
   .slider {
       height: 55%;
-      margin-bottom: -45%;
+      margin-bottom: 43%;
       align-self: center;
   }
 
@@ -322,13 +349,6 @@
 
   .fb-p {
     font-size: smaller;
-  }
-
-  .val-link-button {
-    height: 7%;
-    width: 100%;
-    display: flex;
-    justify-content: flex-end;
   }
 
   .ui-checkboxradio-label{

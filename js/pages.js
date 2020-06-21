@@ -41,9 +41,9 @@ var consent_page_2 = `
     <label for="contact">I have been given contact details of the researcher to ask questions, should I wish to.</label>
     <input type="checkbox" name="consent-cb" id="contact"><br>
     <label for="data-prot">I understand that my data will be held anonymously and as such, my responses cannot be tracked to me individually.</label>
-    <input type="checkbox" name="consent-cb" id="data-prot">
+    <input type="checkbox" name="consent-cb" id="data-prot"><br>
     <label for="withdrawal">I understand that I am free to withdraw from the study without penalty if I so wish, simply by closing the browser.</label>
-    <input type="checkbox" name="consent-cb" id="withdrawal">
+    <input type="checkbox" name="consent-cb" id="withdrawal"><br>
     <label for="consent">I understand that my data will be held anonymously and as such, my responses cannot be tracked to me individually.</label>
     <input type="checkbox" name="consent-cb" id="consent">
 </fieldset>`;
@@ -54,21 +54,21 @@ var causal_models_intro_1 = `
     For example, you might use causal reasoning when deciding what to eat (e.g. avoiding certain <strong>foods</strong> you know might <strong>cause</strong> you <strong>stomach pains</strong>).
     Any situation involving reasoning about causes and effects can be represented in what we call a <strong>"causal model"</strong>. 
     <br>
-    Causal models are essentially diagrams that allow you to represent objects, events, items of information etc. as” NODES" <strong>(circles)</strong> 
-    and draw arrows between these nodes to represent the relationship between them (e.g. cause and effect). 
+    Causal models are essentially diagrams that allow you to represent objects, events, items of information etc. as <strong>variables (circles)</strong> 
+    and draw arrows between these variables to represent the relationship between them (e.g. cause and effect). 
     <br>
-    For example, if you wanted to represent the following information in a causal model: 
-    <br>
+    Causal reasoning to express causal effects between higher order concepts. For example, if you wanted to represent the following information in a causal model: 
+    <br><br>
+    <span style='align-self: center;'><strong>"a <u>financial crisis</u> and a <u>pandemic</u> can both result in <u>job losses</u>"</strong></span><br>
 </p>
-<span style='align-self: center;'><strong>"<u>rain</u> and a <u>sprinkler</u> can both make the <u>grass wet</u>"</strong></span><br>
 <p class='base-p'>
-    You would first identify your elements of interest (nodes; RAIN, SPRINKLER, WET GRASS) and using arrows represent <strong>RAIN and SPRINKLER</strong> as causes of the effect: <strong>WET GRASS</strong>.                 The causal model would therefore look like the one below:
+    You would first identify your elements of interest (variables; FINANCIAL CRISIS, PANDEMIC, JOB LOSSES) and using arrows represent <strong>FINANCIAL CRISIS and PANDEMIC</strong> as causes of the effect: <strong>JOB LOSSES</strong>.                 The causal model would therefore look like the one below:
 </p>
 <img src='./img/pageOne-graph.png'></img>`;
 
 var causal_models_intro_2 = `
 <p class='base-p'>
-    Sometimes, you might also want to say whether the cause makes the effect <strong>MORE</strong> or <strong>LESS</strong> likely  e.g. rain makes wet grass MORE likely but if you had another node representing "sunshine" this would make the effect (wet grass) LESS likely.
+    Sometimes, you might also want to say whether the cause makes the effect <strong>MORE</strong> or <strong>LESS</strong> likely  e.g. a financial crisis makes job losses MORE likely but if you had another variable representing "economic growth" this would make the effect (job losses) LESS likely.
     <br><br>
     To show this, you can either have a plus (+) or (-) sign next to the arrow to say if the cause makes the effect more likely (+) or less likely (-).
     <br><br>
@@ -111,32 +111,39 @@ var links_template = `
     <img class='page-4-graph' id='page-4-graphTwo' src='./img/pageFour-graphTwo.png'>
     <img class='page-4-graph' id='page-4-graphThree' src='./img/pageFour-graphThree.PNG'>
     <div class='page-4-graph' id='page-4-graphFour-p' style='width:100%;'>
-        <p>
+        <p style='font-size:10pt;'>  
             <strong>Let's try something different!</strong>
+            <br> 
+            Here, please represent the information below using the interface you just learned to use:
             <br>
-            Here, please represent the information below using the interface you just learned to use.
+            <u>"Tom has a cough. The doctor thinks that it could be a symptom of either asthma or the flu. He also believes that the flu is twice as likely as asthma to be the cause of the cough.
             <br>
-            <u>"Tom has a cough. The doctor thinks that it could be a symptom of either asthma or the flu. He also believes that the flu is twice as likely as asthma to be the cause of the cough. 
-            <br>
-            Moreover, he read in a research paper that having asthma increased the chance of getting the flu." </u>
+            The doctor also read a research paper stating that having asthma increased the chances of catching the flu."</u> 
             <br>
             As you can see, no links are drawn, provide them using the sliders on the right.
             Do not add links that are not in the text. 
             <br>
         </p>
-        <i style='font-size:small;'>Reminder of the rules: 
-        <ul>
-                <li><strong>0</strong>: no arrow from node A to node B means no effect of node A on node B</li>
-                <li><strong>1 or -1</strong>: one arrow from node A to node B means a moderate effect of node A on node B</li>
-                <li><strong>2 or -2</strong>: two arrows from node A to node B means a strong effect of node A on node B</li>
-        </ul></i>
     </div>
-    <img class='page-4-graph' id='page-4-graphFour' src='./img/pageFour-graphFour.PNG'>
+    <img style='width:70%;' class='page-4-graph' id='page-4-graphFour' src='./img/pageFour-graphFour.PNG'>
     <img class='page-4-graph' id='page-4-graph-crime-1' src='./img/pageFour-graph-crime-1.PNG'>
     <img class='page-4-graph' id='page-4-graph-crime-2' src='./img/pageFour-graph-crime-2.PNG'>
     <img class='page-4-graph' id='page-4-graph-crime-3' src='./img/pageFour-graph-crime-3.PNG'>
     <img class='page-4-graph' id='page-4-graph-finance' src='./img/pageFour-graph-finance.PNG'>
     <img class='page-4-graph' id='page-4-graph-estate' src='./img/pageFour-graph-estate.PNG'>
+    
+    <!-- Error Paragraphs -->
+    <div style='width: 100%;' class='error-p'>
+        <p style='font-size:smaller;'>
+            <i>Reminder of the rules: 
+            <ul style='font-size:smaller;'>
+                <li><strong>0</strong>: no arrow from node A to node B means no effect of node A on node B</li>
+                <li><strong>1 or -1</strong>: one arrow from node A to node B means a moderate effect of node A on node B</li>
+                <li><strong>2 or -2</strong>: two arrows from node A to node B means a strong effect of node A on node B</li>
+            </ul></i>
+        </p>
+        <p style='color: red;' id='error-msg'></p>
+    </div>
 </div>
 <div class='page-4-right'>
     <!-- Feedback template-->
@@ -321,84 +328,93 @@ var link_estate = `
 
 var graph_intro_1 = `
 <p class='base-p'>
-    <strong> Thank you for sharing your models! </strong>
+    <strong> <span id='change-onfail'>Thank you for sharing your models! </span> </strong>
     <br><br>
     With these models, you were able to represent causes and effects in a static way. However, in reality, interactions between causes and effects happen over time. 
-    <br>
-    In the next section, we will see another way to represent causal dynamics. One that takes time into account. 
-    <br>
-    In the next blocks, you will see a graph with three lines representing the values of three variables changing through time according to a causal model like the ones you drew before.
+    In the next section, we will see a way to represent causal dynamics which takes time into account. 
     <br><br>
-    Here we will ask you use handles on the right hand side of a graph to manually change the value of variables. Your goal is to understand the causal model underling the behaviour of the lines by using the handle of one variable at a time and observe if there are changes in the other two.
+    In the next trials, you will see a graph with three lines representing the values of three variables changing through time according to a causal model like the ones you drew before.
+    <br><br> 
+    <u>Your goal is to understand the causal model underlying the behaviour of the lines by using handles allowing you to manually change their values. </u>
+    <br><br>
+    You will be able to report the sign, i.e. is it a negative or a positive effect, and the strength, i.e. 0, 1 or 2 arrows, of the relationships you observe at any point during the trial using the interface you have used previously.
     <br>
-    Then you will be asked to report the sign, i.e. is it a negative or a positive effect, and the strength, i.e. 0, 1 or 2 arrows, of the relationships you observed.
-    <br>
-    The next page will show you a short video to observe the layout and get a first impression of the task. You will have two tools at your disposal:
+    Each trial will last <strong>60 seconds / 1 minute</strong>. Sections will vary in difficulty, this is perfectly normal. It may seem abstract now but next page will show you a demo. 
+    <br><br>
+    You will have two tools at your disposal:
 </p>
 <ul>
-    <li><strong>Interventions</strong>: the three handles on the right allow you to voluntarily change the value of one of the variables as long as you keep hold of it with your mouse.</li>
-    <li><strong>Observations</strong>: the graph on the left plots the values (i.e. vertical axis is the value) that the three variables took in the last 10 seconds (i.e. horizontal axis is time in seconds), 
+    <li><strong>Interventions</strong>: three handles on the right allowing you to voluntarily change the value of one of the variables and observe changes in the values of the other two. <br> You can intervene on a variable by keeping hold of its handle with your mouse.</li>
+    <li><strong>Observations</strong>: A graph on the left plots the values (i.e. vertical axis is the value) that the three variables took in the last 10 seconds (i.e. horizontal axis is time in seconds), 
         allowing you to observe their variations through time and the result of you interventions. These will be represented by a shading in the graph of variable's colour.</li> 
 </ul>
-<div id='spanLabels'>There are two kinds of trial, the colours of the variables' names always corresponds to their respective colours on the graph:
+<div id='spanLabels'>
+    <p class='base-p'>
+        There are two kinds of trial. In both cases the colours of the variables' names always corresponds to their respective colour on the graph:
+    </p>
     <ul>
         <li><strong>Colours:</strong> variables are simply named after their colour, i.e. <span class='c-blue'>blue</span>, <span class='c-red'>red</span> and <span class='c-green'>green</span>.</li>
         <li><strong>Labels:</strong> variables have labels of concepts you have seen during the causal model task. In this case the task is the same but there will be an additional question asking you to report whether the relationships you observed during the task made sense to you.</li>
     </ul>
 </div>
 <p class='base-p'>
-    Watch next page's video. It shows a brief extract of what the game looks like in real time.
+
+    The next page will show you a video to introduce you to the interface. It shows a brief extract of what the game looks like in real time.
 </p>`;
 
 //<img class='graph-intro-img' id='layout-ex' src='./img/layout-ex.PNG'>`;
 
 var graph_intro_2 = `
 <p class='base-p'>
-    To start the game, press the <strong>start button on the bottom right</strong>.
-    <br>
-    Sections will vary in difficulty, this is perfectly normal. Each of them lasts for <strong>60 seconds maximum</strong>, after which the game stops and the report page is displayed.
-    <br>
-    However, <strong>after 30 seconds</strong>, a stop button will appear on the bottom right in place of the start button, allowing you to stop early and display the report page if you feel you have understood the dynamics of the system before the end of the trial.
-    <br><br>
-    After you press <strong>stop</strong> or 60 seconds pass, you will be shown sliders allowing you to indicate the relationship between variables, they will be displayed two at a time exactly like what you have previously done.
-    <br>
-    <strong>Watch carefully to familiarise yourself with the interface.</strong> The first trial starts next page.
+    <strong>Watch carefully this short video to familiarise yourself with the interface. Press play to start.</strong> The first trial starts next page.
 </p>
 <div class='video-container'>
-    <video controls>
+    <video id='pres-video'>
         <source src="./img/graphTuto3.mp4" type="video/mp4">
         Your browser does not support the video tag.
     </video>
-</div>`;
+</div>
+<div style='width:100%;' class='control-container'>
+    <button class='video-control' id='play_btn'>Play</button>
+    <button class='video-control' id='pause_btn'>Pause</button>
+<div>`;
 
 var graph_intro_3 = `
+<div>
+    <fieldset style='margin-bottom: 10px;' class='quiz-1-field'>
+    <legend>The goal of the task is to...</legend>
+    <label for="quiz-1-1">... understand how the three variables relate to one another by simply observing the graph.</label>
+    <input type="radio" name="quiz-1" id="quiz-1-1"><br>
+    <label for="quiz-1-2">... understand how the three variables relate to one another by using the handles to make interventions and observe their effect on the graph.</label>
+    <input type="radio" name="quiz-1" id="quiz-1-2"><br>
+    <label for="quiz-1-3">... completely ignore the graph while guessing the links between the variables.</label>
+    <input type="radio" name="quiz-1" id="quiz-1-3">
+    </fieldset>
 
-<div id='spanLabels'>There are two kinds of trial:
-    <ul>
-        <li><strong>Colours:</strong> variables are simply named after their colour, i.e. <span class='c-blue'>blue</span>, <span class='c-red'>red</span> and <span class='c-green'>green</span>.</li>
-        <li><strong>Labels:</strong> variables have labels of concepts you have seen during the causal model task. In this case the task is the same but there will be an additional question asking you to report whether the relationships you observed during the task made sense to you.</li>
-    </ul>
-</div>
-<p class='base-p'> 
-    Sections will vary in difficulty, this is perfectly normal. Each of them lasts for <strong>60 seconds maximum</strong>, after which the game stops and the report page is displayed.
-    <br><br>
-    However, <strong>after 30 seconds</strong>, a stop button will appear on the bottom right in place of the start button, allowing you to stop early and display the report page if you feel you have understood the dynamics of the system before the end of the trial.
-    <br><br>
-    After you press <strong>stop</strong> or 60 seconds pass, you will be shown sliders allowing you to indicate the relationship between variables, they will be displayed two at a time exactly like what you have previously done.
-    <br><br>
-    When you report you findings, keep in mind that the links between variables follow the same logic as the causal models. 
-    <br>
-    The sliders are initialized at 0 and can be moved to the left (-1, -2) to indicate a negative effect or to the right (+1, +2) to indicate a positive effect.
-    <br>
-    Rules are as follows:
-    <ul>
-        <li>Variables can have multiple causes: changes in A can be caused by changes in B or C or both</li>
-        <li>Variables can have multiple effects: changes in A can cause changes in B or C or both</li>
-        <li>Effects can be <u>positive</u> or <u>negative</u>: more A can mean more B OR more A can mean less B</li>
-        <li>Effects can be <u>null</u> (i.e. no arrow), <u>moderate</u> (i.e. one arrow) or <u>strong</u> (i.e. two arrows)</li>
-    </ul>
-    Next page will show a brief video on how to report your findings.
-</p>`;
+    <fieldset style='margin-bottom: 10px;' class='quiz-1-field'>
+    <legend>What is the duration of each trial?</legend>
+    <label for="quiz-2-1">2 minutes</label><br>
+    <input type="radio" name="quiz-2" id="quiz-2-1">
+    <label for="quiz-2-2">1 minute</label><br>
+    <input type="radio" name="quiz-2" id="quiz-2-2">
+    <label for="quiz-2-3">30 seconds</label>
+    <input type="radio" name="quiz-2" id="quiz-2-3">
+    </fieldset>
+
+    <fieldset style='margin-bottom: 10px;' class='quiz-1-field'>
+    <legend>Which of the following statement is <strong>false</strong>?</legend>
+    <label for="quiz-3-1">Variables can have negative, positive links or no links at all.</label>
+    <input type="radio" name="quiz-3" id="quiz-3-1"><br>
+    <label for="quiz-3-2">Variables can have strong (i.e. 2 arrows) or normal (1 arrow) links.</label>
+    <input type="radio" name="quiz-3" id="quiz-3-2"><br>
+    <label for="quiz-3-3">Variables must have at least one link between them which can be positive or negative.</label>
+    <input type="radio" name="quiz-3" id="quiz-3-3">
+    </fieldset>
+
+    <div id='submit-quiz-container'>
+        <button id='submit-quiz'>Submit</button>
+    </div>
+</div>`;
 
 var graph_intro_4 = `
 <p class='base-p'>
@@ -419,8 +435,18 @@ Watch this video that shows a brief extract of how to report you findings.
 var graph_template = `
 <div class='game-display'>
     <!-- Chart display -->
-    <div class='chart_container'>
-        <canvas id='progressPlot' style="width:100%;height:100%;"></canvas>
+    <div class='graph-left-side'>
+        <div class='chart_container'>
+            <canvas id='progressPlot' style="width:100%;height:100%;"></canvas>
+        </div>
+        <div class='instruction-reminder'>
+            <p>
+                <strong>Rules reminder:</strong> 
+                <br> - Use the handles on the right of the chart to manipulate the values of the variables
+                <br> - You have 1 minute to attempt to understand the causal links between variables
+                <br> - Report your findings, during or after the 1 minute, by using the six sliders on the far right of the screen
+            </p>
+        </div>
     </div>
     <div class='slider_container'>
         <div class='slider_box_container'>
@@ -504,10 +530,10 @@ var graph_template = `
             </div>
         </div>
 
-        <div class='button_container'>
+        <!-- <div class='button_container'>
             <button class='process' id='start_button'>Start</button>
             <button class='process' id='stop_button'>Stop</button>
-        </div>
+        </div> -->
 
         <div class='graph-pred-rec-right'>
             <!-- RADIO with sense making -->
@@ -529,6 +555,8 @@ var graph_template = `
         </div>
 
         <div class='val-link-button'>
+            <button class='process' id='start_button'>Start</button>
+            <button class='process' id='stop_button'>Stop</button>
             <button id='val-button'>Done</button>
         </div>
     </div>

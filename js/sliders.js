@@ -6,7 +6,7 @@ var gameLoop;
 // 10 steps per second with time step of 100 and dt (frequency) 1/10 : 100 * 10 = 1000 ms
 var time_step = 200;
 var elapsed = 0; // Duration of the trial
-var endTrial = 6000; // Supposed to be 1 min, time at which all stops here 1 min,  60 sec or 60,000 ms
+var endTrial = 60000; // Supposed to be 1 min, time at which all stops here 1 min,  60 sec or 60,000 ms
 var midTrial = endTrial*2;//Math.floor(endTrial / 2); // Time at which participants can stop, half the total duration
 var x = 0;
 var y = 0;
@@ -249,11 +249,11 @@ function setupInterface() {
                 //$('#next_button').button({disabled: false});
                 // Display feeback
                 //$('.slider_box').css({'display': 'none'})
-                $('.button_container').css({'display': 'none'})
+                //$('.button_container').css({'display': 'none'})
                 // Feedback report
                 //$(nodeList[0]).css({'display': 'flex'});
                 $('.feedback-slider').slider({disabled: false});
-                $('.val-link-button').css({'display': 'flex'});
+                $('#val-button').css({'display': 'flex'});
                 //$('#val-button').button({disabled: false});
                 // Clear interval
                 clearInterval(gameLoop);
