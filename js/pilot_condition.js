@@ -61,7 +61,7 @@ if (uid == null) {
     // if does not exists, generate a new one
     uid = getQueryVariable('PROLIFIC_PID')
     if (uid == false) {
-        uid = 'pilot_'.concat(Math.random().toString().slice(2, 11));
+        uid = 'test_'.concat(Math.random().toString().slice(2, 11));
         prolific = false;
         // Change href for prolific return as person is not from prolific
     } else {

@@ -127,8 +127,8 @@ var links_template = `
     </div>
     <img style='width:70%;' class='page-4-graph' id='page-4-graphFour' src='./img/pageFour-graphFour.PNG'>
     <img class='page-4-graph' id='page-4-graph-crime-1' src='./img/pageFour-graph-crime-1.PNG'>
-    <img class='page-4-graph' id='page-4-graph-crime-2' src='./img/pageFour-graph-crime-2.PNG'>
-    <img class='page-4-graph' id='page-4-graph-crime-3' src='./img/pageFour-graph-crime-3.PNG'>
+    <img class='page-4-graph' id='page-4-graph-crime-2' src='./img/pageFour-graph-crime-2.png'>
+    <img class='page-4-graph' id='page-4-graph-crime-3' src='./img/pageFour-graph-crime-3.png'>
     <img class='page-4-graph' id='page-4-graph-finance' src='./img/pageFour-graph-finance.PNG'>
     <img class='page-4-graph' id='page-4-graph-estate' src='./img/pageFour-graph-estate.PNG'>
     
