@@ -113,7 +113,7 @@ var links_template = `
     <div class='page-4-graph' id='page-4-graphFour-p' style='width:100%;'>
         <p style='font-size:10pt;'>  
             <strong>Let's try something different!</strong>
-            <br> 
+            
             Here, please represent the information below using the interface you just learned to use:
             <br>
             <u>"Tom has a cough. The doctor thinks that it could be a symptom of either asthma or the flu. He also believes that the flu is twice as likely as asthma to be the cause of the cough.
@@ -125,7 +125,7 @@ var links_template = `
             <br>
         </p>
     </div>
-    <img style='width:70%;' class='page-4-graph' id='page-4-graphFour' src='./img/pageFour-graphFour.PNG'>
+    <img style='width:60%;' class='page-4-graph' id='page-4-graphFour' src='./img/pageFour-graphFour.PNG'>
     <img class='page-4-graph' id='page-4-graph-crime-1' src='./img/pageFour-graph-crime-1.PNG'>
     <img class='page-4-graph' id='page-4-graph-crime-2' src='./img/pageFour-graph-crime-2.png'>
     <img class='page-4-graph' id='page-4-graph-crime-3' src='./img/pageFour-graph-crime-3.png'>
@@ -137,9 +137,11 @@ var links_template = `
         <p style='font-size:smaller;'>
             <i>Reminder of the rules: 
             <ul style='font-size:smaller;'>
-                <li><strong>0</strong>: no arrow from node A to node B means no effect of node A on node B</li>
-                <li><strong>1 or -1</strong>: one arrow from node A to node B means a moderate effect of node A on node B</li>
-                <li><strong>2 or -2</strong>: two arrows from node A to node B means a strong effect of node A on node B</li>
+                <li><strong>0</strong>: no arrow from variable A to variable B means no effect of variable A on variable B</li>
+                <li><strong>1</strong>: one positive arrow from A to B means that <strong>MORE of A</strong> results in <strong>MORE of B</strong></li>
+                <li><strong>2</strong>: two positive arrows from A to B means that <strong>MORE of A</strong> results in <strong> a lot MORE of B</strong></li>
+                <li><strong>-1</strong>: one negative arrow from A to B means that <strong>MORE of A</strong> results in <strong>LESS of B</strong></li>
+                <li><strong>-2</strong>: two negative arrows from A to B means that <strong>MORE of A</strong> results in <strong>a lot LESS of B</strong></li>
             </ul></i>
         </p>
         <p style='color: red;' id='error-msg'></p>
@@ -263,9 +265,11 @@ var link_crime = `
         <br><br>
         <i style='font-size:small;'>Reminder of the rules: 
         <ul>
-            <li><strong>0</strong>: no arrow from node A to node B means no effect of node A on node B</li>
-            <li><strong>1 or -1</strong>: one arrow from node A to node B means a moderate effect of node A on node B</li>
-            <li><strong>2 or -2</strong>: two arrows from node A to node B means a strong effect of node A on node B</li>
+            <li><strong>0</strong>: no arrow from variable A to variable B means no effect of variable A on variable B</li>
+            <li><strong>1</strong>: one positive arrow from A to B means that <strong>MORE of A</strong> results in <strong>MORE of B</strong></li>
+            <li><strong>2</strong>: two positive arrows from A to B means that <strong>MORE of A</strong> results in <strong> a lot MORE of B</strong></li>
+            <li><strong>-1</strong>: one arrow from A to B means that <strong>MORE of A</strong> results in <strong>LESS of B</strong></li>
+            <li><strong>-2</strong>: two arrows from A to B means that <strong>MORE of A</strong> results in <strong>a lot LESS of B</strong></li>
         </ul></i>
     </p>
 </div>`;
@@ -337,8 +341,14 @@ var graph_intro_1 = `
     <br><br> 
     <u>Your goal is to understand the causal model underlying the behaviour of the lines by using handles allowing you to manually change their values. </u>
     <br><br>
-    You will be able to report the sign, i.e. is it a negative or a positive effect, and the strength, i.e. 0, 1 or 2 arrows, of the relationships you observe at any point during the trial using the interface you have used previously.
+    You will be able to report the sign, i.e. "+" or "-", and the strength, i.e. 0, 1 or 2 arrows, of the relationships you observe at any point during the trial using the interface you have used previously.
     <br>
+    - <strong>No link (0)</strong>: as variable A goes UP, variable B does not move.
+    <br>
+    - <strong>Positive link (+1, +2)</strong>: as variable A goes UP, variable B goes UP as well
+    <br>
+    - <strong>Negative link (-1, -2)</strong>: as variable A goes UP, variable B goes DOWN
+    <br><br>
     Each trial will last <strong>60 seconds / 1 minute</strong>. Sections will vary in difficulty, this is perfectly normal. It may seem abstract now but next page will show you a demo. 
     <br><br>
     You will have two tools at your disposal:
