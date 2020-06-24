@@ -16,6 +16,8 @@ var pageFour_crime_1 = 'https://ncase.me/loopy/v1.1/?data=[[[3,483,208,1,%22Crim
 var pageFour_crime_2 = 'https://ncase.me/loopy/v1.1/?data=[[[3,483,208,1,%22Police%2520Action%22,4],[4,803,209,1,%22Population%2520Happiness%22,0],[5,649,435,1,%22Crime%2520Rate%22,3]],[],[[642,218,%22%253F%22],[750,337,%22%253F%22],[536,342,%22%253F%22]],5%5D'
 var pageFour_crime_3 = 'https://ncase.me/loopy/v1.1/?data=[[[3,483,208,1,%22Population%2520Happiness%22,4],[4,803,209,1,%22Crime%2520Rate%22,0],[5,649,435,1,%22Police%2520Action%22,3]],[],[[642,218,%22%253F%22],[750,337,%22%253F%22],[536,342,%22%253F%22]],5%5D' 
 
+var crime_groundtruth = 'https://ncase.me/loopy/v1.1/?data=[[[1,478,239,1,%22Crime%2520Rate%22,4],[3,800,248,1,%22Police%2520Action%22,0],[4,636,454,1,%22Population%2520Happiness%22,3]],[[1,3,113,1,0],[1,4,-115,-1,0],[3,4,116,-1,0],[3,1,88,-1,0],[3,1,20,-1,0],[1,3,165,1,0]],[],4%5D'
+
 var pageFour_finance = 'https://ncase.me/loopy/v1.1/?data=[[[3,490,209,1,%22Stock%2520Prices%22,4],[4,803,209,1,%22Confinement%2520Measures%22,0],[5,649,435,1,%22Virus%2520Cases%22,3]],[],[[545,337,%22%253F%22],[648,214,%22%253F%22],[746,337,%22%253F%22]],6%5D'
 
 var pageFour_estate = 'https://ncase.me/loopy/v1.1/?data=[[[3,484,209,1,%22Houses%2520Prices%22,4],[4,802,208,1,%22Population%2520Density%22,0],[5,639,434,1,%22Desirability%22,3]],[],[[540,337,%22%253F%22],[639,220,%22%253F%22],[731,342,%22%253F%22]],5%5D'
