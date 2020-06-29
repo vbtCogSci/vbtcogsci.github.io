@@ -9,7 +9,7 @@ var consent_page_1 = `
     You are invited to participate in a research study conducted by Victor Btesh (victor.btesh.19@ucl.ac.uk) under the supervision of Professor David Lagnado at University College London. The purpose of this research study is to examine how people reason and learn about systems in continuous time. You are free to contact the investigators at the above email address if you wish to discuss the study. 
     <br><br>
     <strong>About the study:</strong>
-    <br>This task is part of a research study. For this task you will answer questions about topics such as public policy and health. No prior experience or expertise is necessary. The task will take approximately 20 minutes and at the end there will be a questionnaire to obtain demographic information. 
+    <br>This task is part of a research study. For this task you will answer questions about topics such as public policy and health and use a dedicated graphical interface to do so. No prior experience or expertise is necessary. The task will take approximately 20 minutes and at the end there will be a questionnaire to obtain demographic information. 
     <br><br>
     You are required to remain in a fully maximised tab throughout the study.
     <br>
