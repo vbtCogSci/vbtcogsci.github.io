@@ -144,26 +144,38 @@ if (uid == null) {
                 }
             
                 condition = dbCond;
-            
-                if (condition == 'label') {
-                    labBlocks = [
-                        condLabel[0],
-                        condLabel[1],
-                        condLabel[2]
-                    ]
-                    // Select only crime
-                    labBlocks = [condLabel[condLabel.indexOf('crime')]];
-                } else {
-                    labBlocks = [
-                        condControl[0],
-                        condControl[1],
-                        condControl[2]
-                    ]
-                    // Select only crime
-                    labBlocks = [condControl[condControl.indexOf('crime_control')]];
-                    // Adjust sequence 
-                    condSeq = buildBlockSeq(condition);
-                }
+                
+                //// Normal if statement sequence
+                //if (condition == 'label') {
+                //    labBlocks = [
+                //        condLabel[0],
+                //        condLabel[1],
+                //        condLabel[2]
+                //    ]
+                //    // Select only crime
+                //    labBlocks = [condLabel[condLabel.indexOf('crime')]];
+                //} else {
+                //    labBlocks = [
+                //        condControl[0],
+                //        condControl[1],
+                //        condControl[2]
+                //    ]
+                //    // Select only crime
+                //    labBlocks = [condControl[condControl.indexOf('crime_control')]];
+                //    // Adjust sequence 
+                //    condSeq = buildBlockSeq(condition);
+                //}
+                // Only run Control Condition
+                condition = 'control'
+                labBlocks = [
+                    condControl[0],
+                    condControl[1],
+                    condControl[2]
+                ]
+                // Select only crime
+                labBlocks = [condControl[condControl.indexOf('crime_control')]];
+                // Adjust sequence 
+                condSeq = buildBlockSeq(condition);
             
                 db.ref('states').child(uid).child('condition').set(condition);
                 localStorage.setItem('condition', condition)
