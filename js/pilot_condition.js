@@ -287,7 +287,7 @@ function setupGame(condIdx) {
         // Remove the first index from genGraph so as to not activate this if statement
         genGraphIdx.shift()
         var easyB = easyBlocks.shift()
-        var randgen = easyB[Math.floor(Math.random() * 2) + 1];
+        var randgen = easyB[Math.floor( Math.random() * 3 )];
         console.log(randgen)
         
         // Sets up the game page given the preset
