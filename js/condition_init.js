@@ -1,9 +1,13 @@
 // Get uid from session storage (user pc)
 var uid = localStorage.getItem('uid');
 console.log(uid);
-if (uid.slice(0, 4) == 'test') {
-    var uid = null;
+
+if (uid != null) {
+    if (uid.slice(0, 4) == 'test') {
+        var uid = null;
+    }
 }
+
 
 // Generate firebase reference -- Uncomment this to connect to database
 var db = firebase.database();
