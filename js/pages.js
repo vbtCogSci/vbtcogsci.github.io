@@ -9,13 +9,13 @@ var consent_page_1 = `
     You are invited to participate in a research study conducted by Victor Btesh (victor.btesh.19@ucl.ac.uk) under the supervision of Professor David Lagnado at University College London. The purpose of this research study is to examine how people reason and learn about systems in continuous time. You are free to contact the investigators at the above email address if you wish to discuss the study. 
     <br><br>
     <strong>About the study:</strong>
-    <br>This task is part of a research study. For this task you will answer questions about topics such as public policy and health and use a dedicated graphical interface to do so. No prior experience or expertise is necessary. The task will take approximately 20 minutes and at the end there will be a questionnaire to obtain demographic information. 
+    <br>This task is part of a research study. For this task you will answer questions about topics such as public policy and use a dedicated graphical interface to do so. No prior experience or expertise is necessary. The task will take approximately 20 minutes and at the end there will be a questionnaire to obtain demographic information. 
     <br><br>
     You are required to remain in a fully maximised tab throughout the study.
     <br>
     <u>**Please do not use mobile devices.**</u>
     <br><br>
-    Please do not accept or attempt multiple surveys. If you have been rejected from previous surveys, you will not be able to participate. To proceed forward at each point, you will have to use the ‘next’ button. An disabled ‘next’ button means that you still have an ongoing task on the current page.
+    Please do not accept or attempt multiple surveys. If you have been rejected from previous surveys, you will not be able to participate. To proceed forward at each point, you will have to use the ‘next’ button. A disabled ‘next’ button means that you still have an ongoing task on the current page.
 </p>`;
 
 var consent_page_2 = `
@@ -83,7 +83,7 @@ var causal_models_intro_3 = `
         They will be reprensented as nodes and your task will be to provide your interpretation of the causal links between them.
         <br>
         <br>
-        Here are how more example structures, study them carefully. The sign of the effect, i.e. positive or negative, is given by the <strong>sign next to the arrow</strong> 
+        Here are more examples of structures, study them carefully. The sign of the effect, i.e. positive or negative, is given by the <strong>sign next to the arrow</strong> 
         while its strength is given by the <strong>number of arrows</strong> going from a cause node to an effect node. 
         <br>
         <br>
@@ -129,8 +129,12 @@ var links_template = `
     <img class='page-4-graph' id='page-4-graph-crime-1' src='./img/pageFour-graph-crime-1.PNG'>
     <img class='page-4-graph' id='page-4-graph-crime-2' src='./img/pageFour-graph-crime-2.png'>
     <img class='page-4-graph' id='page-4-graph-crime-3' src='./img/pageFour-graph-crime-3.png'>
-    <img class='page-4-graph' id='page-4-graph-finance' src='./img/pageFour-graph-finance.PNG'>
-    <img class='page-4-graph' id='page-4-graph-estate' src='./img/pageFour-graph-estate.PNG'>
+    <img class='page-4-graph' id='page-4-graph-finance-1' src='./img/pageFour-graph-finance-1.PNG'>
+    <img class='page-4-graph' id='page-4-graph-finance-2' src='./img/pageFour-graph-finance-2.PNG'>
+    <img class='page-4-graph' id='page-4-graph-finance-3' src='./img/pageFour-graph-finance-3.PNG'>
+    <img class='page-4-graph' id='page-4-graph-estate-1' src='./img/pageFour-graph-estate-1.PNG'>
+    <img class='page-4-graph' id='page-4-graph-estate-2' src='./img/pageFour-graph-estate-2.PNG'>
+    <img class='page-4-graph' id='page-4-graph-estate-3' src='./img/pageFour-graph-estate-3.PNG'>
     
     <!-- Error Paragraphs -->
     <div style='width: 100%;' class='error-p'>
@@ -280,15 +284,15 @@ var link_finance = `
         Please provide the links that correspond to your understanding of the causal dynamics in the following scenario: 
         <br><br>
         <u>You are a state policy maker who is trying to manage a virus outbreak</u>.
-        You have to decide on a confinement policy to protect to the population and limit the number of virus cases but want to balance it with the long term aim not to overly damage the economy.
+        You have to decide on a lockdown policy to protect to the population and limit the number of virus cases but want to balance it with the long term goal not to overly damage the economy.
         <br><br>
-        Before making any decision you want to model the interplay between Stock Prices, the intensity of confinement measures (for instance, total confinement under all circumstances, partial, to allow people to still work or no confinement at all) and the number of people affected by the virus.
+        Before making any decision you want to model the interplay between Stock Prices, the intensity of lockdown measures (for instance, total lockdown under all circumstances, partial, to allow people to still work or no lockdown at all) and the number of people affected by the virus.
         <br>
         This is a complicated issue but sadly you only have access to three key indices:
         <br><br>
         - <strong>Stock Prices</strong>, representing a global index of the stock market's health.
         <br>
-        - <strong>Confinement Measures</strong>, representing the intensity of confinement measures on the territory.
+        - <strong>Lockdown Measures</strong>, representing the intensity of lockdown measures on the territory.
         <br>
         - <strong>Virus Cases</strong>, the number of people affected by the virus.
         <br><br>
@@ -308,7 +312,7 @@ var link_estate = `
     <p>
         Please provide the links that correspond to your understanding of the causal dynamics in the following scenario: 
         <br><br>
-        <u>You are an urban planner in a developping city. You notice that the some neighbourhoods are more desireable than other.</u><br>
+        <u>You are an urban planner in a developping city. You notice that the some neighbourhoods are more desirable than others.</u><br>
         You want to model the interplay, in a given neighbourhood, between House Prices, its Population density and its overall Desirability.
         <br>
         This is a complex issue but sadly you only have access to three key indices:
@@ -317,7 +321,7 @@ var link_estate = `
         <br>
         - <strong>Population Density</strong>, representing the number of inhabitants per km squared.
         <br>
-        - <strong>Desirability</strong>, an index of the desireability of the neighbourhood gathered via polls in the population.
+        - <strong>Desirability</strong>, an index of the desirability of the neighbourhood gathered via polls in the population.
         <br><br>
         Please provide your understanding of this causal model in the next page.
         <br><br>
@@ -376,7 +380,7 @@ var graph_intro_1 = `
 
 var graph_intro_2 = `
 <p class='base-p'>
-    <strong>Watch carefully this short video to familiarise yourself with the interface. Press play to start.</strong> The first trial starts next page.
+    <strong>Watch carefully this short video to familiarise yourself with the interface. Press play to start.</strong> The first trial starts after a short quiz.
 </p>
 <div class='video-container'>
     <video id='pres-video'>

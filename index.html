@@ -14,40 +14,50 @@
 	<!-- Javascript Files -->
     <!-- FIREBASE -->
     <!-- The core Firebase JS SDK is always required and must be listed first -->
-    <script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-app.js"></script>
-
-    <!-- TODO: Add SDKs for Firebase products that you want to use
-         https://firebase.google.com/docs/web/setup#available-libraries -->
-    <script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-database.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-analytics.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-firestore.js"></script>
-
-    <script>
-      // Your web app's Firebase configuration
-      var firebaseConfig = {
-        apiKey: "AIzaSyDUcWjGZM1fvL22wgiZGBc3N4Isv_kt5GI",
-        authDomain: "dynamicinference.firebaseapp.com",
-        databaseURL: "https://dynamicinference.firebaseio.com",
-        projectId: "dynamicinference",
-        storageBucket: "dynamicinference.appspot.com", 
-        messagingSenderId: "351957370332",
-        appId: "1:351957370332:web:8cea28afc23740b1363b19",
-        measurementId: "G-DJQQVW7EH8"
-      };
-      // Initialize Firebase
-      firebase.initializeApp(firebaseConfig);
-      firebase.analytics();
-    </script>
+    <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-app.js"></script>
+  
+  
+  <!-- TODO: Add SDKs for Firebase products that you want to use
+       https://firebase.google.com/docs/web/setup#available-libraries -->
+  <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-database.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-analytics.js"></script>
+  
+  <script>
+    // Your web app's Firebase configuration
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    var firebaseConfig = {
+      apiKey: "AIzaSyDUcWjGZM1fvL22wgiZGBc3N4Isv_kt5GI",
+      authDomain: "dynamicinference.firebaseapp.com",
+      databaseURL: "https://dynamicinference.firebaseio.com",
+      projectId: "dynamicinference",
+      storageBucket: "dynamicinference.appspot.com",
+      messagingSenderId: "351957370332",
+      appId: "1:351957370332:web:8cea28afc23740b1363b19",
+      measurementId: "G-DJQQVW7EH8"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    firebase.analytics();
+  </script>
 
 	<!-- UI and logic scripts -->
-	<script src='./js/jquery-3.4.1.min.js'></script>
+  <!-- Order matters here! -->
+	<script src='./js/pkg/jquery-3.4.1.min.js'></script>
 	<script src='./js/jquery.ui/jquery-ui.min.js'></script>
-  <script src='./js/jquery.fittext.js'></script>
+  <script src='./js/pkg/jquery.fittext.js'></script>
+  <script src='./js/pkg/math.js'></script>
   <script src='./js/pages.js'></script>
-  <script src='./js/pilot_condition.js'></script>
-  <script src="./js/survey.js"></script>
+  <script src='./js/scrambler.js'></script>
+  <script src="./js/utilities.js"></script>
+  <script src='./js/condition_init.js'></script>
+  <script src="./js/survey_methods.js"></script>
+  <script src="./js/interface_methods.js"></script>
 	<script src="./js/sliders.js"></script>
   <script src="./js/database.js"></script>
+  <script src="./js/survey.js"></script>
+
+
 	<!-- Chart.js and plot logic -->
 	<script src='https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js'></script>
 	<!--Math display-->

@@ -1,17 +1,73 @@
-function saveState() {
-    db.ref('states').child(uid).child('state').set(currentModel);
-    db.ref('states').child(uid).child('condIdx').set(condIdx);
-    
+// Methods pushing data to the firebase database, called throughout the experiment
+// Methods name are self explanatory on what they refer to
+
+function saveState(db_update=true) {    
+    localStorage.setItem('condition', condition)
     localStorage.setItem('condIdx', condIdx);
     localStorage.setItem('currentModel', currentModel);
+    localStorage.setItem('currentLinkIdx', currentLinkIdx)
+    localStorage.setItem('condLabel', condLabel)
+    localStorage.setItem('condDifficulty', condDifficulty)
 
-    if (condIdx < 2) {
-        // Save date and time of submission
-        startTime = Date.now();
-        db.ref('date').child(uid).child('start').set(Date.now());
+    if (db_update == true) {
+        db.ref('states').child(uid).child('condition').set(condition);
+        db.ref('states').child(uid).child('state').set(currentModel);
+        db.ref('states').child(uid).child('condIdx').set(condIdx);
+        db.ref('states').child(uid).child('currentLinkIdx').set(currentLinkIdx);
+        db.ref('states').child(uid).child('condLabel').set(condLabel);
+        db.ref('states').child(uid).child('condDifficulty').set(condDifficulty);
+
+        
+        if (condIdx < 2) {
+            // Save date and time of submission
+            startTime = Date.now();
+            db.ref('date').child(uid).child('start').set(Date.now());
+        }
+
     }
 }
 
+
+// Record Prior Model
+// Called survey_methods.nextNode()
+function record_prior(linksModel) {
+
+    var prior_report = [
+        $('#AonB').slider("value"),
+        $('#AonC').slider("value"),
+        $('#BonA').slider("value"),
+        $('#BonC').slider("value"),
+        $('#ConA').slider("value"),
+        $('#ConB').slider("value")
+    ];
+
+    // For test purposes
+    prior_test = prior_report;
+    prior_test_order = currentLabels;
+
+    if (linksModel == 'linkscrime') {
+        var model_idx = 0;
+    } else if (linksModel == 'linksfinance') {
+        var model_idx = 1;
+    } else if (linksModel == 'linksestate') {
+        var model_idx = 2;
+    }
+
+    var prior_order = 'links_'.concat(model_idx).concat('_').concat(currentLabels[0].slice(0, 3)).concat(currentLabels[1].slice(0, 3)).concat(currentLabels[2].slice(0, 3));
+
+    return [prior_report, prior_order]
+}
+
+
+function saveScramblingInfo(model_preset, ned_prior) {
+
+    localStorage.setItem(condLabel[currentLinkIdx].concat('_').concat(condDifficulty[currentLinkIdx]), model_preset[0])
+    db.ref('states').child(uid).child(condDifficulty[currentLinkIdx]).set(model_preset[0]);
+    db.ref('data').child(uid).child(condLabel[currentLinkIdx].concat('_').concat(condition)).child('preset_dict').set(model_preset[1]);
+    db.ref('data').child(uid).child(condLabel[currentLinkIdx].concat('_').concat(condition)).child('ned_prior').set(ned_prior);
+}
+
+// Record link data after a graph trial
 function saveLinkData() {
     // Feedback sliders values
     var report = [
@@ -33,7 +89,6 @@ function saveLinkData() {
 }
 
 function saveGraphData() {
-    // SEND TO DATABASE
 
     // Feedback sliders values
     var report = [
@@ -44,7 +99,17 @@ function saveGraphData() {
         $('#ZonX').slider("value"),
         $('#ZonY').slider("value")
     ];
-    if (['crime', 'finance', 'estate'].includes(currentModel)) {
+
+    if (['crime', 'finance', 'estate'].includes(currentModel) && experiment == 'exp3') {
+        var modelName = currentModel.concat('_').concat(condition);
+        db.ref('data').child(uid).child(modelName).child('report').set(report);
+        db.ref('data').child(uid).child(modelName).child('order').set(currentLabels);
+        
+        var $radioSense = $("input:radio[name=radio-1]:checked").attr('id');
+        db.ref('data').child(uid).child(modelName).child('sense').set($radioSense);
+        db.ref('data').child(uid).child(modelName).child('reason').set($('#reason-qual').val());
+       
+    } else if (['crime', 'finance', 'estate'].includes(currentModel)) {
         var modelName = currentModel.concat('_').concat(modelNo.toString());
         db.ref('data').child(uid).child(modelName).child('report').set(report);
         
@@ -55,7 +120,6 @@ function saveGraphData() {
     } else if (['crime_control', 'finance_control', 'estate_control'].includes(currentModel)) {
         var modelName = currentModel.concat('_').concat(modelNo.toString());
         db.ref('data').child(uid).child(modelName).child('report').set(report);
-
     } else {
         var modelName = currentModel;
         db.ref('data').child(uid).child(modelName).child('report').set(report);
@@ -110,9 +174,7 @@ function saveDemographics () {
     db.ref('demo').child(uid).child('graph_fb').set(radioGraph);
 
     // Save date and time of submission
-    endTime = Date.now();
     db.ref('date').child(uid).child('end').set(Date.now());
-    db.ref('date').child(uid).child('duration').set(endTime - startTime);
 }
 
 function saveTechnicalFb () {
