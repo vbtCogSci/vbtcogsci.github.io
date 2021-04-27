@@ -80,7 +80,7 @@ var causal_models_intro_3 = `
 <div class='page-3-upper'>
     <p class='base-p'>
         In today's task, you will first be presented with a set of concepts and asked to state your representation of their causal links. 
-        They will be reprensented as nodes and your task will be to provide your interpretation of the causal links between them.
+        They will be represented as nodes and your task will be to provide your interpretation of the causal links between them.
         <br>
         <br>
         Here are more examples of structures, study them carefully. The sign of the effect, i.e. positive or negative, is given by the <strong>sign next to the arrow</strong> 
@@ -284,7 +284,7 @@ var link_finance = `
         Please provide the links that correspond to your understanding of the causal dynamics in the following scenario: 
         <br><br>
         <u>You are a state policy maker who is trying to manage a virus outbreak</u>.
-        You have to decide on a lockdown policy to protect to the population and limit the number of virus cases but want to balance it with the long term goal not to overly damage the economy.
+        You have to decide on a lockdown policy to protect the population and limit the number of virus cases but want to balance it with the long term goal not to overly damage the economy.
         <br><br>
         Before making any decision you want to model the interplay between Stock Prices, the intensity of lockdown measures (for instance, total lockdown under all circumstances, partial, to allow people to still work or no lockdown at all) and the number of people affected by the virus.
         <br>
