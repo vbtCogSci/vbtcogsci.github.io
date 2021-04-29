@@ -40,7 +40,7 @@ function scrambler_wrapper(init_model, init_order, cond, save=true) {
     if (cond == 'congruent') {
         // model = prior OR model ~= prior 
         // 3 links will be randomised with a softmax preference for closer link values
-        var num_scramble = 2;
+        var num_scramble = 1;
         var softmax_coef = -1;
         var target_ned = [0.80, 0.90];
 
@@ -77,7 +77,7 @@ function scrambler_wrapper(init_model, init_order, cond, save=true) {
 
 // Methods for scrambling
 // Samples a model within the specified ned range parameter of the base model
-function scramble_model(init_model, num_scramble, softmax_coef, target_ned) {
+function scramble_model(init_model, num_scramble, softmax_coef, target_ned, test=false) {
     // Initialise generic variables
     var possibilities = [-2, -1, 0, 1, 2];
 
@@ -131,14 +131,23 @@ function scramble_model(init_model, num_scramble, softmax_coef, target_ned) {
         current_ned = 1 - euclidean_distance(init_model, out_report) / norm_c;
 
         // Counter to check number of loops it took to find a suitable model
-        n_iter = n_iter += 1
+        n_iter = n_iter + 1
+
+        if (test == true && n_iter < 15) {
+            console.log(current_ned)
+        }
 
     }
 
-    console.log(init_model)
-    console.log(n_iter)
-    console.log(out_report)
-    console.log(current_ned)
+    //console.log(init_model)
+
+    if (test == true) {
+        console.log('Done after '.concat(n_iter.toString()));
+        console.log('Final ned: '.concat(current_ned.toString()));
+    }
+    //console.log(n_iter)
+    //console.log(out_report)
+    //console.log(current_ned)
 
     // Return accepted report
     return out_report
@@ -245,3 +254,55 @@ function to_preset_list(model_order, model_report, shuffle=true) {
 
     return [model_list, causes_dict]
 }
+
+
+// Model generator for testing purposes
+function model_generator(n) {
+
+    var model_array = [];
+
+    for (i=0;i<n;i++) {
+        var new_model = [];
+        for (j=0;j<6;j++) {
+            new_model.push(weighted_choice([-2, -1, 0, 1, 2], [1, 1, 1, 1, 1]));
+        }
+        model_array.push(new_model);
+    }
+
+    return model_array;
+}
+
+function model_tester(models, which=[0, 1, 2]) {
+
+    var cond_label = ['congruent', 'incongruent', 'implausible'];
+
+    var num_scramble = [1, 3, 6];
+
+    var softmax_c = [-1, 0, 1];
+
+    var ned_ranges = [[0.8, 0.9],
+                      [0.45, 0.55],
+                      [0.05, 0.15]];
+
+    var scrambled_out = [];
+    for (k=0; k<models.length; k++) {
+
+        if (models[k].toString() == [0, 0, 0, 0, 0, 0].toString()) {
+            console.log('Degenerate model 0s');
+            continue;
+        }
+
+        var neds_out = [];
+
+        console.log('Index '.concat(k.toString()).concat(': [').concat(models[k].toString()).concat(']'));
+
+        for (j=0; j<3; j++) {
+            console.log('Starting '.concat(cond_label[j]));
+            
+            var ned_loc = scramble_model(models[k], num_scramble[j], softmax_c[j], ned_ranges[j], true);
+
+        }
+
+    }
+}
+
