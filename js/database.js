@@ -107,7 +107,8 @@ function saveGraphData() {
         
         var $radioSense = $("input:radio[name=radio-1]:checked").attr('id');
         db.ref('data').child(uid).child(modelName).child('sense').set($radioSense);
-        db.ref('data').child(uid).child(modelName).child('reason').set($('#reason-qual').val());
+        var $radioExpect = $("input:radio[name=radio-expect]:checked").attr('id');
+        db.ref('data').child(uid).child(modelName).child('expect').set($radioExpect);
        
     } else if (['crime', 'finance', 'estate'].includes(currentModel)) {
         var modelName = currentModel.concat('_').concat(modelNo.toString());
@@ -115,7 +116,8 @@ function saveGraphData() {
         
         var $radioSense = $("input:radio[name=radio-1]:checked").attr('id');
         db.ref('data').child(uid).child(modelName).child('sense').set($radioSense);
-        db.ref('data').child(uid).child(modelName).child('reason').set($('#reason-qual').val());
+        var $radioExpect = $("input:radio[name=radio-expect]:checked").attr('id');
+        db.ref('data').child(uid).child(modelName).child('expect').set($radioExpect);
 
     } else if (['crime_control', 'finance_control', 'estate_control'].includes(currentModel)) {
         var modelName = currentModel.concat('_').concat(modelNo.toString());

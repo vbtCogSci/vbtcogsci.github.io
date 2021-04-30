@@ -337,9 +337,7 @@ function setupFeedback() {
             $('#ConA').slider("value"),
             $('#ConB').slider("value")
         ];
-        if (['linkscrime', 'linksestate', 'linksfinance'].includes(currentModel)) {
-            nextNode();
-        } else if (checkReport(report, currentModel) == true) {
+        if (checkReport(report, currentModel) == true) {
             nextNode();
         }
     });
@@ -347,18 +345,38 @@ function setupFeedback() {
     $("input:radio[name=radio-1]").each(function (index, element) {
         var $radioB = $(element)
         $radioB.click(function () {
-            if ($('#reason-qual').val() != "") {
+            var $radioExpect = $("input:radio[name=radio-expect]:checked").attr('id');
+            if ($radioExpect != null) {
                 $('#val-button').button({disabled: false});
             }
         }) 
     })
 
-    $('#reason-qual').on('input', function() {
-        var $radioSense = $("input:radio[name=radio-1]:checked").attr('id');
-        if ($radioSense != null) {
-            $('#val-button').button({disabled: false});
-        }
+    $("input:radio[name=radio-expect]").each(function (index, element) {
+        var $radioB = $(element)
+        $radioB.click(function () {
+            var $radioSense = $("input:radio[name=radio-1]:checked").attr('id');
+            if ($radioSense != null) {
+                $('#val-button').button({disabled: false});
+            }
+        }) 
     })
+
+    //$("input:radio[name=radio-1]").each(function (index, element) {
+    //    var $radioB = $(element)
+    //    $radioB.click(function () {
+    //        if ($('#reason-qual').val() != "") {
+    //            $('#val-button').button({disabled: false});
+    //        }
+    //    }) 
+    //})
+    //
+    //$('#reason-qual').on('input', function() {
+    //    var $radioSense = $("input:radio[name=radio-1]:checked").attr('id');
+    //    if ($radioSense != null) {
+    //        $('#val-button').button({disabled: false});
+    //    }
+    //})
 
 }
 
@@ -427,10 +445,14 @@ function nextNode () {
 
 
 // Check that the report is correct in the links training blocks
-// Called when a participants validates feedback from link sliders (setup in survey.setupFeedback)
+// Called when a participants validates feedback from link sliders (setup in survey_methods.setupFeedback)
 function checkReport(report, currentModel) {
     if (JSON.stringify(report) == '[0,0,0,0,0,0]') {
-        $('#error-msg').html('Incorrect: there is at least one link in the diagram.')
+        if (['linksestate', 'linkscrime', 'linksfinance'].includes(currentModel)) {
+            $('#error-msg').html('Invalid model: no link in the model is not likely to be true.')
+        } else {
+            $('#error-msg').html('Incorrect: there is at least one link in the diagram.')
+        } 
         return false;
     }
 
@@ -499,6 +521,8 @@ function checkReport(report, currentModel) {
             return false;
         }
     } 
+
+    return true;
 }
 
 

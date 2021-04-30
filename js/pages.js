@@ -563,8 +563,15 @@ var graph_template = `
                 <input type="radio" name="radio-1" id="radio-4"><br>
             </fieldset>
             <fieldset class='label-fb'>
-                <legend>Please write in a few words the logic behind you answer:</legend>
-                <textarea type='text' id='reason-qual' name='reason'></textarea>
+                <legend>To what extent did the variables behave the way you expected them to?</legend>
+                <label for="radio-6">Not at all like I expected</label>
+                <input type="radio" name="radio-expect" id="radio-6"><br>
+                <label for="radio-7">Not really like I expected</label>
+                <input type="radio" name="radio-expect" id="radio-7"><br>
+                <label for="radio-8">Somewhat like I expected</label>
+                <input type="radio" name="radio-expect" id="radio-8"><br>
+                <label for="radio-9">Exactly like I expected</label>
+                <input type="radio" name="radio-expect" id="radio-9"><br>
             </fieldset>
         </div>
 
@@ -769,7 +776,7 @@ var feedback_template = `
             <div class='feedback-slider' id='XonZ'>
                 <div id="handle-XonZ" class="ui-slider-handle"></div>
             </div>
-        </div>
+        </div> 
         <div class='feedback-slider-container'>
             <img class='fb_img' src='./img/varYX.png'>
             <p style='text-align:center'>
@@ -820,6 +827,17 @@ var feedback_template = `
             <input type="radio" name="radio-1" id="radio-3"><br>
             <label for="radio-4">Completely logical</label>
             <input type="radio" name="radio-1" id="radio-4"><br>
+        </fieldset>
+        <fieldset class='label-fb'>
+            <legend>To what extent did the variables behave the way you expected them to?</legend>
+            <label for="radio-6">Not at all like I expected</label>
+            <input type="radio" name="radio-expect" id="radio-6"><br>
+            <label for="radio-7">Not really like I expected</label>
+            <input type="radio" name="radio-expect" id="radio-7"><br>
+            <label for="radio-8">Somewhat like I expected</label>
+            <input type="radio" name="radio-expect" id="radio-8"><br>
+            <label for="radio-9">Exactly like I expected</label>
+            <input type="radio" name="radio-expect" id="radio-9"><br>
         </fieldset>
         <fieldset class='label-fb'>
             <legend>Please write in a few words the logic behind you answer:</legend>
