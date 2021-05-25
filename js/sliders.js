@@ -435,14 +435,14 @@ function setupGameCanvas() {
 function updateModel(preset) {
     //var presetValues = presets[preset];
     if (experiment == 'exp3' && condLabel.includes(preset)) {
-        // Scramble here maybe ----
+
         var locCond = condLabel[currentLinkIdx].concat('_').concat(condDifficulty[currentLinkIdx])
         var presetValues = localStorage.getItem(locCond).split(','); // Scrambled custom preset
         var presetLabels = presetValues.slice(9, 12);
         var labelsHandle = presetValues.slice(12);
-        causes['X'] = [parseInt(presetValues[0]), parseInt(presetValues[1]), parseInt(presetValues[2])];
-        causes['Y'] = [parseInt(presetValues[3]), parseInt(presetValues[4]), parseInt(presetValues[5])];
-        causes['Z'] = [parseInt(presetValues[6]), parseInt(presetValues[7]), parseInt(presetValues[8])];
+        causes['X'] = [parseFloat(presetValues[0]), parseFloat(presetValues[1]), parseFloat(presetValues[2])];
+        causes['Y'] = [parseFloat(presetValues[3]), parseFloat(presetValues[4]), parseFloat(presetValues[5])];
+        causes['Z'] = [parseFloat(presetValues[6]), parseFloat(presetValues[7]), parseFloat(presetValues[8])];
         currentLabels = presetLabels;
     
     } else if (preset == 'crime' && experiment == 'exp1') {
@@ -455,7 +455,7 @@ function updateModel(preset) {
         causes['Z'] = presetValues.slice(6, 9);
         currentLabels = presetLabels;
 
-    }else if (preset == 'crime_control') {
+    } else if (preset == 'crime_control') {
         modelNo = getRandomInt(6);
         var presetValues = presets[preset][modelNo];
         var presetLabels = presetValues.slice(9, 12);

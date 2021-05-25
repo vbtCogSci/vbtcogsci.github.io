@@ -26,11 +26,20 @@ var label_handle = [
 ]
 
 // Link types possibilites
-var link_possibilities = [-2, -1, 0, 1, 2];
+var link_possibilities = [-1, -0.5, 0, 0.5, 1];
 
 // Wrapper for all the scrambling process
-// Called in ?? (should happen as soon as we have the prior)
-function scrambler_wrapper(init_model, init_order, cond, save=true) {
+// Called in survey_methods.nextNode, when the prior is validated by the participant (should happen as soon as we have the prior)
+function scrambler_wrapper(init_model_scaled, init_order, cond, save=true) {
+
+    console.log(init_model_scaled)
+
+    var init_model = Array(init_model_scaled.length);
+    for (i=0; i<init_model_scaled.length; i++) {
+        init_model[i] = init_model_scaled[i] / 2;
+    }
+
+    console.log(init_model)
 
     if (experiment == 'exp1' || experiment == 'exp2') {
         return
@@ -72,6 +81,7 @@ function scrambler_wrapper(init_model, init_order, cond, save=true) {
         saveScramblingInfo(model_preset, ned_out);
     }
 
+    console.log(model_preset)
     return model_preset;
 }
 
@@ -79,7 +89,7 @@ function scrambler_wrapper(init_model, init_order, cond, save=true) {
 // Samples a model within the specified ned range parameter of the base model
 function scramble_model(init_model, num_scramble, softmax_coef, target_ned, test=false) {
     // Initialise generic variables
-    var possibilities = [-2, -1, 0, 1, 2];
+    var possibilities = [-1, -0.5, 0, 0.5, 1];
 
     // Generate normalising constant
     var norm_c = normalising_constant(init_model);
@@ -156,8 +166,8 @@ function scramble_model(init_model, num_scramble, softmax_coef, target_ned, test
 
 // Returns the normalising constant for the given model
 function normalising_constant(base_model) {
-    var possibilities = [-2, -1, 0, 1, 2];
-    var max_dist = [2, 2, -2, -2, -2];
+    var possibilities = [-1, -0.5, 0, 0.5, 1];
+    var max_dist = [1, 1, 1, -1, -1];
 
     var max_dist_model = Array(base_model.length).fill(0);
 
@@ -183,8 +193,8 @@ function euclidean_distance(model, base_model) {
 
 
 var test_order = 'links_0_PopPolCri';
-var test_report = [2, 0, 1, 1, -2, 0];
-var other_report = [2, 2, 2, 2, 2, 2];
+var test_report = [1, 0, 0.5, 0.5, -1, 0];
+var other_report = [1, 1, 1, 1, 1, 1];
 // Takes a model_order and model_report and outputs a list ready
 function to_preset_list(model_order, model_report, shuffle=true) {
     // Parse model_order
@@ -215,9 +225,7 @@ function to_preset_list(model_order, model_report, shuffle=true) {
     var label_two = label_order[1];
     var label_three = label_order[2];
 
-    // Causes based, values nested are the cause of the values on the keys
-    // /!\ The value of label_two nested in label_one is the effect of label_two on label_one /!\
-    /// PROBABLY AN ISSUE HERE
+    // Causes based, values nested are the cause of the values on the key
     var causes_dict = {
         [label_one]: {
             [label_two]: model_report[0],
@@ -264,7 +272,7 @@ function model_generator(n) {
     for (i=0;i<n;i++) {
         var new_model = [];
         for (j=0;j<6;j++) {
-            new_model.push(weighted_choice([-2, -1, 0, 1, 2], [1, 1, 1, 1, 1]));
+            new_model.push(weighted_choice([-1, -0.5, 0, 0.5, 1], [1, 1, 1, 1, 1]));
         }
         model_array.push(new_model);
     }
@@ -300,6 +308,8 @@ function model_tester(models, which=[0, 1, 2]) {
             console.log('Starting '.concat(cond_label[j]));
             
             var ned_loc = scramble_model(models[k], num_scramble[j], softmax_c[j], ned_ranges[j], true);
+
+            console.log(ned_loc);
 
         }
 

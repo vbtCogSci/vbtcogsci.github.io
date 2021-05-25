@@ -76,11 +76,11 @@ var exp3_conds = [
 
 var condControl = shuffleArray(['crime_control', 'finance_control', 'estate_control']);
 
-var easyBlocks = [
-    chains,
-    colliders,
-    commonCause
-];
+var easyBlocks = shuffleArray([
+    shuffleArray(chains),
+    shuffleArray(colliders),
+    shuffleArray(commonCause)
+]);
 
 // If the condition is label, assign labelled presets, otherwise add control presets
 
