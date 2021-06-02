@@ -62,7 +62,7 @@ function setupNavigation() {
     })
 
     if (prolific == true) {
-        $('#prolific-link').attr("href", 'https://app.prolific.co/submissions/complete?cc=49081850')
+        $('#prolific-link').attr("href", 'https://app.prolific.co/submissions/complete?cc=29551DF4')
     }
 }
 
