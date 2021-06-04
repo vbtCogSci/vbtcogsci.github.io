@@ -125,6 +125,21 @@ var presets = {
         0, 0, 1,
         'Blue', 'Red', 'Green'
     ],
+    'confound_1': [1, 0, 0,
+        0.5, 1, -1,
+        -1, 0, 1,
+        'Blue', 'Red', 'Green'
+    ],
+    'confound_2': [1, 1, 0,
+        0, 1, 0,
+        1, 0.5, 1,
+        'Blue', 'Red', 'Green'
+    ],
+    'confound_3': [1, 0, 1,
+        1, 1, 0.5,
+        0, 0, 1,
+        'Blue', 'Red', 'Green'
+    ],
     'avg_z': [1, 0, 0,
         1, 1, 0,
         1, -1, 1,

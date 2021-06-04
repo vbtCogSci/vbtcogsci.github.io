@@ -48,6 +48,7 @@ var easyLink = ['easy_1', 'easy_2', 'easy_2'];
 var chains = ['pos_chain_1', 'pos_chain_2', 'pos_chain_3'];
 var colliders = ['collider_1', 'collider_2', 'collider_3'];
 var commonCause = ['ccause_1', 'ccause_2', 'ccause_3'];
+var confounds = ['confound_1', 'confound_2', 'confound_3'];
 // Labelled and control preset names
 var condLabel = shuffleArray(['crime', 'finance', 'estate']);
 var condDifficulty;
@@ -78,8 +79,7 @@ var condControl = shuffleArray(['crime_control', 'finance_control', 'estate_cont
 
 var easyBlocks = shuffleArray([
     shuffleArray(chains),
-    shuffleArray(colliders),
-    shuffleArray(commonCause)
+    shuffleArray(confounds)
 ]);
 
 // If the condition is label, assign labelled presets, otherwise add control presets
