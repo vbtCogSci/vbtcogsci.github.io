@@ -45,31 +45,35 @@ function scrambler_wrapper(init_model_scaled, init_order, cond, save=true) {
         return
     }
 
-    // Transfrom report according to condition, specifically exp3
-    if (cond == 'congruent') {
-        // model = prior OR model ~= prior 
-        // 3 links will be randomised with a softmax preference for closer link values
-        var num_scramble = 1;
-        var softmax_coef = -1;
-        var target_ned = [0.80, 0.90];
-
-    } else if (cond == 'incongruent') {
-        // model != prior 
-        // 3 links will be randomised with a uniform distribution over link values
-        var num_scramble = 3;
-        var softmax_coef = 0;
-        var target_ned = [0.45, 0.55];
-
-    } else if (cond == 'implausible') {
-        // model != prior 
-        // 4 links will be randomised with a softmax preference for further link values
-        var num_scramble = 6;
-        var softmax_coef = 1;
-        var target_ned = [0.05, 0.15];
-    }
-
     // Generate posterior model satisfying the experimental condition condition
-    var out_report = scramble_model(init_model, num_scramble, softmax_coef, target_ned);
+    // Difference in experiment number changes the inversion process (exp3: random, exp4: deterministic)
+    if (experiment == 'exp3') {
+        // Transfrom report according to condition, specifically exp3
+        if (cond == 'congruent') {
+            // model = prior OR model ~= prior 
+            // 3 links will be randomised with a softmax preference for closer link values
+            var num_scramble = 1;
+            var softmax_coef = -1;
+            var target_ned = [0.80, 0.90];
+
+        } else if (cond == 'incongruent') {
+            // model != prior 
+            // 3 links will be randomised with a uniform distribution over link values
+            var num_scramble = 3;
+            var softmax_coef = 0;
+            var target_ned = [0.45, 0.55];
+
+        } else if (cond == 'implausible') {
+            // model != prior 
+            // 4 links will be randomised with a softmax preference for further link values
+            var num_scramble = 6;
+            var softmax_coef = 1;
+            var target_ned = [0.05, 0.15];
+        }
+        var out_report = scramble_model(init_model, num_scramble, softmax_coef, target_ned);
+    } else if (experiment == 'exp4') {
+        var out_report = invert_model(init_model, cond);
+    }
 
     // Parse report to turn it into a shape readable by the game API
     // Model_presetp = [preset_list, preset_order]
@@ -86,6 +90,28 @@ function scrambler_wrapper(init_model_scaled, init_order, cond, save=true) {
 }
 
 // Methods for scrambling
+
+// DETERMINISTIC SCRAMBLING
+function invert_model(init_model, cond) {
+    // Order idx is based on the permutations of the model values equivalent to transposing the adjacency matrix of the graph
+    var order_idx = [2, 4, 0, 5, 1, 3];
+    var out_report;
+
+    if (cond == 'congruent') {
+        out_report = init_model;
+    } else if (cond == 'incongruent') {
+        out_report = Array(init_model.length).fill(0);
+
+        for (var i = 0; i < init_model.length; i++) {
+            out_report[i] = init_model[order_idx[i]];
+        }
+    }
+
+    return out_report;
+}
+
+
+// RANDOM SCRAMBLING BASED ON DISTANCE AND ASSOCIATED FUNCTIONS
 // Samples a model within the specified ned range parameter of the base model
 function scramble_model(init_model, num_scramble, softmax_coef, target_ned, test=false) {
     // Initialise generic variables

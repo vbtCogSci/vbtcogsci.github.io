@@ -6,7 +6,7 @@ var gameLoop;
 // 10 steps per second with time step of 100 and dt (frequency) 1/10 : 100 * 10 = 1000 ms
 var time_step = 200;
 var elapsed = 0; // Duration of the trial
-var endTrial = 60000; // Supposed to be 1 min, time at which all stops here 1 min,  60 sec or 60,000 ms
+var endTrial = 10000; // Supposed to be 1 min, time at which all stops here 1 min,  60 sec or 60,000 ms
 var midTrial = endTrial * 2; //Math.floor(endTrial / 2); // Time at which participants can stop, half the total duration
 var x = 0;
 var y = 0;
@@ -92,6 +92,21 @@ var presets = {
     ],
     'pos_chain_3': [1, 1, 0,
         0, 1, 1,
+        0, 0, 1,
+        'Blue', 'Red', 'Green'
+    ],
+    'damp_chain_1': [1, 0, 0,
+        1, 1, 0,
+        -0.5, 1, 1,
+        'Blue', 'Red', 'Green'
+    ],
+    'damp_chain_2': [1, -1, 0,
+        0, 1, 0,
+        -1, -0.5, 1,
+        'Blue', 'Red', 'Green'
+    ],
+    'damp_chain_3': [1, 1, 0.5,
+        0, 1, -1,
         0, 0, 1,
         'Blue', 'Red', 'Green'
     ],
@@ -449,9 +464,9 @@ function setupGameCanvas() {
 // Called in interface_methods.setupGame
 function updateModel(preset) {
     //var presetValues = presets[preset];
-    if (experiment == 'exp3' && condLabel.includes(preset)) {
+    if ((experiment == 'exp3' || experiment == 'exp4') && condLabel.includes(preset)) {
 
-        var locCond = condLabel[currentLinkIdx].concat('_').concat(condDifficulty[currentLinkIdx])
+        var locCond = condLabel[currentLabelLinkIdx].concat('_').concat(condDifficulty[currentLabelLinkIdx])
         var presetValues = localStorage.getItem(locCond).split(','); // Scrambled custom preset
         var presetLabels = presetValues.slice(9, 12);
         var labelsHandle = presetValues.slice(12);

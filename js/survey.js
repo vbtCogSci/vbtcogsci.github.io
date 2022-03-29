@@ -180,24 +180,34 @@ function buildBlockSeq() {
     // Graph intro
     sequence = sequence.concat(intgraphIdx);
 
-    for (i=0; i < numGenBlocks + numLabelBlocks ; i++) {
-        // If running experiment 3, add scenarios in between each labelled trials
-        if (experiment == 'exp3' && i >= numGenBlocks) {
-            var scenIdx = condLabel.indexOf(condLabel[i - numGenBlocks])
+    // Must allow for alternating generic and labelled blocks
+    // All experiment must have a generic structure (e.g. [gen, label, gen, label] or [gen, label, label, label])
+    var trialType;
+    var generic_idx = 0;
+    var label_idx = 0;
+    for (i = 0; i < taskStructure.length; i++) {
+        trialType = taskStructure[i];
+        // If running experiment 3 and 4, add scenarios in between each labelled trials
+        if (trialType == 'label' && (experiment == 'exp3' || experiment == 'exp4')) {
+            var scenIdx = condLabel.indexOf(condLabel[label_idx])
             // Scenario page
-           sequence = sequence.concat(scenarioIdx[scenIdx])
-           // Links
-           sequence = sequence.concat(linkIdx)
-           linkScenarioIdx.push(sequence.length - 1)
+            sequence = sequence.concat(scenarioIdx[scenIdx])
+            // Links
+            sequence = sequence.concat(linkIdx)
+            linkScenarioIdx.push(sequence.length - 1)
+            
         }
-
+        
+        // Add a graph trial index to the experiment's screen sequence
         sequence = sequence.concat(graphIdx);
-
-        if (i < numGenBlocks) {
-            //console.log(i)
+        
+        // Add current sequence idx to appropriate trial type
+        if (trialType == 'generic') {
             genGraphIdx.push(sequence.length - 1);
+            generic_idx += 1;
         } else {
             labGraphIdx.push(sequence.length - 1);
+            label_idx += 1;
         }
     }
 

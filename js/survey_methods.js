@@ -425,17 +425,24 @@ function nextNode () {
         // SEND TO DATABASE and save prior model if applicable
         if (currentModel.slice(0,4) == 'link') {
             // Record prior model response if current block is prior elicitation
-            if (['linkscrime', 'linksestate', 'linksfinance'].includes(currentModel) && experiment == 'exp3') {
+            if (['linkscrime', 'linksestate', 'linksfinance'].includes(currentModel)) {
                 var out_prior = record_prior(currentModel);
-                scrambler_wrapper(out_prior[0], out_prior[1], condDifficulty[currentLinkIdx]);
+                console.log('Hello links')
+                console.log(out_prior)
+                scrambler_wrapper(out_prior[0], out_prior[1], condDifficulty[currentLabelLinkIdx]);
             }
             saveLinkData();
         } else {
+            console.log('Updating indices...')
             saveGraphData();
-            if (['crime', 'finance', 'estate'].includes(currentModel) && experiment == 'exp3') {
+            if (['crime', 'finance', 'estate'].includes(currentModel)) {
                 console.log('Updating link index')
-                currentLinkIdx += 1;
-            }    
+                currentLabelLinkIdx += 1;
+                console.log('Updated label index')
+            } else {
+                currentGenericLinkIdx += 1;
+                console.log('Updated label index')
+            }
         }
         
         
@@ -521,7 +528,7 @@ function checkReport(report, currentModel) {
             return false;
         }
     } 
-
+    $('#error-msg').html('')
     return true;
 }
 

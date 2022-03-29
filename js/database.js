@@ -5,7 +5,8 @@ function saveState(db_update=true) {
     localStorage.setItem('condition', condition)
     localStorage.setItem('condIdx', condIdx);
     localStorage.setItem('currentModel', currentModel);
-    localStorage.setItem('currentLinkIdx', currentLinkIdx)
+    localStorage.setItem('currentLabelLinkIdx', currentLabelLinkIdx)
+    localStorage.setItem('currentGenericLinkIdx', currentGenericLinkIdx)
     localStorage.setItem('condLabel', condLabel)
     localStorage.setItem('condDifficulty', condDifficulty)
 
@@ -13,7 +14,8 @@ function saveState(db_update=true) {
         db.ref('states').child(uid).child('condition').set(condition);
         db.ref('states').child(uid).child('state').set(currentModel);
         db.ref('states').child(uid).child('condIdx').set(condIdx);
-        db.ref('states').child(uid).child('currentLinkIdx').set(currentLinkIdx);
+        db.ref('states').child(uid).child('currentLabelLinkIdx').set(currentLabelLinkIdx);
+        db.ref('states').child(uid).child('currentGenericLinkIdx').set(currentGenericLinkIdx);
         db.ref('states').child(uid).child('condLabel').set(condLabel);
         db.ref('states').child(uid).child('condDifficulty').set(condDifficulty);
 
@@ -61,10 +63,10 @@ function record_prior(linksModel) {
 
 function saveScramblingInfo(model_preset, ned_prior) {
 
-    localStorage.setItem(condLabel[currentLinkIdx].concat('_').concat(condDifficulty[currentLinkIdx]), model_preset[0])
-    db.ref('states').child(uid).child(condDifficulty[currentLinkIdx]).set(model_preset[0]);
-    db.ref('data').child(uid).child(condLabel[currentLinkIdx].concat('_').concat(condition)).child('preset_dict').set(model_preset[1]);
-    db.ref('data').child(uid).child(condLabel[currentLinkIdx].concat('_').concat(condition)).child('ned_prior').set(ned_prior);
+    localStorage.setItem(condLabel[currentLabelLinkIdx].concat('_').concat(condDifficulty[currentLabelLinkIdx]), model_preset[0])
+    db.ref('states').child(uid).child(condDifficulty[currentLabelLinkIdx]).set(model_preset[0]);
+    db.ref('data').child(uid).child(condLabel[currentLabelLinkIdx].concat('_').concat(condition)).child('preset_dict').set(model_preset[1]);
+    db.ref('data').child(uid).child(condLabel[currentLabelLinkIdx].concat('_').concat(condition)).child('ned_prior').set(ned_prior);
 }
 
 // Record link data after a graph trial
@@ -100,7 +102,7 @@ function saveGraphData() {
         $('#ZonY').slider("value")
     ];
 
-    if (['crime', 'finance', 'estate'].includes(currentModel) && experiment == 'exp3') {
+    if (['crime', 'finance', 'estate'].includes(currentModel) && experiment != 'exp1') {
         var modelName = currentModel.concat('_').concat(condition);
         db.ref('data').child(uid).child(modelName).child('report').set(report);
         db.ref('data').child(uid).child(modelName).child('order').set(currentLabels);

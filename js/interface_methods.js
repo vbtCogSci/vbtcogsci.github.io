@@ -8,7 +8,7 @@ function setupGame(condIdx) {
     if (genGraphIdx.includes(condIdx)) {
         // Remove the first index from genGraph so as to not activate this if statement
         genGraphIdx.shift()
-        var easyB = easyBlocks.shift()
+        var easyB = easyBlocks[currentGenericLinkIdx];
         var randgen = easyB[Math.floor( Math.random() * 3 )];
         console.log(randgen)
         
@@ -26,7 +26,7 @@ function setupGame(condIdx) {
     // Deals with conditioned models
     } else if (labGraphIdx.includes(condIdx)) {
         // Define preset as the first index of the labBlocks
-        preset = condLabel[currentLinkIdx]; // NEW VERSION
+        preset = condLabel[currentLabelLinkIdx]; // NEW VERSION
         
         console.log(preset);
 
@@ -72,7 +72,7 @@ function setupLinkTraining(condIdx) {
     } else {
         // Do Labelled stuff
         //var scenario = condLabel[2 - linkScenarioIdx.length];
-        var scenario = condLabel[currentLinkIdx]; 
+        var scenario = condLabel[currentLabelLinkIdx]; 
         currentModel = 'links'.concat(scenario);
         
         var randint = getRandomInt(3)

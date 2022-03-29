@@ -17,8 +17,9 @@ var prolific;
 // Possibilities:
 //// exp1: control and label conditions
 //// exp2: long and short conditions
-//// exp3: congruent and incongruent
-var experiment = 'exp3';
+//// exp3: random congruent and incongruent
+//// exp4: deterministic congruent and incongruent
+var experiment = 'exp4';
 
 // Debug mode
 // /!\ MUST BE FALSE FOR DATA COLLECTION /!\
@@ -49,10 +50,17 @@ var chains = ['pos_chain_1', 'pos_chain_2', 'pos_chain_3'];
 var colliders = ['collider_1', 'collider_2', 'collider_3'];
 var commonCause = ['ccause_1', 'ccause_2', 'ccause_3'];
 var confounds = ['confound_1', 'confound_2', 'confound_3'];
+var damped_chain = ['damp_chain_1', 'damp_chain_2', 'damp_chain_3']
 // Labelled and control preset names
-var condLabel = shuffleArray(['crime', 'finance', 'estate']);
+if (experiment == 'exp3') {
+    var condLabel = shuffleArray(['crime', 'finance', 'estate']);
+} else if (experiment == 'exp4') {
+    var condLabel = shuffleArray(['crime', 'finance']);
+}
+
 var condDifficulty;
-var currentLinkIdx = 0;
+var currentLabelLinkIdx = 0;
+var currentGenericLinkIdx = 0;
 
 var labelOptions = {
     'linkscrime': [['Crime rate', 'Police action', 'Population happiness'], 
@@ -75,23 +83,40 @@ var exp3_conds = [
     {'finance':'congruent', 'estate':'implausible', 'crime':'incongruent'}
 ]
 
+var exp4_conds = [
+    {'finance':'incongruent', 'crime':'congruent'},
+    {'finance':'congruent', 'crime':'incongruent'}
+]
+
 var condControl = shuffleArray(['crime_control', 'finance_control', 'estate_control']);
 
+
+// 
+// ADD DAMPENED CHAINS and DAMPENED CONFOUND
 var easyBlocks = shuffleArray([
     shuffleArray(chains),
-    shuffleArray(confounds)
+    shuffleArray(damped_chain)
 ]);
 
 // If the condition is label, assign labelled presets, otherwise add control presets
 
 // Variables that define the number of experimental block of each type.
-var numLinkBlocks = 3;
-var numGenBlocks = 3;
-var numLabelBlocks = 1;
-
-if (experiment == 'exp3') {
+if (experiment == 'exp1') {
+    var numLinkBlocks = 3;
+    var numGenBlocks = 3;
+    var numLabelBlocks = 1;
+    var taskStructure = ['generic', 'generic', 'generic', 'label']
+} else if (experiment == 'exp3') {
+    var numLinkBlocks = 3;
     var numGenBlocks = 1;
     var numLabelBlocks = 3;
+    var taskStructure = ['generic', 'label', 'label', 'label']
+} else if (experiment == 'exp4') {
+    var numLinkBlocks = 3;
+    // One generic, one label x2
+    var numGenBlocks = 2;
+    var numLabelBlocks = 2;
+    var taskStructure = ['generic', 'label', 'generic', 'label']
 }
 
 // Define variables that keep track of block indices
@@ -175,6 +200,7 @@ if (uid == null) {
             
                 // Changes the next participant's condition based on the current participant and the experiment number
                 if (experiment == 'exp1') {
+                    // EXPERIMENT 1 SELECTION OF CONDITION
                     if (dbCond == "label") {
                         console.log('changing to control')
                         db.ref('cond').child(experiment).set('control');
@@ -191,7 +217,7 @@ if (uid == null) {
                         db.ref('cond').child(experiment).set('long');
                     }
                 } else if (experiment == 'exp3') {
-                    // Some randomisation to define here
+                    // EXPERIMENT 3 SELECTION OF CONDITION
                     dbCond = parseInt(dbCond);
                     console.log(dbCond)
                     if (dbCond > 5) {
@@ -206,9 +232,27 @@ if (uid == null) {
 
                     // Set condDifficulty
                     var pairings = exp3_conds[dbCond];
-                    condDifficulty = [null, null, null];
+                    condDifficulty = Array(pairings.length).fill(null);
                     
-                    for (i=0; i<3; i ++) {
+                    for (i=0; i < numLabelBlocks; i ++) {
+                        condDifficulty[i] = pairings[condLabel[i]]
+                    }
+                } else if (experiment == 'exp4') {
+                    // EXPERIMENT 4 SELECTION OF CONDITION
+                    dbCond = parseInt(dbCond);
+                    console.log(dbCond)
+
+                    if (dbCond == 0) {
+                        db.ref('cond').child(experiment).set(1)
+                    } else {
+                        db.ref('cond').child(experiment).set(0)
+                    }
+
+                    // Set condDifficulty
+                    var pairings = exp4_conds[dbCond];
+                    condDifficulty = Array(pairings.length).fill(null);
+                    
+                    for (i=0; i < numLabelBlocks; i ++) {
                         condDifficulty[i] = pairings[condLabel[i]]
                     }
                 }
@@ -230,7 +274,8 @@ if (uid == null) {
     console.log('Found UID in local storage')
     condition = localStorage.getItem('condition');
     condIdx = parseInt(localStorage.getItem('condIdx'));
-    currentLinkIdx = parseInt(localStorage.getItem('currentLinkIdx'));
+    currentLabelLinkIdx = parseInt(localStorage.getItem('currentLabelLinkIdx'));
+    currentGenericLinkIdx = parseInt(localStorage.getItem('currentGenericLinkIdx'));
     condLabel = localStorage.getItem('condLabel').split(',');
     condDifficulty = localStorage.getItem('condDifficulty').split(',');
     prolific = localStorage.getItem('prolific');
