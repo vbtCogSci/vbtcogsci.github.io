@@ -95,17 +95,17 @@ var presets = {
         0, 0, 1,
         'Blue', 'Red', 'Green'
     ],
-    'damp_chain_1': [1, 0, 0,
+    'dampened_1': [1, 0, 0,
         1, 1, 0,
         -0.5, 1, 1,
         'Blue', 'Red', 'Green'
     ],
-    'damp_chain_2': [1, -1, 0,
+    'dampened_2': [1, -1, 0,
         0, 1, 0,
         -1, -0.5, 1,
         'Blue', 'Red', 'Green'
     ],
-    'damp_chain_3': [1, 1, 0.5,
+    'dampened_3': [1, 1, 0.5,
         0, 1, -1,
         0, 0, 1,
         'Blue', 'Red', 'Green'

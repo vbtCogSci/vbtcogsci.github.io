@@ -50,7 +50,7 @@ var chains = ['pos_chain_1', 'pos_chain_2', 'pos_chain_3'];
 var colliders = ['collider_1', 'collider_2', 'collider_3'];
 var commonCause = ['ccause_1', 'ccause_2', 'ccause_3'];
 var confounds = ['confound_1', 'confound_2', 'confound_3'];
-var damped_chain = ['damp_chain_1', 'damp_chain_2', 'damp_chain_3']
+var dampened = ['dampened_1', 'dampened_2', 'dampened_3']
 // Labelled and control preset names
 if (experiment == 'exp3') {
     var condLabel = shuffleArray(['crime', 'finance', 'estate']);
@@ -95,7 +95,7 @@ var condControl = shuffleArray(['crime_control', 'finance_control', 'estate_cont
 // ADD DAMPENED CHAINS and DAMPENED CONFOUND
 var easyBlocks = shuffleArray([
     shuffleArray(chains),
-    shuffleArray(damped_chain)
+    shuffleArray(dampened)
 ]);
 
 // If the condition is label, assign labelled presets, otherwise add control presets

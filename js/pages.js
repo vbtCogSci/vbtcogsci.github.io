@@ -368,7 +368,7 @@ var graph_intro_1 = `
     </p>
     <ul>
         <li><strong>Colours:</strong> variables are simply named after their colour, i.e. <span class='c-blue'>blue</span>, <span class='c-red'>red</span> and <span class='c-green'>green</span>.</li>
-        <li><strong>Labels:</strong> variables have labels of concepts you have seen during the causal model task. In this case the task is the same but there will be an additional question asking you to report whether the relationships you observed during the task made sense to you.</li>
+        <li><strong>Labels:</strong> in some cases you will be asked to provide the links between three concepts using the interface you just used. The variables of the following trials will be labelled with the same concepts. In these cases the task is the same but there will be an additional question asking you to report whether the relationships you observed during the task made sense to you.</li>
     </ul>
 </div>
 <p class='base-p'>
@@ -739,7 +739,7 @@ var outro_3 = `
     <br><br>
     Please click on the link below to go back to the Prolific platform and receive your compensation.
     <br><br>
-    Back to prolific: <a id='prolific-link' href='https://app.prolific.co/submissions/complete?cc=29551DF4'>Back to Prolific.co</a>
+    Back to prolific: <a id='prolific-link' href='#'>Back to Prolific.co</a>
 </p>`;
 
 var outro_4 = `
