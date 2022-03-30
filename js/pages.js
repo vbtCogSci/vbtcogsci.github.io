@@ -739,7 +739,7 @@ var outro_3 = `
     <br><br>
     Please click on the link below to go back to the Prolific platform and receive your compensation.
     <br><br>
-    Back to prolific: <a id='prolific-link' href='#'>Back to Prolific.co</a>
+    Back to prolific: <a id='prolific-link' href='https://app.prolific.co/submissions/complete?cc=29551DF4'>Back to Prolific.co</a>
 </p>`;
 
 var outro_4 = `
