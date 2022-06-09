@@ -5,20 +5,25 @@ function saveState(db_update=true) {
     localStorage.setItem('condition', condition)
     localStorage.setItem('condIdx', condIdx);
     localStorage.setItem('currentModel', currentModel);
+    localStorage.setItem('currentScenarioIdx', currentScenarioIdx)
     localStorage.setItem('currentLabelLinkIdx', currentLabelLinkIdx)
     localStorage.setItem('currentGenericLinkIdx', currentGenericLinkIdx)
     localStorage.setItem('condLabel', condLabel)
     localStorage.setItem('condDifficulty', condDifficulty)
+    localStorage.setItem('scenarioOrder', scenarioOrder)
+    localStorage.setItem('trialNumber', trial_number)
 
     if (db_update == true) {
         db.ref('states').child(uid).child('condition').set(condition);
         db.ref('states').child(uid).child('state').set(currentModel);
         db.ref('states').child(uid).child('condIdx').set(condIdx);
+        db.ref('states').child(uid).child('currentScenarioIdx').set(currentScenarioIdx);
         db.ref('states').child(uid).child('currentLabelLinkIdx').set(currentLabelLinkIdx);
         db.ref('states').child(uid).child('currentGenericLinkIdx').set(currentGenericLinkIdx);
         db.ref('states').child(uid).child('condLabel').set(condLabel);
         db.ref('states').child(uid).child('condDifficulty').set(condDifficulty);
-
+        db.ref('states').child(uid).child('scenarioOrder').set(scenarioOrder);
+        db.ref('states').child(uid).child('trialNumber').set(trial_number)
         
         if (condIdx < 2) {
             // Save date and time of submission
@@ -62,11 +67,13 @@ function record_prior(linksModel) {
 
 
 function saveScramblingInfo(model_preset, ned_prior) {
-
-    localStorage.setItem(condLabel[currentLabelLinkIdx].concat('_').concat(condDifficulty[currentLabelLinkIdx]), model_preset[0])
-    db.ref('states').child(uid).child(condDifficulty[currentLabelLinkIdx]).set(model_preset[0]);
-    db.ref('data').child(uid).child(condLabel[currentLabelLinkIdx].concat('_').concat(condition)).child('preset_dict').set(model_preset[1]);
-    db.ref('data').child(uid).child(condLabel[currentLabelLinkIdx].concat('_').concat(condition)).child('ned_prior').set(ned_prior);
+    // Change this to store the current model label and the appropriate difficulty idx
+    var actual_label = currentModel.slice(5)
+    var respective_difficulty = condDifficulty[condLabel.indexOf(actual_label)]
+    localStorage.setItem(actual_label.concat('_').concat(respective_difficulty), model_preset[0])
+    db.ref('states').child(uid).child(respective_difficulty).set(model_preset[0]);
+    db.ref('data').child(uid).child(actual_label.concat('_').concat(condition)).child('preset_dict').set(model_preset[1]);
+    db.ref('data').child(uid).child(actual_label.concat('_').concat(condition)).child('ned_prior').set(ned_prior);
 }
 
 // Record link data after a graph trial
@@ -128,8 +135,10 @@ function saveGraphData() {
         var modelName = currentModel;
         db.ref('data').child(uid).child(modelName).child('report').set(report);
     }
-    
-        // Graph data
+    // Graph index
+    db.ref('data').child(uid).child(modelName).child('trial_number').set(trial_number)
+
+    // Graph data
     // Times 
     db.ref('data').child(uid).child(modelName).child('times').set(steps);
     // Values
@@ -149,6 +158,7 @@ function saveGraphData() {
     db.ref('data').child(uid).child(modelName).child('ZonY').set(sixthHist);
 
     // Reset Data storage variables
+    trial_number ++;
     xHist = [0];
     yHist = [0];
     zHist = [0];

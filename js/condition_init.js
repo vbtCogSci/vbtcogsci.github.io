@@ -19,7 +19,8 @@ var prolific;
 //// exp2: long and short conditions
 //// exp3: random congruent and incongruent
 //// exp4: deterministic congruent and incongruent
-var experiment = 'exp4';
+//// exp5: reordered deterministic congruent and incongruent
+var experiment = 'exp5';
 
 // Debug mode
 // /!\ MUST BE FALSE FOR DATA COLLECTION /!\
@@ -30,6 +31,7 @@ var debug = false;
 var currentModel = 'none';
 var currentLabels;
 var modelName;
+var trial_number = 0;
 
 // Key globabl navigation variables
 var condition;
@@ -48,31 +50,60 @@ var endTime;
 var easyLink = ['easy_1', 'easy_2', 'easy_2'];
 var chains = ['pos_chain_1', 'pos_chain_2', 'pos_chain_3'];
 var colliders = ['collider_1', 'collider_2', 'collider_3'];
-var commonCause = ['ccause_1', 'ccause_2', 'ccause_3'];
+var commonCauses = ['ccause_1', 'ccause_2', 'ccause_3'];
 var confounds = ['confound_1', 'confound_2', 'confound_3'];
 var dampened = ['dampened_1', 'dampened_2', 'dampened_3']
+var loops = ['loop_1', 'loop_2', 'loop_3']
 // Labelled and control preset names
+
 if (experiment == 'exp3') {
     var condLabel = shuffleArray(['crime', 'finance', 'estate']);
 } else if (experiment == 'exp4') {
     var condLabel = shuffleArray(['crime', 'finance']);
+} else if (experiment == 'exp5') {
+    var condLabel = shuffleArray(['crime', 'finance']);
 }
 
+var scenarioOrder = shuffleArray(['crime', 'finance']);
 var condDifficulty;
+var currentScenarioIdx = 0;
 var currentLabelLinkIdx = 0;
 var currentGenericLinkIdx = 0;
 
-var labelOptions = {
-    'linkscrime': [['Crime rate', 'Police action', 'Population happiness'], 
-                   ['Police action', 'Population happiness', 'Crime rate'], 
-                   ['Population happiness', 'Crime rate', 'Police action']],
-    'linksfinance': [['Lockdown measures', 'Virus cases', 'Stock prices'],
-                     ['Virus cases', 'Stock prices', 'Lockdown measures'],
-                     ['Stock prices', 'Lockdown measures', 'Virus cases']],
-    'linksestate': [['House prices', 'Population density', 'Desirability'],
-                    ['Population density', 'Desirability', 'House prices'],
-                    ['Desirability', 'House prices', 'Population density']]  
+
+if (experiment == 'exp5') {
+    var labelOptions = {
+        'linkscrime': [['Crime rate', 'Police action', 'Population happiness'], 
+                       ['Police action', 'Population happiness', 'Crime rate'], 
+                       ['Population happiness', 'Crime rate', 'Police action'],
+                       ['Crime rate', 'Population happiness', 'Police action'], 
+                       ['Population happiness', 'Police action', 'Crime rate'], 
+                       ['Police action', 'Crime rate', 'Population happiness']],
+        'linksfinance': [['Lockdown measures', 'Virus cases', 'Stock prices'],
+                         ['Virus cases', 'Stock prices', 'Lockdown measures'],
+                         ['Stock prices', 'Lockdown measures', 'Virus cases'],
+                         ['Virus cases', 'Lockdown measures', 'Stock prices'],
+                         ['Lockdown measures', 'Stock prices', 'Virus cases'],
+                         ['Stock prices', 'Virus cases', 'Lockdown measures']],
+        'linksestate': [['House prices', 'Population density', 'Desirability'],
+                        ['Population density', 'Desirability', 'House prices'],
+                        ['Desirability', 'House prices', 'Population density']]  
+    }
+
+} else {
+    var labelOptions = {
+        'linkscrime': [['Crime rate', 'Police action', 'Population happiness'], 
+                       ['Police action', 'Population happiness', 'Crime rate'], 
+                       ['Population happiness', 'Crime rate', 'Police action']],
+        'linksfinance': [['Lockdown measures', 'Virus cases', 'Stock prices'],
+                         ['Virus cases', 'Stock prices', 'Lockdown measures'],
+                         ['Stock prices', 'Lockdown measures', 'Virus cases']],
+        'linksestate': [['House prices', 'Population density', 'Desirability'],
+                        ['Population density', 'Desirability', 'House prices'],
+                        ['Desirability', 'House prices', 'Population density']]  
+    }
 }
+
 
 var exp3_conds = [
     {'finance':'incongruent', 'estate':'implausible', 'crime':'congruent'},
@@ -88,15 +119,40 @@ var exp4_conds = [
     {'finance':'congruent', 'crime':'incongruent'}
 ]
 
+var exp5_conds = [
+    {'finance':'incongruent', 'crime':'congruent'},
+    {'finance':'congruent', 'crime':'incongruent'}
+]
+
+
+
 var condControl = shuffleArray(['crime_control', 'finance_control', 'estate_control']);
 
 
 // 
 // ADD DAMPENED CHAINS and DAMPENED CONFOUND
-var easyBlocks = shuffleArray([
-    shuffleArray(chains),
-    shuffleArray(dampened)
-]);
+if (experiment == 'exp1') {
+    var easyBlocks = shuffleArray([
+        shuffleArray(chains),
+        shuffleArray(commonCauses),
+        shuffleArray(colliders)
+    ]);
+
+} else if (experiment == 'exp3' || experiment == 'exp4') {
+    var easyBlocks = shuffleArray([
+        shuffleArray(chains),
+        shuffleArray(dampened)
+    ]);
+
+} else if (experiment == 'exp5') {
+    var easyBlocks = shuffleArray([
+        shuffleArray(commonCauses),
+        shuffleArray(dampened),
+        shuffleArray(colliders)
+    ]);
+
+}
+
 
 // If the condition is label, assign labelled presets, otherwise add control presets
 
@@ -117,6 +173,12 @@ if (experiment == 'exp1') {
     var numGenBlocks = 2;
     var numLabelBlocks = 2;
     var taskStructure = ['generic', 'label', 'generic', 'label']
+} else if (experiment == 'exp5') {
+    var numLinkBlocks = 3;
+    // 2 generic, 1 label, 1 generic, 1 label
+    var numGenBlocks = 3;
+    var numLabelBlocks = 2;
+    var taskStructure = ['generic', 'generic', 'label', 'generic', 'label']
 }
 
 // Define variables that keep track of block indices
@@ -161,9 +223,13 @@ if (uid == null) {
                 condIdx = states.condIdx;
                 condition = states.condition;
                 currentModel = states.state;
-                currentLinkIdx = states.currentLinkIdx;
+                currentScenarioIdx = states.currentLinkIdx;
+                currentLabelLinkIdx = states.currentLabelLinkIdx;
+                currentGenericLinkIdx = states.currentGenericLinkIdx;
                 condLabel = states.condLabel;
                 condDifficulty = states.condDifficulty;
+                scenarioOrder = states.scenarioOrder;
+                trial_number = states.trial_number;
 
 
                 // Redefine condition
@@ -255,8 +321,25 @@ if (uid == null) {
                     for (i=0; i < numLabelBlocks; i ++) {
                         condDifficulty[i] = pairings[condLabel[i]]
                     }
+                } else if (experiment == 'exp5') {
+                    // EXPERIMENT 4 SELECTION OF CONDITION
+                    dbCond = parseInt(dbCond);
+                    console.log(dbCond)
+
+                    if (dbCond == 0) {
+                        db.ref('cond').child(experiment).set(1)
+                    } else {
+                        db.ref('cond').child(experiment).set(0)
+                    }
+
+                    // Set condDifficulty
+                    var pairings = exp5_conds[dbCond];
+                    condDifficulty = Array(pairings.length).fill(null);
+                    
+                    for (i=0; i < numLabelBlocks; i ++) {
+                        condDifficulty[i] = pairings[condLabel[i]]
+                    }
                 }
-            
                 condition = dbCond;
 
                 // Adjust sequence 
@@ -274,11 +357,14 @@ if (uid == null) {
     console.log('Found UID in local storage')
     condition = localStorage.getItem('condition');
     condIdx = parseInt(localStorage.getItem('condIdx'));
+    currentScenarioIdx = parseInt(localStorage.getItem('currentScenarioIdx'));
     currentLabelLinkIdx = parseInt(localStorage.getItem('currentLabelLinkIdx'));
     currentGenericLinkIdx = parseInt(localStorage.getItem('currentGenericLinkIdx'));
     condLabel = localStorage.getItem('condLabel').split(',');
     condDifficulty = localStorage.getItem('condDifficulty').split(',');
+    scenarioOrder = localStorage.getItem('scenarioOrder').split(',')
     prolific = localStorage.getItem('prolific');
+    trial_number = parseInt(localStorage.getItem('trialNumber'));
 
     if (prolific == 'true') {
         prolific = true;

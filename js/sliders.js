@@ -80,6 +80,21 @@ var presets = {
         0, 0, 1,
         'Blue', 'Red', 'Green'
     ],
+    'loop_1': [1, 0, 1,
+        1, 1, 0,
+        0, -1, 1,
+        'Blue', 'Red', 'Green'
+    ],
+    'loop_2': [1, -1, 0,
+        0, 1, -1,
+        -1, 0, 1,
+        'Blue', 'Red', 'Green'
+    ],
+    'loop_3': [1, 0, -1,
+        1, 1, 0,
+        0, 1, 1,
+        'Blue', 'Red', 'Green'
+    ],
     'pos_chain_1': [1, 0, 0,
         1, 1, 0,
         0, 1, 1,
@@ -464,7 +479,7 @@ function setupGameCanvas() {
 // Called in interface_methods.setupGame
 function updateModel(preset) {
     //var presetValues = presets[preset];
-    if ((experiment == 'exp3' || experiment == 'exp4') && condLabel.includes(preset)) {
+    if ((experiment != 'exp1') && condLabel.includes(preset)) {
 
         var locCond = condLabel[currentLabelLinkIdx].concat('_').concat(condDifficulty[currentLabelLinkIdx])
         var presetValues = localStorage.getItem(locCond).split(','); // Scrambled custom preset

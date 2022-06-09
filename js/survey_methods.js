@@ -429,7 +429,12 @@ function nextNode () {
                 var out_prior = record_prior(currentModel);
                 console.log('Hello links')
                 console.log(out_prior)
-                scrambler_wrapper(out_prior[0], out_prior[1], condDifficulty[currentLabelLinkIdx]);
+                var actual_label = currentModel.slice(5);
+                var respective_difficulty = condDifficulty[condLabel.indexOf(actual_label)]
+                console.log(actual_label)
+                console.log(respective_difficulty)
+                scrambler_wrapper(out_prior[0], out_prior[1], respective_difficulty);
+                currentScenarioIdx += 1;
             }
             saveLinkData();
         } else {
@@ -441,13 +446,10 @@ function nextNode () {
                 console.log('Updated label index')
             } else {
                 currentGenericLinkIdx += 1;
-                console.log('Updated label index')
+                console.log('Updated Generic index')
             }
         }
-        
-        
     }
-    //console.log('Next Idx: '.concat(nodeIdx.toString()))
 }
 
 

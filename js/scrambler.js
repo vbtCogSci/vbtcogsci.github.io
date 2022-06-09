@@ -71,13 +71,22 @@ function scrambler_wrapper(init_model_scaled, init_order, cond, save=true) {
             var target_ned = [0.05, 0.15];
         }
         var out_report = scramble_model(init_model, num_scramble, softmax_coef, target_ned);
-    } else if (experiment == 'exp4') {
+    } else if (experiment == 'exp4' || experiment == 'exp5') {
+        console.log('Inverting model')
+        console.log(init_model)
+        console.log(cond)
         var out_report = invert_model(init_model, cond);
+        console.log(out_report)
     }
 
     // Parse report to turn it into a shape readable by the game API
     // Model_presetp = [preset_list, preset_order]
-    var model_preset = to_preset_list(init_order, out_report, shuffle=false);
+    if (experiment == 'exp5') {
+        var shuffle = true;
+    } else {
+        var shuffle = false;
+    }
+    var model_preset = to_preset_list(init_order, out_report, shuffle=shuffle);
 
     // Store the scrambled model in local storage and database
     var ned_out = 1 - (euclidean_distance(init_model, out_report) / normalising_constant(init_model))

@@ -72,10 +72,15 @@ function setupLinkTraining(condIdx) {
     } else {
         // Do Labelled stuff
         //var scenario = condLabel[2 - linkScenarioIdx.length];
-        var scenario = condLabel[currentLabelLinkIdx]; 
+        if (experiment == 'exp5') {
+            var scenario = scenarioOrder[currentScenarioIdx];
+        } else {
+            var scenario = condLabel[currentScenarioIdx]; 
+        }
+    
         currentModel = 'links'.concat(scenario);
         
-        var randint = getRandomInt(3)
+        var randint = getRandomInt(labelOptions[currentModel][0].length)
         currentLabels = labelOptions[currentModel][randint];
         randint += 1;
         console.log('#page-4-graph-'.concat(scenario).concat("-").concat(randint.toString()))

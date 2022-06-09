@@ -165,6 +165,13 @@ function buildBlockSeq() {
         sequence = sequence.concat(linkIdx)
         linkScenarioIdx.push(sequence.length - 1)
 
+    } else if (experiment == 'exp5') {
+        // Add both scenarios at the end of the link trials in a random order
+        for (i = 0; i < scenarioOrder.length; i++) {
+            sequence = sequence.concat(scenarioIdx[condLabel.indexOf(scenarioOrder[i])])
+            sequence = sequence.concat(linkIdx)
+            linkScenarioIdx.push(sequence.length - 1)
+        }
     }
 
 
