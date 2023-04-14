@@ -370,7 +370,7 @@ function setupGameCanvas() {
                     addData(chart, new_step, [x, y, z, NaN, NaN, NaN]);
                 }
                 // Remove data if too much is plotted here max datapoints is 100
-                if (chart.data.datasets[0].data.length > 50) {
+                if (chart.data.datasets[0].data.length > 10/dt) {
                     removeData(chart);
                 }
             }
